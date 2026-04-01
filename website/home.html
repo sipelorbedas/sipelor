@@ -1265,10 +1265,7 @@ ul { list-style: none; }
       <div class="nav-right">
         <button class="nav-search-btn" aria-label="Cari">🔍</button>
         <!-- Auth buttons — updated dynamically by checkAuthState() -->
-        <div id="nav-auth-buttons" style="display:flex;gap:8px;align-items:center;">
-          <a href="public/login.html" class="btn" id="btn-masuk" style="background:var(--gray-100);color:var(--gray-700);font-size:.85rem;padding:9px 18px;">Masuk</a>
-          <a href="public/login.html?tab=signup" class="btn btn-emerald" id="btn-daftar" style="font-size:.85rem;padding:9px 18px;">Daftar</a>
-        </div>
+        <!-- Login / Daftar buttons removed -->
         <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -1298,7 +1295,7 @@ ul { list-style: none; }
         Pilih lapangan, atur jadwal, bayar — semua dalam satu platform.
       </p>
       <div class="hero-actions">
-        <a href="public/login.html" class="btn btn-gold">🏅 Pesan Sekarang</a>
+        <a href="#kategori" class="btn btn-gold">🏅 Pesan Sekarang</a>
         <a href="#kategori" class="btn btn-outline-white">Lihat Lapangan</a>
       </div>
     </div>
@@ -1529,7 +1526,7 @@ ul { list-style: none; }
       <h2 class="cta-title">Siap Berolahraga? 💪</h2>
       <p class="cta-sub">Pesan lapangan favoritmu sekarang dan mulai aktivitas olahraga bersama komunitas Kabupaten Bandung.</p>
       <div class="cta-actions">
-        <a href="public/login.html" class="btn btn-cta-white" style="padding:14px 32px;font-size:.98rem;">🏅 Pesan Lapangan Sekarang</a>
+        <a href="#lapangan" class="btn btn-cta-white" style="padding:14px 32px;font-size:.98rem;">🏅 Pesan Lapangan Sekarang</a>
         <a href="#lapangan" class="btn btn-outline-white" style="padding:14px 24px;font-size:.98rem;">Lihat Semua Lapangan</a>
       </div>
     </div>
@@ -1592,7 +1589,7 @@ ul { list-style: none; }
           <li><a href="#">Syarat & Ketentuan</a></li>
           <li><a href="#">Kebijakan Privasi</a></li>
           <li><a href="#">FAQ</a></li>
-          <li><a href="public/login.html">Login / Daftar</a></li>
+
         </ul>
       </div>
       <div class="footer-col">
@@ -2109,7 +2106,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   // ── Pill HTML ──────────────────────────────────────────────────────────────
   function pillHtml(status, showLabel) {
     const lbl = { available:'Tersedia', booked:'Dipesan', maintenance:'Perawatan', closed:'Tutup' };
-    const clickable = status === 'available' ? ' onclick="window.location.href=\'public/login.html\'"' : '';
+    const clickable = '';
     return `<span class="sched-pill ${status}"${clickable} title="${lbl[status]}">
       <span class="sp-dot"></span>${showLabel ? lbl[status] : ''}
     </span>`;
@@ -2322,42 +2319,8 @@ loadFields();
 // Also reveal static sections on initial load (hero already visible, trigger rest)
 window.addEventListener('load', () => initReveal());
 
-// ── Auth State: update nav buttons based on active session ───────────────────
-(async function checkAuthState() {
-  try {
-    // Use the same storageKey as login.html so we read the same session
-    const authClient = window.supabase?.createClient(
-      CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY,
-      { auth: { storageKey: 'sipelor-user-session', persistSession: true } }
-    );
-    if (!authClient) return;
+// ── Auth checks removed from public homepage ─────────────────────────────────
 
-    const { data: { session } } = await authClient.auth.getSession();
-    if (!session) return; // not logged in — keep default Masuk/Daftar buttons
-
-    // User IS logged in — swap buttons
-    const masuk  = document.getElementById('btn-masuk');
-    const daftar = document.getElementById('btn-daftar');
-    if (masuk) {
-      masuk.href        = 'pesan.html';
-      masuk.textContent = '📋 Pesan Sekarang';
-      masuk.style.background = 'var(--emerald)';
-      masuk.style.color      = '#fff';
-    }
-    if (daftar) {
-      daftar.textContent      = 'Keluar';
-      daftar.style.background = 'var(--gray-100)';
-      daftar.style.color      = 'var(--gray-700)';
-      daftar.removeAttribute('href');
-      daftar.style.cursor = 'pointer';
-      daftar.addEventListener('click', async (e) => {
-        e.preventDefault();
-        try { await authClient.auth.signOut(); } catch (_) {}
-        window.location.reload();
-      });
-    }
-  } catch (_) { /* session check optional — fail silently */ }
-})();
 </script>
 </body>
 </html>
