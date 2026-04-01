@@ -1,0 +1,23 @@
+﻿SIPELOR BEDAS - Admin Panel
+============================
+Build Time  : 04 March 2026 09:12:34
+Source      : website/admin/
+Supabase URL: https://gbhprmibbcqfwjgrkfzq.supabase.co
+Demo Mode   : False
+
+CARA DEPLOY:
+1. Upload seluruh isi folder ini ke web server / hosting
+2. Arahkan domain ke file index.html (entry point)
+3. Pastikan SUPABASE_URL dan SUPABASE_ANON_KEY sudah benar di js/config.js
+4. Aktifkan RLS di semua tabel Supabase
+
+HOSTING YANG DIREKOMENDASIKAN:
+- Netlify  : drag-and-drop folder ke netlify.com/drop
+- Vercel   : vercel deploy --prod (di folder dist/admin)
+- cPanel   : upload ZIP ke File Manager, extract di public_html/admin
+- Nginx    : copy folder ke /var/www/html/admin
+
+CATATAN KEAMANAN:
+- anon key aman diekspos di browser (dilindungi RLS Supabase)
+- Jangan pernah masukkan service_role key di frontend
+- Pastikan RLS aktif di tabel: profiles, bookings, fields, payments

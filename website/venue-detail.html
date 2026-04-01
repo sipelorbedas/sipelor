@@ -1,0 +1,1278 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Lapangan — SIPELOR BEDAS</title>
+  <meta name="description" content="Detail dan pemesanan lapangan olahraga SIPELOR BEDAS. DISPORA Kabupaten Bandung." />
+  <link rel="icon" href="public/images/sipelor.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --navy:          #0A1628;
+  --navy-mid:      #132136;
+  --navy-light:    #1E3A5F;
+  --emerald:       #00693E;
+  --emerald-mid:   #059669;
+  --emerald-light: #34D399;
+  --emerald-pale:  #ECFDF5;
+  --gold:          #D97706;
+  --gold-mid:      #F59E0B;
+  --gold-light:    #FCD34D;
+  --gold-pale:     #FFFBEB;
+  --white:         #FFFFFF;
+  --surface:       #F8FAFB;
+  --gray-100:      #F3F4F6;
+  --gray-200:      #E5E7EB;
+  --gray-400:      #9CA3AF;
+  --gray-500:      #6B7280;
+  --gray-700:      #374151;
+  --gray-900:      #111827;
+
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,.14);
+  --shadow-em:  0 8px 24px rgba(0,105,62,.22);
+  --shadow-gd:  0 8px 24px rgba(217,119,6,.30);
+
+  --transition: all .25s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100vw; }
+body { font-family: var(--font-body); background: var(--surface); color: var(--gray-900); line-height: 1.6; overflow-x: hidden; max-width: 100vw; }
+img { display: block; max-width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--radius-sm);
+  font-family: var(--font-head); font-weight: 600; font-size: .9rem;
+  cursor: pointer; border: none; transition: var(--transition); white-space: nowrap;
+}
+.btn-emerald { background: var(--emerald); color: var(--white); box-shadow: var(--shadow-em); }
+.btn-emerald:hover { background: #00562f; transform: translateY(-1px); }
+.btn-outline-emerald { background: transparent; color: var(--emerald); border: 1.5px solid var(--emerald); }
+.btn-outline-emerald:hover { background: var(--emerald-pale); }
+
+/* ─── TOP BAR ─── */
+.topbar { background: var(--navy); padding: 8px 0; font-size: .78rem; overflow: hidden; }
+.topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; }
+.topbar-features { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; min-width: 0; overflow: hidden; }
+.topbar-feature { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.70); white-space: nowrap; }
+.topbar-feature .dot { width: 6px; height: 6px; background: var(--emerald-light); border-radius: 50%; flex-shrink: 0; }
+.topbar-right { display: flex; align-items: center; gap: 16px; color: rgba(255,255,255,.55); flex-shrink: 0; white-space: nowrap; }
+.topbar-right a { color: rgba(255,255,255,.65); transition: var(--transition); }
+.topbar-right a:hover { color: var(--gold-light); }
+
+/* ─── NAVBAR ─── */
+.navbar {
+  position: sticky; top: 0; z-index: 500;
+  background: var(--white); border-bottom: 1px solid var(--gray-200);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); overflow: hidden;
+}
+.nav-inner { display: flex; align-items: center; gap: 8px; height: 64px; min-width: 0; width: 100%; }
+.nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-right: 16px; min-width: 0; }
+.nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; overflow: hidden; }
+.nav-logo-text .brand { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: var(--emerald); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-logo-text .tagline { font-size: .6rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+.nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; flex-shrink: 0; }
+
+/* ─── BREADCRUMB ─── */
+.breadcrumb-bar {
+  background: var(--white); border-bottom: 1px solid var(--gray-100);
+  padding: 14px 0;
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .82rem; color: var(--gray-400);
+}
+.breadcrumb a { color: var(--emerald); }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb .sep { color: var(--gray-300); }
+.breadcrumb .cur { color: var(--gray-700); font-weight: 500; }
+
+/* ─── MAIN CONTENT ─── */
+.detail-wrap {
+  max-width: 1200px; margin: 0 auto; padding: 36px 24px 80px; width: 100%; overflow: hidden;
+}
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 320px; gap: 32px; align-items: start; min-width: 0;
+}
+.detail-grid > * { min-width: 0; overflow: hidden; }
+
+/* ─── GALLERY ─── */
+.gallery-main {
+  border-radius: var(--radius-lg); overflow: hidden;
+  aspect-ratio: 16/8; background: var(--navy-mid);
+  position: relative; margin-bottom: 10px; width: 100%;
+}
+.gallery-main img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.gallery-badge {
+  position: absolute; top: 16px; left: 16px;
+  background: var(--emerald); color: var(--white);
+  font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 99px;
+}
+.gallery-status {
+  position: absolute; top: 16px; right: 16px;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  padding: 5px 12px; border-radius: 99px; backdrop-filter: blur(6px);
+}
+.gallery-status.available { background: rgba(0,105,62,.88); color: var(--white); }
+.gallery-status.booked    { background: rgba(185,28,28,.85); color: var(--white); }
+.gallery-status.maintenance { background: rgba(180,83,9,.85); color: var(--white); }
+
+/* ─── VENUE INFO CARD ─── */
+.vc {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); overflow: hidden; margin-bottom: 20px;
+}
+.vc-header {
+  padding: 22px 24px 0;
+}
+.vc-type-tag {
+  display: inline-block; font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--emerald);
+  background: var(--emerald-pale); padding: 3px 10px; border-radius: 99px; margin-bottom: 10px;
+}
+.vc-name {
+  font-family: var(--font-head); font-size: 1.9rem; font-weight: 800;
+  color: var(--gray-900); line-height: 1.1; margin-bottom: 8px;
+}
+.vc-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.vc-stars { color: var(--gold-mid); font-size: 1rem; letter-spacing: 2px; }
+.vc-rating-lbl { font-size: .8rem; color: var(--gray-400); }
+
+.vc-section { padding: 20px 24px; border-top: 1px solid var(--gray-100); }
+.vc-section-title {
+  font-family: var(--font-head); font-size: .68rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 12px;
+}
+.vc-desc { font-size: .9rem; color: var(--gray-500); line-height: 1.80; }
+
+/* Info grid */
+.vc-info-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.vc-info-item {
+  background: var(--surface); border: 1px solid var(--gray-100);
+  border-radius: var(--radius-md); padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.vc-info-icon { font-size: 1.1rem; }
+.vc-info-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gray-400); font-weight: 600; }
+.vc-info-value { font-size: .9rem; color: var(--gray-900); font-weight: 600; line-height: 1.3; }
+
+/* Facilities */
+.vc-facs { display: flex; gap: 8px; flex-wrap: wrap; }
+.vc-fac {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .8rem; font-weight: 500; color: var(--emerald);
+  background: var(--emerald-pale); border: 1px solid rgba(0,105,62,.15);
+  padding: 6px 14px; border-radius: 99px;
+}
+
+/* ─── BOOKING SIDEBAR ─── */
+.book-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 2px solid var(--emerald); overflow: hidden;
+  box-shadow: var(--shadow-em); position: sticky; top: 80px; width: 100%;
+}
+.book-card-header {
+  background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-mid) 100%);
+  padding: 20px 22px; text-align: center;
+}
+.book-card-header h3 {
+  font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
+  color: var(--white); margin-bottom: 3px;
+}
+.book-card-header p { font-size: .72rem; color: rgba(255,255,255,.70); }
+
+.book-card-body { padding: 22px; width: 100%; overflow: hidden; }
+.book-price-row { text-align: center; margin-bottom: 6px; }
+.book-price {
+  font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--emerald);
+  word-break: break-word;
+}
+.book-price-unit { font-size: .75rem; color: var(--gray-400); text-align: center; margin-bottom: 16px; }
+
+.book-status {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  font-size: .8rem; font-weight: 600; padding: 8px 14px;
+  border-radius: 99px; margin-bottom: 18px;
+}
+.book-status.available { background: var(--emerald-pale); color: var(--emerald); }
+.book-status.booked    { background: #fee2e2; color: #b91c1c; }
+.book-status.maintenance { background: var(--gold-pale); color: var(--gold); }
+.book-status .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+.book-btn {
+  display: block; width: 100%; padding: 14px;
+  background: var(--gold); color: var(--white);
+  font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+  border: none; border-radius: var(--radius-sm); cursor: pointer;
+  text-align: center; transition: var(--transition); box-shadow: var(--shadow-gd);
+  margin-bottom: 18px;
+}
+.book-btn:hover { background: #b45309; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(217,119,6,.38); }
+.book-btn:disabled {
+  background: var(--gray-200); color: var(--gray-400);
+  box-shadow: none; cursor: not-allowed; transform: none;
+}
+
+.book-divider { height: 1px; background: var(--gray-100); margin-bottom: 16px; }
+.book-meta { display: flex; flex-direction: column; gap: 9px; }
+.book-meta-row {
+  display: flex; align-items: center; gap: 9px;
+  font-size: .78rem; color: var(--gray-500);
+}
+.book-meta-row .mi { color: var(--emerald); font-size: .95rem; flex-shrink: 0; }
+
+.book-share { margin-top: 18px; }
+.book-share-lbl {
+  font-size: .65rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--gray-400); font-weight: 600; margin-bottom: 10px;
+}
+.book-share-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.share-btn {
+  flex: 1; min-width: 100px; padding: 8px 6px; border-radius: var(--radius-sm);
+  font-size: .72rem; font-weight: 600; border: 1.5px solid var(--gray-200);
+  background: var(--white); color: var(--gray-600); cursor: pointer;
+  transition: var(--transition); text-align: center;
+}
+.share-btn:hover { border-color: var(--emerald); color: var(--emerald); background: var(--emerald-pale); }
+
+/* ─── SKELETON ─── */
+.skel {
+  background: var(--gray-100); border-radius: var(--radius-lg);
+  position: relative; overflow: hidden;
+}
+.skel::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+/* ─── FOOTER ─── */
+.footer { background: var(--navy); padding: 48px 0 0; margin-top: 0; }
+.footer-mini-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,.08);
+  gap: 24px; flex-wrap: wrap;
+}
+.footer-mini-brand { display: flex; align-items: center; gap: 10px; }
+.footer-mini-brand img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+.footer-mini-brand-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white); }
+.footer-mini-brand-sub  { font-size: .6rem; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .06em; }
+.footer-mini-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-mini-links a { font-size: .82rem; color: rgba(255,255,255,.45); transition: var(--transition); }
+.footer-mini-links a:hover { color: var(--emerald-light); }
+.footer-mini-copy { padding: 16px 0; font-size: .72rem; color: rgba(255,255,255,.22); text-align: center; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .detail-grid { grid-template-columns: 1fr 300px; gap: 24px; }
+}
+
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; gap: 20px; }
+  .book-card { position: static; width: 100%; }
+  .topbar-features { display: none; }
+}
+
+@media (max-width: 768px) {
+  /* Topbar */
+  .topbar-right span { display: none; }
+  /* Navbar: hide Masuk/Daftar, keep only Kembali */
+  .nav-right .btn:not(:first-child) { display: none; }
+  .nav-right .btn:first-child { font-size: .8rem; padding: 7px 12px; white-space: nowrap; }
+  /* Logo text condensed */
+  .nav-logo-text .tagline { display: none; }
+  /* Detail wrap */
+  .detail-wrap { padding: 16px 16px 60px; }
+  /* Gallery */
+  .gallery-main { aspect-ratio: 16/9; }
+  /* Venue card */
+  .vc-header { padding: 16px 16px 0; }
+  .vc-section { padding: 16px; }
+  /* Schedule */
+  .sched-section-header { padding: 16px 16px 0; }
+  .sched-inner { padding: 0 12px 16px; }
+  /* Booking card body */
+  .book-card-body { padding: 16px; }
+  /* Book meta rows clip */
+  .book-meta-row { font-size: .74rem; }
+  .book-price { font-size: 1.6rem; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 12px; }
+  .vc-info-grid { grid-template-columns: 1fr 1fr; }
+  .vc-name { font-size: 1.3rem; }
+  .vc-desc { font-size: .85rem; }
+  /* Footer */
+  .footer-mini-links { flex-direction: column; gap: 10px; }
+  .footer-mini-inner { flex-direction: column; align-items: flex-start; }
+  /* Breadcrumb */
+  .breadcrumb { flex-wrap: wrap; gap: 4px; font-size: .78rem; }
+  /* Book card */
+  .book-card-header { padding: 16px; }
+  .book-card-header h3 { font-size: .95rem; }
+  .book-btn { font-size: .9rem; padding: 12px; }
+}
+
+@media (max-width: 420px) {
+  .container { padding: 0 10px; }
+  .detail-wrap { padding: 12px 10px 48px; }
+  .vc-info-grid { grid-template-columns: 1fr; }
+  .vc-name { font-size: 1.15rem; }
+  .book-price { font-size: 1.4rem; }
+  /* Topbar fully hidden */
+  .topbar { display: none; }
+  /* Navbar compact */
+  .nav-inner { height: 56px; }
+  .nav-logo img { width: 30px; height: 30px; }
+  .nav-logo-text .brand { font-size: .9rem; }
+  /* Gallery tighter */
+  .gallery-main { aspect-ratio: 4/3; border-radius: var(--radius-md); }
+  /* Schedule tabs scroll */
+  .sched-view-tabs { overflow-x: auto; max-width: 100%; }
+  .sched-tab { padding: 6px 12px; font-size: .75rem; white-space: nowrap; }
+  /* Share buttons stacked */
+  .book-share-btns { flex-direction: column; }
+  .share-btn { min-width: auto; }
+}
+
+/* ─── JADWAL LAPANGAN ─── */
+.sched-section {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200); overflow: hidden;
+  margin-top: 20px; box-shadow: var(--shadow-sm); width: 100%;
+}
+.sched-section-header {
+  padding: 20px 24px 0;
+}
+.sched-section-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .10em; text-transform: uppercase;
+  color: var(--emerald); background: var(--emerald-pale);
+  border: 1px solid rgba(0,105,62,.20); padding: 4px 12px; border-radius: 99px;
+  margin-bottom: 10px;
+}
+.sched-section-title {
+  font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
+  color: var(--gray-900); margin-bottom: 16px;
+}
+.sched-inner { padding: 0 24px 24px; }
+
+.sched-top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.sched-view-tabs {
+  display: flex; gap: 2px; background: var(--gray-100);
+  border-radius: var(--radius-sm); padding: 3px;
+}
+.sched-tab {
+  padding: 6px 18px; border-radius: var(--radius-sm);
+  font-size: .8rem; font-weight: 600; cursor: pointer;
+  border: none; background: transparent; font-family: var(--font-body);
+  color: var(--gray-500); transition: var(--transition);
+}
+.sched-tab.active { background: var(--white); color: var(--emerald); box-shadow: var(--shadow-sm); }
+.sched-tab:hover:not(.active) { color: var(--gray-700); }
+
+.sched-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.sched-nav-group { display: flex; align-items: center; gap: 8px; }
+.sched-nav-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: .82rem; transition: var(--transition); color: var(--gray-700);
+  box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.sched-nav-btn:hover { background: var(--emerald); border-color: var(--emerald); color: var(--white); }
+.sched-date-range {
+  font-family: var(--font-head); font-size: .95rem; font-weight: 700;
+  color: var(--gray-900); min-width: 200px; text-align: center;
+}
+.sched-today-btn {
+  padding: 7px 16px; font-size: .78rem; border-radius: var(--radius-sm);
+  background: transparent; border: 1.5px solid var(--emerald); color: var(--emerald);
+  font-family: var(--font-head); font-weight: 600; cursor: pointer; transition: var(--transition);
+  white-space: nowrap;
+}
+.sched-today-btn:hover { background: var(--emerald-pale); }
+
+.sched-grid-wrap {
+  overflow-x: auto; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+  scrollbar-color: var(--gray-200) transparent;
+}
+.sched-grid-wrap::-webkit-scrollbar { height: 4px; }
+.sched-grid-wrap::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
+
+.sched-table { width: 100%; min-width: 600px; border-collapse: collapse; table-layout: fixed; }
+
+.sched-th-time {
+  width: 100px; padding: 12px 8px; text-align: center;
+  background: var(--navy); color: rgba(255,255,255,.50);
+  font-family: var(--font-head); font-size: .65rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,.08);
+  position: sticky; left: 0; z-index: 2;
+}
+.sched-th-day {
+  padding: 10px 6px; text-align: center;
+  background: var(--navy); border-right: 1px solid rgba(255,255,255,.08);
+}
+.sched-th-day.today { background: var(--emerald); }
+.sched-th-day .day-name {
+  font-family: var(--font-head); font-size: .68rem; font-weight: 700;
+  color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .05em;
+}
+.sched-th-day.today .day-name { color: rgba(255,255,255,.80); }
+.sched-th-day .day-num {
+  font-family: var(--font-head); font-size: 1.05rem; font-weight: 800;
+  color: var(--white); line-height: 1.1; margin-top: 2px;
+}
+.sched-td-time {
+  padding: 9px 8px; text-align: center; white-space: nowrap;
+  background: var(--surface); border-right: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-100);
+  font-size: .70rem; font-weight: 700; color: var(--gray-500);
+  font-family: var(--font-head);
+  position: sticky; left: 0; z-index: 1;
+}
+.sched-td-slot {
+  padding: 4px; text-align: center;
+  border-right: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);
+  vertical-align: middle;
+}
+.sched-td-slot:last-child { border-right: none; }
+
+.sched-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  width: calc(100% - 4px); padding: 5px 4px; border-radius: var(--radius-sm);
+  font-size: .65rem; font-weight: 700; cursor: pointer;
+  transition: var(--transition); border: 1px solid transparent; white-space: nowrap;
+}
+.sched-pill .sp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.sched-pill.available {
+  background: var(--emerald-pale); color: var(--emerald); border-color: rgba(0,105,62,.18);
+}
+.sched-pill.available:hover {
+  background: var(--emerald); color: var(--white); transform: scale(1.05);
+}
+.sched-pill.available .sp-dot { background: var(--emerald); }
+.sched-pill.booked {
+  background: #fee2e2; color: #b91c1c; border-color: rgba(185,28,28,.14);
+  cursor: not-allowed;
+}
+.sched-pill.booked .sp-dot { background: #ef4444; }
+.sched-pill.maintenance {
+  background: var(--gold-pale); color: var(--gold); border-color: rgba(217,119,6,.18);
+  cursor: not-allowed;
+}
+.sched-pill.maintenance .sp-dot { background: var(--gold); }
+.sched-pill.closed {
+  background: var(--gray-100); color: var(--gray-300);
+  border-color: var(--gray-200); cursor: default;
+}
+.sched-pill.closed .sp-dot { background: var(--gray-300); }
+
+/* Harian table */
+.sched-harian-table { width: 100%; min-width: 340px; border-collapse: collapse; }
+.sched-harian-head {
+  padding: 12px 16px; text-align: left;
+  background: var(--navy); color: var(--white);
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+.sched-harian-head.time-col { width: 120px; color: rgba(255,255,255,.45); }
+.sched-harian-td {
+  padding: 8px 14px; border-bottom: 1px solid var(--gray-100);
+  border-right: 1px solid var(--gray-100);
+}
+.sched-harian-td.time-td {
+  font-size: .72rem; font-weight: 700; color: var(--gray-500);
+  background: var(--surface); font-family: var(--font-head); white-space: nowrap;
+  text-align: center;
+}
+.sched-harian-td:last-child { border-right: none; }
+
+/* Monthly */
+.sched-month-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 12px;
+}
+.sched-month-dayname {
+  padding: 8px 4px; text-align: center;
+  font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray-500); font-family: var(--font-head);
+}
+.sched-month-cell {
+  min-height: 64px; padding: 6px; border: 1px solid var(--gray-100);
+  border-radius: var(--radius-sm); background: var(--white); position: relative;
+}
+.sched-month-cell.other-month { background: var(--surface); opacity: .4; }
+.sched-month-cell.today-cell { border-color: var(--emerald); background: var(--emerald-pale); }
+.sched-month-num {
+  font-family: var(--font-head); font-size: .78rem; font-weight: 700; color: var(--gray-700);
+  margin-bottom: 4px;
+}
+.sched-month-cell.today-cell .sched-month-num { color: var(--emerald); }
+.sched-month-dots { display: flex; flex-wrap: wrap; gap: 2px; }
+.sched-month-dot { width: 6px; height: 6px; border-radius: 50%; }
+.sched-month-dot.available { background: var(--emerald); }
+.sched-month-dot.booked    { background: #ef4444; }
+
+/* Legend */
+.sched-legend {
+  display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 14px;
+}
+.sched-legend-item { display: flex; align-items: center; gap: 6px; font-size: .76rem; color: var(--gray-500); }
+.sched-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .sched-top-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sched-controls { flex-direction: column; align-items: flex-start; }
+  .sched-date-range { min-width: auto; font-size: .85rem; }
+  .sched-nav-group { width: 100%; }
+  .sched-legend { gap: 10px; }
+  .sched-legend-item { font-size: .72rem; }
+  .sched-month-cell { min-height: 48px; padding: 4px; }
+  .sched-month-num { font-size: .7rem; }
+}
+@keyframes pulse {
+  0%,100% { opacity:1; } 50% { opacity:.3; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+}
+
+/* ─── NOT FOUND ─── */
+.not-found {
+  text-align: center; padding: 100px 24px;
+}
+.not-found .icon { font-size: 3rem; margin-bottom: 16px; opacity: .4; }
+.not-found h2 { font-family: var(--font-head); font-size: 1.5rem; color: var(--gray-700); margin-bottom: 8px; }
+.not-found p  { font-size: .9rem; color: var(--gray-400); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-features">
+        <div class="topbar-feature"><span class="dot"></span> Pemesanan Mudah</div>
+        <div class="topbar-feature"><span class="dot"></span> Pembayaran Aman</div>
+        <div class="topbar-feature"><span class="dot"></span> Jadwal Real-time</div>
+        <div class="topbar-feature"><span class="dot"></span> Lapangan Berkualitas</div>
+      </div>
+      <div class="topbar-right">
+        <span>DISPORA Kab. Bandung</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo">
+        <img src="public/images/sipelor.png" alt="SIPELOR BEDAS" width="36" height="36" />
+        <div class="nav-logo-text">
+          <span class="brand">SIPELOR BEDAS</span>
+          <span class="tagline">Dispora Kab. Bandung</span>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a href="home.html" class="btn" style="background:var(--gray-100);color:var(--gray-700);font-size:.85rem;padding:9px 18px;">← Kembali</a>
+        <a href="public/login.html" class="btn" style="background:var(--gray-100);color:var(--gray-700);font-size:.85rem;padding:9px 18px;">Masuk</a>
+        <a href="public/login.html" class="btn btn-emerald" style="font-size:.85rem;padding:9px 18px;">Daftar</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="home.html">Beranda</a>
+      <span class="sep">›</span>
+      <a href="home.html#lapangan">Lapangan</a>
+      <span class="sep">›</span>
+      <span class="cur" id="bc-name">Memuat…</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <!-- Skeleton while loading -->
+  <div id="skeleton-wrap" class="detail-wrap">
+    <div class="detail-grid">
+      <div>
+        <div class="skel" style="aspect-ratio:16/8;margin-bottom:20px;"></div>
+        <div class="skel" style="height:420px;"></div>
+      </div>
+      <div>
+        <div class="skel" style="height:480px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actual content (hidden until loaded) -->
+  <div id="detail-content" style="display:none;">
+    <div class="detail-wrap">
+      <div class="detail-grid">
+        <!-- Left -->
+        <div>
+          <!-- Gallery -->
+          <div class="gallery-main" id="gallery-main">
+            <img id="detail-img" src="" alt="" />
+            <div class="gallery-badge" id="detail-badge"></div>
+            <div class="gallery-status" id="detail-status-badge"></div>
+          </div>
+
+          <!-- Info card -->
+          <div class="vc">
+            <div class="vc-header">
+              <div class="vc-type-tag" id="detail-type-tag"></div>
+              <div class="vc-name" id="detail-name"></div>
+              <div class="vc-rating">
+                <span class="vc-stars">★★★★★</span>
+                <span class="vc-rating-lbl">Lapangan Resmi DISPORA Kab. Bandung</span>
+              </div>
+            </div>
+
+            <div class="vc-section">
+              <div class="vc-section-title">Deskripsi</div>
+              <p class="vc-desc" id="detail-desc"></p>
+            </div>
+
+            <div class="vc-section">
+              <div class="vc-section-title">Informasi Lapangan</div>
+              <div class="vc-info-grid" id="detail-info-grid"></div>
+            </div>
+
+            <div class="vc-section" id="detail-fac-section">
+              <div class="vc-section-title">Fasilitas</div>
+              <div class="vc-facs" id="detail-facs"></div>
+            </div>
+          </div>
+
+          <!-- ── Jadwal Lapangan ── -->
+          <div class="sched-section">
+            <div class="sched-section-header">
+              <div class="sched-section-eyebrow">📅 Jadwal</div>
+              <div class="sched-section-title">Daftar Jadwal Lapangan</div>
+            </div>
+            <div class="sched-inner">
+              <!-- View tabs + navigation -->
+              <div class="sched-top-bar">
+                <div class="sched-view-tabs" id="sched-view-tabs">
+                  <button class="sched-tab active" data-view="mingguan">Mingguan</button>
+                  <button class="sched-tab" data-view="harian">Harian</button>
+                  <button class="sched-tab" data-view="bulanan">Bulanan</button>
+                </div>
+                <button class="sched-today-btn" id="sched-today">📅 Hari Ini</button>
+              </div>
+              <div class="sched-controls">
+                <div class="sched-nav-group">
+                  <button class="sched-nav-btn" id="sched-prev">&#8592;</button>
+                  <span class="sched-date-range" id="sched-date-range">—</span>
+                  <button class="sched-nav-btn" id="sched-next">&#8594;</button>
+                </div>
+              </div>
+              <!-- Grid -->
+              <div class="sched-grid-wrap" id="sched-grid-wrap">
+                <div style="height:140px;background:var(--gray-100);border-radius:var(--radius-md);"></div>
+              </div>
+              <!-- Legend -->
+              <div class="sched-legend">
+                <div class="sched-legend-item">
+                  <div class="sched-legend-dot" style="background:var(--emerald-pale);border:1px solid rgba(0,105,62,.25);"></div> Tersedia
+                </div>
+                <div class="sched-legend-item">
+                  <div class="sched-legend-dot" style="background:#fee2e2;border:1px solid rgba(185,28,28,.25);"></div> Dipesan
+                </div>
+                <div class="sched-legend-item">
+                  <div class="sched-legend-dot" style="background:var(--gold-pale);border:1px solid rgba(217,119,6,.25);"></div> Perawatan
+                </div>
+                <div class="sched-legend-item">
+                  <div class="sched-legend-dot" style="background:var(--gray-100);border:1px solid var(--gray-200);"></div> Tutup
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: booking sidebar -->
+        <div>
+          <div class="book-card">
+            <div class="book-card-header">
+              <h3>🏅 Pesan Lapangan Ini</h3>
+              <p>Konfirmasi instan · Pembayaran aman</p>
+            </div>
+            <div class="book-card-body">
+              <div class="book-price-row">
+                <div class="book-price" id="book-price">—</div>
+              </div>
+              <div class="book-price-unit" id="book-price-unit"></div>
+              <div class="book-status" id="book-status"></div>
+              <button class="book-btn" id="book-btn" onclick="window.location.href='pesan.html?id='+encodeURIComponent(fieldId)">
+                🏅 Pesan Sekarang
+              </button>
+              <div class="book-divider"></div>
+              <div class="book-meta">
+                <div class="book-meta-row"><span class="mi">⚡</span> Konfirmasi instan via email</div>
+                <div class="book-meta-row"><span class="mi">🔒</span> Pembayaran 100% aman</div>
+                <div class="book-meta-row"><span class="mi">📱</span> Tiket digital langsung</div>
+                <div class="book-meta-row"><span class="mi">🏛️</span> Dikelola resmi DISPORA</div>
+                <div class="book-meta-row"><span class="mi">📍</span> Kabupaten Bandung</div>
+              </div>
+              <div class="book-share">
+                <div class="book-share-lbl">Bagikan Lapangan</div>
+                <div class="book-share-btns">
+                  <button class="share-btn" onclick="shareVenue('whatsapp')">💬 WhatsApp</button>
+                  <button class="share-btn" onclick="shareVenue('copy')">🔗 Salin Link</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Not found state -->
+  <div id="not-found" style="display:none;">
+    <div class="not-found">
+      <div class="icon">🏟️</div>
+      <h2>Lapangan Tidak Ditemukan</h2>
+      <p>Lapangan yang Anda cari tidak tersedia atau sudah tidak aktif.</p>
+      <a href="home.html#lapangan" class="btn btn-emerald">← Lihat Semua Lapangan</a>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-mini-inner">
+      <div class="footer-mini-brand">
+        <img src="public/images/sipelor.png" alt="SIPELOR" width="36" height="36" />
+        <div>
+          <div class="footer-mini-brand-name">SIPELOR BEDAS</div>
+          <div class="footer-mini-brand-sub">DISPORA Kab. Bandung</div>
+        </div>
+      </div>
+      <div class="footer-mini-links">
+        <a href="home.html">Beranda</a>
+        <a href="home.html#tentang">Tentang</a>
+        <a href="home.html#cara-booking">Cara Booking</a>
+        <a href="home.html#kontak">Kontak</a>
+        <a href="public/login.html">Masuk / Daftar</a>
+      </div>
+    </div>
+    <div class="footer-mini-copy">© 2025 SIPELOR BEDAS — Dinas Pemuda dan Olahraga Kabupaten Bandung.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+
+const CFG = {
+  SUPABASE_URL:      'https://gbhprmibbcqfwjgrkfzq.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiaHBybWliYmNxZndqZ3JrZnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MDgwNTcsImV4cCI6MjA4NDQ4NDA1N30.vMuV0A4NEC5IhA34TrVmJGBtB4UerOt2Dk8fe4uxwrY',
+};
+
+let supabaseClient = null;
+try { supabaseClient = window.supabase?.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY); }
+catch(e) { console.warn('[SIPELOR] Supabase init error:', e.message); }
+
+const VENUE_META = {
+  'Sepak Bola': { emoji:'⚽', img:'public/images/stadium_jalak_harupat.jpg', color:'#6A725A', tag:'Unggulan' },
+  'Futsal':     { emoji:'🥅', img:'https://images.pexels.com/photos/13890306/pexels-photo-13890306.jpeg?auto=compress&cs=tinysrgb&w=800', color:'#4D6C43', tag:'Populer' },
+  'Badminton':  { emoji:'🏸', img:'https://picsum.photos/seed/badminton/800/450', color:'#4A5568', tag:'Indoor' },
+  'Volly':      { emoji:'🏐', img:'https://picsum.photos/seed/volly/800/450', color:'#5C7A3E', tag:'Outdoor' },
+  'Bola Voli':  { emoji:'🏐', img:'https://picsum.photos/seed/volly/800/450', color:'#5C7A3E', tag:'Outdoor' },
+  'Basket':     { emoji:'🏀', img:'https://picsum.photos/seed/basket/800/450', color:'#6B4226', tag:'Serbaguna' },
+  'Tenis':      { emoji:'🎾', img:'https://picsum.photos/seed/tenis/800/450', color:'#3D6B4F', tag:'Premium' },
+};
+const DEFAULT_META = { emoji:'🏟️', img:'https://picsum.photos/seed/lapangan/800/450', color:'#4A5568', tag:'Lapangan' };
+
+const STATUS_CFG = {
+  available:   { label:'Tersedia',  cls:'available' },
+  booked:      { label:'Penuh',     cls:'booked' },
+  maintenance: { label:'Perawatan', cls:'maintenance' },
+};
+
+function fmtPrice(p) {
+  if (!p) return null;
+  return new Intl.NumberFormat('id-ID',{ style:'currency', currency:'IDR', maximumFractionDigits:0 }).format(p).replace('IDR','Rp');
+}
+function getMeta(t) { return VENUE_META[t] || DEFAULT_META; }
+function getImg(f) {
+  if (Array.isArray(f.image_urls) && f.image_urls[0]) return f.image_urls[0];
+  if (typeof f.image_urls === 'string' && f.image_urls.startsWith('http')) return f.image_urls;
+  return getMeta(f.venue_type).img;
+}
+
+function getMock() {
+  return [
+    { id:'f1', venue_name:'GOR Sabilulungan', venue_type:'Futsal',    area:'Lantai 1', price_per_hour:80000,  satuan:'per jam',          status:'available',   image_urls:[], ukuran_lapangan:'16.8×24.95m', kapasitas:'14 orang', tempat_parkir:true, mushola:true, cctv:true, ruang_tunggu:true, ruang_ganti:true },
+    { id:'f2', venue_name:'GOR Sabilulungan', venue_type:'Badminton', area:'Hall B',   price_per_hour:60000,  satuan:'per jam',          status:'available',   image_urls:[], kapasitas:'8 orang',  tempat_parkir:true, mushola:true, cctv:true },
+    { id:'f3', venue_name:'Arena Tenis DISPORA', venue_type:'Tenis',  area:'Court A',  price_per_hour:100000, satuan:'per jam',          status:'maintenance', image_urls:[], kapasitas:'4 orang',  cctv:true },
+    { id:'f4', venue_name:'GOR Volly Bedas',  venue_type:'Volly',    area:'Utama',    price_per_hour:90000,  satuan:'per pertandingan', status:'available',   image_urls:[], kapasitas:'12 orang', tempat_parkir:true, cctv:true },
+    { id:'f5', venue_name:'Lapangan Basket',  venue_type:'Basket',   area:'Outdoor',  price_per_hour:70000,  satuan:'per sesi',         status:'available',   image_urls:[], kapasitas:'10 orang' },
+    { id:'f6', venue_name:'GOR Bulu Tangkis', venue_type:'Badminton', area:'Hall C',  price_per_hour:55000,  satuan:'per jam',          status:'booked',      image_urls:[], kapasitas:'6 orang',  mushola:true },
+  ];
+}
+
+// ── Read ID from URL ──────────────────────────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const fieldId = params.get('id');
+
+async function loadAndRender() {
+  let field = null;
+
+  try {
+    if (supabaseClient && fieldId) {
+      const { data, error } = await supabaseClient.from('fields').select('*').eq('id', fieldId).single();
+      if (!error && data) field = data;
+    }
+    if (!field) {
+      const mock = getMock();
+      field = mock.find(f => f.id === fieldId) || mock[0];
+    }
+  } catch(e) {
+    console.warn('[SIPELOR] load error:', e.message);
+    const mock = getMock();
+    field = mock.find(f => f.id === fieldId) || mock[0];
+  }
+
+  if (!field) {
+    document.getElementById('skeleton-wrap').style.display = 'none';
+    document.getElementById('not-found').style.display = 'block';
+    return;
+  }
+
+  renderDetail(field);
+}
+
+function renderDetail(f) {
+  const meta   = getMeta(f.venue_type);
+  const status = STATUS_CFG[f.status] || STATUS_CFG.available;
+  const price  = fmtPrice(f.price_per_hour);
+  const satuan = f.satuan || 'per jam';
+  const img    = getImg(f);
+
+  // Page title
+  document.title = `${f.venue_name} — SIPELOR BEDAS`;
+
+  // Breadcrumb
+  document.getElementById('bc-name').textContent = f.venue_name;
+
+  // Gallery
+  document.getElementById('detail-img').src = img;
+  document.getElementById('detail-img').alt = f.venue_name;
+  document.getElementById('detail-badge').textContent = `${meta.emoji} ${meta.tag}`;
+  const statusBadge = document.getElementById('detail-status-badge');
+  statusBadge.className = `gallery-status ${f.status || 'available'}`;
+  statusBadge.textContent = `● ${status.label}`;
+
+  // Type tag & name
+  document.getElementById('detail-type-tag').textContent = `${meta.emoji} ${f.venue_type}`;
+  document.getElementById('detail-name').textContent = f.venue_name;
+
+  // Description
+  const area = f.area ? ` area ${f.area}` : '';
+  const size = f.ukuran_lapangan ? ` dengan ukuran lapangan ${f.ukuran_lapangan}` : '';
+  const cap  = f.kapasitas ? ` dan kapasitas hingga ${f.kapasitas}` : '';
+  document.getElementById('detail-desc').textContent =
+    `${f.venue_name} adalah lapangan ${f.venue_type.toLowerCase()}${area}${size}${cap} yang dikelola resmi oleh DISPORA Kabupaten Bandung. Dirancang untuk mendukung aktivitas olahraga masyarakat Kabupaten Bandung dengan fasilitas lengkap, standar yang baik, dan sistem pemesanan digital yang mudah digunakan.`;
+
+  // Info grid
+  const infoItems = [
+    { icon:'🏟️', label:'Jenis Olahraga', value: f.venue_type },
+    { icon:'📐', label:'Ukuran',         value: f.ukuran_lapangan || '—' },
+    { icon:'👥', label:'Kapasitas',      value: f.kapasitas       || '—' },
+    { icon:'📍', label:'Area / Zona',    value: f.area            || 'Utama' },
+    { icon:'💰', label:'Harga Sewa',     value: price ? `${price} / ${satuan}` : '—' },
+    { icon:'🔖', label:'Status',         value: status.label },
+  ];
+  document.getElementById('detail-info-grid').innerHTML = infoItems.map(i => `
+    <div class="vc-info-item">
+      <div class="vc-info-icon">${i.icon}</div>
+      <div class="vc-info-label">${i.label}</div>
+      <div class="vc-info-value">${i.value}</div>
+    </div>`).join('');
+
+  // Facilities
+  const facs = [];
+  if (f.tempat_parkir) facs.push('🅿️ Parkir');
+  if (f.mushola)       facs.push('🕌 Mushola');
+  if (f.cctv)          facs.push('📷 CCTV');
+  if (f.ruang_ganti)   facs.push('🚿 Ruang Ganti');
+  if (f.ruang_tunggu)  facs.push('🪑 Ruang Tunggu');
+  const facsEl = document.getElementById('detail-facs');
+  if (facs.length) {
+    facsEl.innerHTML = facs.map(fc => `<span class="vc-fac">${fc}</span>`).join('');
+  } else {
+    document.getElementById('detail-fac-section').style.display = 'none';
+  }
+
+  // Sidebar
+  document.getElementById('book-price').textContent = price || '—';
+  document.getElementById('book-price-unit').textContent = `${satuan} · inkl. pajak`;
+  const bookStatus = document.getElementById('book-status');
+  bookStatus.className = `book-status ${f.status || 'available'}`;
+  bookStatus.innerHTML = `<span class="dot"></span> ${status.label}`;
+  const bookBtn = document.getElementById('book-btn');
+  if (f.status === 'maintenance') {
+    bookBtn.disabled = true;
+    bookBtn.textContent = '🔧 Sedang Perawatan';
+  } else if (f.status === 'booked') {
+    bookBtn.textContent = '⏳ Cek Ketersediaan';
+  } else {
+    bookBtn.textContent = '🏅 Pesan Sekarang';
+  }
+
+  // Store for share
+  window._currentVenue = f;
+
+  // Show
+  document.getElementById('skeleton-wrap').style.display = 'none';
+  document.getElementById('detail-content').style.display = 'block';
+
+  // Init schedule for this specific field
+  if (window.initSchedule) window.initSchedule(f.id);
+}
+
+window.shareVenue = function(type) {
+  const url = window.location.href;
+  const name = window._currentVenue?.venue_name || 'Lapangan';
+  if (type === 'whatsapp') {
+    window.open(`https://wa.me/?text=${encodeURIComponent(`Cek lapangan ${name} di SIPELOR BEDAS!\n${url}`)}`,'_blank');
+  } else {
+    navigator.clipboard?.writeText(url).then(() => {
+      const btn = document.querySelector('.share-btn:last-child');
+      if (btn) { btn.textContent = '✓ Tersalin!'; setTimeout(() => btn.textContent = '🔗 Salin Link', 2000); }
+    });
+  }
+};
+
+loadAndRender();
+
+// ══════════════════════════════════════════════════════════════════
+// SCHEDULE ENGINE — Real Supabase Integration + Anti-Double Booking
+// ══════════════════════════════════════════════════════════════════
+(function() {
+
+  const TIME_SLOTS  = [
+    '06:00 – 08:00','08:00 – 10:00','10:00 – 12:00','12:00 – 14:00',
+    '14:00 – 16:00','16:00 – 18:00','18:00 – 20:00','20:00 – 22:00',
+  ];
+  // Start hour of each slot, used to match booking start_time from DB
+  const SLOT_STARTS = ['06:00','08:00','10:00','12:00','14:00','16:00','18:00','20:00'];
+
+  const DAY_NAMES   = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni',
+                       'Juli','Agustus','September','Oktober','November','Desember'];
+
+  let schedView      = 'mingguan';
+  let schedAnchor    = new Date();
+  let currentFieldId = null;
+
+  // ── Real booking data cache (fetched from Supabase) ───────────────────────
+  // bookedMap: { 'yyyy-mm-dd|slotIdx': 'booked' | 'confirmed' }
+  let bookedMap      = {};
+  // cacheRange: { from: Date, to: Date } — what range is already fetched
+  let cacheRange     = null;
+  let dataSource     = 'mock'; // 'live' or 'mock'
+
+  function isoDate(d) { return d.toISOString().split('T')[0]; }
+  function isToday(d) {
+    const t = new Date();
+    return d.getDate()===t.getDate() && d.getMonth()===t.getMonth() && d.getFullYear()===t.getFullYear();
+  }
+
+  // ── Fetch bookings from Supabase for this field ───────────────────────────
+  // Requires "Public can view booked slots for schedule" RLS policy.
+  // See: database/FIX_SCHEDULE_PUBLIC_RLS.sql
+  async function fetchBookings(fieldId) {
+    if (!supabaseClient || !fieldId) return;
+
+    const today = new Date();
+    const fromDate = new Date(today);
+    fromDate.setDate(today.getDate() - 7);
+    const toDate = new Date(today);
+    toDate.setMonth(today.getMonth() + 3);
+
+    try {
+      const { data, error } = await supabaseClient
+        .from('bookings')
+        .select('booking_date, start_time, end_time, status')
+        .eq('field_id', fieldId)
+        .in('status', ['pending', 'confirmed'])
+        .gte('booking_date', isoDate(fromDate))
+        .lte('booking_date', isoDate(toDate));
+
+      if (error) {
+        console.warn('[SIPELOR] Jadwal: Supabase query gagal →', error.message,
+          '\n💡 Jalankan database/FIX_SCHEDULE_PUBLIC_RLS.sql di Supabase untuk mengaktifkan jadwal real-time.');
+        return;
+      }
+
+      bookedMap = {};
+      (data || []).forEach(b => {
+        // Match start_time like "06:00" or "06:00:00" to slot index
+        const startHH = String(b.start_time || '').substring(0, 5);
+        const slotIdx = SLOT_STARTS.indexOf(startHH);
+        if (slotIdx >= 0) {
+          bookedMap[`${b.booking_date}|${slotIdx}`] = b.status;
+        }
+      });
+
+      cacheRange = { from: fromDate, to: toDate };
+      dataSource = 'live';
+      console.info(`[SIPELOR] Jadwal real-time aktif: ${(data||[]).length} booking dimuat untuk lapangan ${fieldId}`);
+    } catch(e) {
+      console.warn('[SIPELOR] Jadwal fetch error:', e.message);
+    }
+  }
+
+  // ── Slot status: hanya dari data real Supabase ────────────────────────────
+  // Jika slot tidak ada di bookedMap → Tersedia (tidak ada mock)
+  function slotStatus(fieldId, dateStr, slotIdx) {
+    const realStatus = bookedMap[`${dateStr}|${slotIdx}`];
+    if (realStatus) return 'booked'; // pending/confirmed = slot sudah dipesan
+    return 'available';              // tidak ada booking = tersedia
+  }
+
+  function pillHtml(status, dateStr, slotIdx) {
+    const lbl = { available:'Tersedia', booked:'Dipesan', maintenance:'Perawatan', closed:'Tutup' };
+    const slotLabel = TIME_SLOTS[slotIdx] || '';
+    if (status === 'available') {
+      return `<span class="sched-pill available"
+          onclick="window.location.href='pesan.html?id=${encodeURIComponent(currentFieldId)}&date=${dateStr}&slot=${slotIdx}'"
+          title="Pesan ${slotLabel} — Klik untuk memesan">
+        <span class="sp-dot"></span>${lbl.available}
+      </span>`;
+    }
+    return `<span class="sched-pill ${status}" title="${lbl[status]}">
+      <span class="sp-dot"></span>${lbl[status] || status}
+    </span>`;
+  }
+
+  function sourceBadge() {
+    if (dataSource === 'live') {
+      return `<span style="font-size:.68rem;color:var(--emerald);font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+        <span style="width:6px;height:6px;background:var(--emerald);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;"></span>
+        Real-time
+      </span>`;
+    }
+    return `<span style="font-size:.68rem;color:var(--gray-400);font-weight:600;">Demo</span>`;
+  }
+
+  // ── Weekly ─────────────────────────────────────────────────────────────────
+  function renderWeekly() {
+    const anchor = new Date(schedAnchor);
+    const dow = anchor.getDay();
+    const mon = new Date(anchor);
+    mon.setDate(anchor.getDate() - ((dow + 6) % 7));
+
+    const days = Array.from({length:7}, (_,i) => {
+      const d = new Date(mon); d.setDate(mon.getDate() + i); return d;
+    });
+
+    document.getElementById('sched-date-range').textContent =
+      `${days[0].getDate()} ${MONTH_NAMES[days[0].getMonth()]} – ${days[6].getDate()} ${MONTH_NAMES[days[6].getMonth()]} ${days[0].getFullYear()}`;
+
+    let html = `<table class="sched-table"><thead><tr>
+      <th class="sched-th-time">Jam ${sourceBadge()}</th>`;
+    days.forEach(d => {
+      const tc = isToday(d) ? ' today' : '';
+      html += `<th class="sched-th-day${tc}">
+        <div class="day-name">${DAY_NAMES[d.getDay()]}</div>
+        <div class="day-num">${d.getDate()}</div>
+      </th>`;
+    });
+    html += `</tr></thead><tbody>`;
+
+    TIME_SLOTS.forEach((slot, si) => {
+      html += `<tr><td class="sched-td-time">${slot}</td>`;
+      days.forEach(d => {
+        const ds = isoDate(d);
+        const status = slotStatus(currentFieldId, ds, si);
+        html += `<td class="sched-td-slot">${pillHtml(status, ds, si)}</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  // ── Daily ──────────────────────────────────────────────────────────────────
+  function renderDaily() {
+    const d = new Date(schedAnchor);
+    const ds = isoDate(d);
+    document.getElementById('sched-date-range').textContent =
+      `${DAY_NAMES[d.getDay()]}, ${d.getDate()} ${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;
+
+    const descMap = {
+      available:   'Tersedia — Klik untuk pesan',
+      booked:      'Sudah Dipesan',
+      maintenance: 'Sedang Perawatan',
+      closed:      'Tutup',
+    };
+
+    let html = `<table class="sched-harian-table"><thead><tr>
+      <th class="sched-harian-head time-col">Jam</th>
+      <th class="sched-harian-head">Status Ketersediaan ${sourceBadge()}</th>
+    </tr></thead><tbody>`;
+
+    TIME_SLOTS.forEach((slot, si) => {
+      const status = slotStatus(currentFieldId, ds, si);
+      html += `<tr>
+        <td class="sched-harian-td time-td">${slot}</td>
+        <td class="sched-harian-td">${pillHtml(status, ds, si)}
+          <span style="font-size:.72rem;color:var(--gray-400);margin-left:6px;">${descMap[status]||''}</span>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  // ── Monthly ────────────────────────────────────────────────────────────────
+  function renderMonthly() {
+    const yr = schedAnchor.getFullYear();
+    const mo = schedAnchor.getMonth();
+    document.getElementById('sched-date-range').textContent = `${MONTH_NAMES[mo]} ${yr}`;
+
+    const firstDay = new Date(yr, mo, 1);
+    const lastDay  = new Date(yr, mo+1, 0);
+    const startDow = (firstDay.getDay() + 6) % 7;
+
+    const cells = [];
+    for (let i = 0; i < startDow; i++) {
+      const d = new Date(yr, mo, 1-(startDow-i)); cells.push({d, other:true});
+    }
+    for (let n = 1; n <= lastDay.getDate(); n++) {
+      cells.push({d: new Date(yr, mo, n), other:false});
+    }
+    while (cells.length % 7 !== 0) {
+      const last = cells[cells.length-1].d;
+      const nd = new Date(last); nd.setDate(last.getDate()+1);
+      cells.push({d:nd, other:true});
+    }
+
+    let html = `<div class="sched-month-grid">`;
+    ['Sen','Sel','Rab','Kam','Jum','Sab','Min'].forEach(n => {
+      html += `<div class="sched-month-dayname">${n}</div>`;
+    });
+    cells.forEach(({d, other}) => {
+      const tc = isToday(d) ? ' today-cell' : '';
+      const oc = other ? ' other-month' : '';
+      const ds = isoDate(d);
+      const avail  = TIME_SLOTS.filter((_,i) => slotStatus(currentFieldId, ds, i) === 'available').length;
+      const booked = TIME_SLOTS.filter((_,i) => slotStatus(currentFieldId, ds, i) === 'booked').length;
+      const dots = other ? '' : [
+        ...Array(Math.min(avail,4)).fill('<div class="sched-month-dot available"></div>'),
+        ...Array(Math.min(booked,3)).fill('<div class="sched-month-dot booked"></div>'),
+      ].join('');
+      html += `<div class="sched-month-cell${tc}${oc}">
+        <div class="sched-month-num">${d.getDate()}</div>
+        <div class="sched-month-dots">${dots}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  function showLoading() {
+    document.getElementById('sched-grid-wrap').innerHTML =
+      `<div style="height:140px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gray-400);font-size:.85rem;">
+        <span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> Memuat jadwal…
+      </div>`;
+  }
+
+  function renderSchedule() {
+    if (!currentFieldId) return;
+    if (schedView === 'mingguan')    renderWeekly();
+    else if (schedView === 'harian') renderDaily();
+    else                             renderMonthly();
+  }
+
+  function navigate(dir) {
+    const d = new Date(schedAnchor);
+    if (schedView === 'mingguan')    d.setDate(d.getDate() + dir*7);
+    else if (schedView === 'harian') d.setDate(d.getDate() + dir);
+    else                             d.setMonth(d.getMonth() + dir);
+    schedAnchor = d;
+    renderSchedule();
+  }
+
+  // ── Event wiring ───────────────────────────────────────────────────────────
+  document.getElementById('sched-prev')?.addEventListener('click', () => navigate(-1));
+  document.getElementById('sched-next')?.addEventListener('click', () => navigate(1));
+  document.getElementById('sched-today')?.addEventListener('click', () => {
+    schedAnchor = new Date(); renderSchedule();
+  });
+  document.getElementById('sched-view-tabs')?.addEventListener('click', e => {
+    const tab = e.target.closest('.sched-tab');
+    if (!tab) return;
+    schedView = tab.dataset.view;
+    document.querySelectorAll('.sched-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderSchedule();
+  });
+
+  // ── Init: fetch real data then render ─────────────────────────────────────
+  window.initSchedule = async function(fieldId) {
+    currentFieldId = fieldId;
+    showLoading();
+    await fetchBookings(fieldId);
+    renderSchedule();
+  };
+
+})();
+</script>
+</body>
+</html>

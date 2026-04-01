@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>SIPELOR BEDAS - Verifikasi Email</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Mulish', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(145deg, #4f46e5 0%, #7c3aed 60%, #9333ea 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 44px 36px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(79, 70, 229, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4f46e5, #9333ea);
+    }
+
+    .app-logo {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    .icon-wrap {
+      font-size: 56px;
+      margin-bottom: 16px;
+      animation: bounce 0.6s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      color: #1e1b4b;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    /* Spinner */
+    .spinner-wrap {
+      margin: 0 auto 20px;
+      width: 56px;
+      height: 56px;
+      position: relative;
+    }
+
+    .spinner {
+      width: 56px;
+      height: 56px;
+      border: 5px solid #ede9fe;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 6px;
+      background: #ede9fe;
+      border-radius: 99px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5, #9333ea);
+      border-radius: 99px;
+      width: 0%;
+      animation: progress 2.5s ease-out forwards;
+    }
+
+    @keyframes progress {
+      0% { width: 0%; }
+      40% { width: 60%; }
+      80% { width: 85%; }
+      100% { width: 100%; }
+    }
+
+    /* Button */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: #f5f3ff;
+      color: #7c3aed;
+    }
+
+    /* Status text */
+    .status-text {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    /* Error state */
+    .error-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    /* Success state */
+    .success-check {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      animation: bounce 0.6s ease-in-out;
+    }
+
+    /* Hidden */
+    .hidden { display: none !important; }
+
+    /* Sections */
+    #sectionLoading {}
+    #sectionSuccess { display: none; }
+    #sectionError { display: none; }
+    #sectionFallback { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Loading state -->
+    <div id="sectionLoading">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+      </div>
+      <h1 id="loadingTitle">Memverifikasi Email...</h1>
+      <p class="subtitle" id="loadingDesc">
+        Mohon tunggu, kami sedang membuka aplikasi SIPELOR BEDAS untuk Anda.
+      </p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <p class="status-text">Menghubungkan ke aplikasi...</p>
+    </div>
+
+    <!-- Success + fallback button -->
+    <div id="sectionFallback">
+      <div class="success-check">✓</div>
+      <h1 id="fallbackTitle">Email Terverifikasi! 🎉</h1>
+      <p class="subtitle" id="fallbackDesc">
+        Email Anda telah berhasil diverifikasi. Ketuk tombol di bawah untuk membuka aplikasi SIPELOR BEDAS.
+      </p>
+      <button class="btn btn-primary" onclick="tryOpenApp()">
+        🚀 Buka Aplikasi SIPELOR
+      </button>
+      <p class="status-text">
+        Jika tombol tidak bekerja, buka aplikasi SIPELOR BEDAS secara manual.
+      </p>
+    </div>
+
+    <!-- Error state -->
+    <div id="sectionError">
+      <div class="error-icon">❌</div>
+      <h1 id="errorTitle">Verifikasi Gagal</h1>
+      <p class="subtitle" id="errorDesc">
+        Terjadi kesalahan saat memverifikasi email Anda. Link mungkin sudah kedaluwarsa.
+      </p>
+      <button class="btn btn-primary" onclick="tryOpenApp()">
+        Buka Aplikasi
+      </button>
+      <p class="status-text">Silakan coba kirim ulang email verifikasi dari aplikasi.</p>
+    </div>
+
+  </div>
+
+  <script>
+    // ─── Parse URL parameters ─────────────────────────────────────────────────
+    var search = window.location.search;
+    var hash   = window.location.hash ? window.location.hash.substring(1) : '';
+
+    var params     = new URLSearchParams(search);
+    var hashParams = new URLSearchParams(hash);
+
+    var code             = params.get('code');
+    var type             = params.get('type')              || hashParams.get('type');
+    var accessToken      = hashParams.get('access_token');
+    var refreshToken     = hashParams.get('refresh_token');
+    var errorParam       = params.get('error')             || hashParams.get('error');
+    var errorDesc        = params.get('error_description') || hashParams.get('error_description');
+
+    // ─── Build the app deeplink URL ───────────────────────────────────────────
+    var appUrl = '';
+
+    if (!errorParam) {
+      if (code) {
+        // PKCE flow: pass the code to the app
+        appUrl = 'sipelor://callback?code=' + encodeURIComponent(code);
+        if (type) appUrl += '&type=' + encodeURIComponent(type);
+      } else if (accessToken) {
+        // Implicit flow: pass full fragment
+        appUrl = 'sipelor://callback#' + hash;
+      } else if (hash || search) {
+        // Fallback: pass everything
+        appUrl = 'sipelor://callback' + search + (hash ? '#' + hash : '');
+      }
+    }
+
+    // ─── UI helpers ───────────────────────────────────────────────────────────
+    function showSection(id) {
+      ['sectionLoading', 'sectionFallback', 'sectionError'].forEach(function(s) {
+        document.getElementById(s).style.display = s === id ? 'block' : 'none';
+      });
+    }
+
+    function setTitle(title, desc) {
+      var tEl = document.getElementById('loadingTitle');
+      var dEl = document.getElementById('loadingDesc');
+      if (tEl) tEl.textContent = title;
+      if (dEl) dEl.textContent = desc;
+    }
+
+    // ─── Attempt to open app ──────────────────────────────────────────────────
+    var appOpened = false;
+
+    // Detect if app was opened (page goes to background)
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        appOpened = true;
+      }
+    });
+    window.addEventListener('pagehide', function() {
+      appOpened = true;
+    });
+
+    function tryOpenApp() {
+      if (appUrl) {
+        window.location.href = appUrl;
+      }
+    }
+
+    function tryCloseTab() {
+      // Attempt to close the browser tab.
+      // Works only if the tab was opened programmatically (some email apps do this).
+      try { window.close(); } catch (e) {}
+    }
+
+    // ─── Main flow ────────────────────────────────────────────────────────────
+    if (errorParam) {
+      // Show error immediately
+      var msg = errorDesc || (errorParam === 'access_denied' ? 'Akses ditolak.' : 'Link tidak valid atau sudah kedaluwarsa.');
+      document.getElementById('errorDesc').textContent = msg;
+      showSection('sectionError');
+
+    } else if (!appUrl) {
+      // No params — might be a direct browser visit
+      document.getElementById('errorDesc').textContent =
+        'Tidak ada parameter verifikasi ditemukan. Silakan gunakan link dari email Anda.';
+      showSection('sectionError');
+
+    } else {
+      // Set loading title based on type
+      if (type === 'signup') {
+        setTitle('Email Terverifikasi! ✅', 'Membuka aplikasi SIPELOR BEDAS...');
+      } else if (type === 'recovery') {
+        setTitle('Reset Password', 'Membuka halaman reset password di aplikasi...');
+      } else if (type === 'email_change') {
+        setTitle('Email Berhasil Diubah! ✅', 'Membuka aplikasi SIPELOR BEDAS...');
+      } else {
+        setTitle('Memproses...', 'Membuka aplikasi SIPELOR BEDAS...');
+      }
+
+      showSection('sectionLoading');
+
+      // Step 1: attempt to open app after short delay
+      setTimeout(function() {
+        tryOpenApp();
+
+        // Step 2: after trying, attempt to close the tab
+        setTimeout(function() {
+          tryCloseTab();
+        }, 600);
+
+        // Step 3: if app not detected as opened, show fallback UI
+        setTimeout(function() {
+          if (!appOpened) {
+            // Update fallback UI text based on type
+            if (type === 'recovery') {
+              document.getElementById('fallbackTitle').textContent = 'Siap Reset Password';
+              document.getElementById('fallbackDesc').textContent =
+                'Ketuk tombol di bawah untuk melanjutkan reset password di aplikasi SIPELOR BEDAS.';
+            } else {
+              document.getElementById('fallbackTitle').textContent = 'Email Terverifikasi! 🎉';
+              document.getElementById('fallbackDesc').textContent =
+                'Email Anda telah berhasil diverifikasi. Ketuk tombol di bawah untuk membuka aplikasi SIPELOR BEDAS.';
+            }
+            showSection('sectionFallback');
+          }
+        }, 2500);
+
+      }, 700);
+    }
+  </script>
+</body>
+</html>

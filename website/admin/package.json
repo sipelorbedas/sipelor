@@ -1,0 +1,56 @@
+{
+  "name": "sipelor-admin",
+  "version": "1.0.0",
+  "description": "SIPELOR BEDAS — Panel Admin Desktop",
+  "main": "main.js",
+  "author": "DISPORA Kabupaten Bandung",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable --x64",
+    "build:installer": "electron-builder --win nsis --x64"
+  },
+  "build": {
+    "appId": "com.dispora.sipelor.admin",
+    "productName": "SIPELOR Admin",
+    "copyright": "Copyright © 2025 DISPORA Kab. Bandung",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "login.html",
+      "css/**/*",
+      "js/**/*",
+      "!dist/**",
+      "!node_modules/**",
+      "!sql/**",
+      "!README.md"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "portable": {
+      "artifactName": "SIPELOR-Admin-v${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SIPELOR Admin"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  }
+}

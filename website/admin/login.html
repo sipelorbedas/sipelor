@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin — SIPELOR BEDAS</title>
+  <link rel="icon" href="images/sipelor.png" type="image/png" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <!-- Mode dot — top right -->
+  <div id="mode-hint" title="" style="
+    position:fixed; top:16px; right:20px;
+    width:10px; height:10px; border-radius:50%;
+    background:#555; box-shadow:0 0 6px 2px rgba(0,0,0,0.3);
+    z-index:999; display:none;
+  "></div>
+
+  <div class="login-page">
+    <div class="login-bg-orb orb1"></div>
+    <div class="login-bg-orb orb2"></div>
+
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-mark" style="background:none;box-shadow:none;padding:0;width:96px;height:96px;">
+          <img src="images/sipelor.png" alt="SIPELOR Logo" style="width:100%;height:100%;object-fit:contain;" />
+        </div>
+        <div>
+          <div class="app-name">SIPELOR BEDAS</div>
+          <div class="app-sub">Sistem Pemesanan Lapangan Olahraga</div>
+        </div>
+      </div>
+
+      <div class="login-title">Masuk ke Panel Admin</div>
+      <div class="login-desc">Administrator, Manager, Operator, atau OPD/Pimpinan — gunakan username atau email.</div>
+
+
+
+      <div id="login-err" class="login-err"></div>
+
+      <form class="login-form" id="admin-login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">Email / Username<span class="req">*</span></label>
+          <input type="text" id="email" class="form-control" placeholder="admin@sipelor.com atau dispora" autocomplete="username" required />
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:5px;">
+            OPD/Pimpinan: cukup ketik username (contoh: <code style="color:rgba(168,85,247,0.9);">dispora</code>)
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password<span class="req">*</span></label>
+          <div style="position:relative;">
+            <input type="password" id="password" class="form-control" placeholder="••••••••" autocomplete="current-password" required style="padding-right:42px;" />
+            <button type="button" id="toggle-pw" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:16px;" title="Tampilkan password">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" id="login-btn" class="btn btn-gradient w-full" style="margin-top:8px; padding:13px;">
+          Masuk
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script>
+    // ════════════════════════════════════════════════════════
+    // INIT — Live Mode (Supabase)
+    // ════════════════════════════════════════════════════════
+
+    // ── Deteksi file:// protocol ────────────────────────────
+    if (window.location.protocol === 'file:') {
+      document.body.insertAdjacentHTML('afterbegin', `
+        <div style="
+          position:fixed;top:0;left:0;right:0;z-index:9999;
+          background:#B45309;color:#fff;font-size:13px;font-weight:600;
+          padding:10px 20px;text-align:center;line-height:1.5;
+        ">
+          ⚠️ File dibuka langsung dari disk — koneksi ke Supabase akan gagal.<br>
+          <span style="font-weight:400;">Buka via web server: jalankan <code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px;">npx serve .</code> di folder <strong>dist/admin/</strong> lalu akses <strong>http://localhost:3000</strong></span>
+        </div>
+      `);
+    }
+
+    let client = null;
+    try {
+      const url = SIPELOR_ADMIN_CONFIG.SUPABASE_URL;
+      const key = SIPELOR_ADMIN_CONFIG.SUPABASE_ANON_KEY;
+      if (url && url !== 'YOUR_SUPABASE_URL' && key && key !== 'YOUR_SUPABASE_ANON_KEY') {
+        client = supabase.createClient(url, key);
+      }
+    } catch(e) {
+      console.warn('[SIPELOR] Supabase init error:', e);
+    }
+
+    // ── Auto-redirect jika sudah login ─────────────────────
+    (async () => {
+      if (!client) return;
+      try {
+        const { data: { session } } = await client.auth.getSession();
+        if (!session) return;
+        const { data: prof } = await client
+          .from('profiles').select('role').eq('id', session.user.id).single();
+        const role = prof?.role || '';
+        if (['admin','superadmin','manager','operator'].includes(role)) {
+          window.location.href = 'index.html';
+        } else {
+          await client.auth.signOut();
+        }
+      } catch(e) { /* session check failed, stay on login */ }
+    })();
+
+    // ── Toggle password ────────────────────────────────────
+    document.getElementById('toggle-pw').addEventListener('click', function() {
+      const pw = document.getElementById('password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+      this.textContent = pw.type === 'password' ? '👁️' : '🙈';
+    });
+
+    // ── Submit ─────────────────────────────────────────────
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const emailRaw = document.getElementById('email').value.trim();
+      const email    = emailRaw; // kept for errMap; resolvedEmail built below
+      const password = document.getElementById('password').value;
+      const btn      = document.getElementById('login-btn');
+
+      document.getElementById('login-err').classList.remove('show');
+      btn.disabled  = true;
+      btn.innerHTML = '<span class="spinner spinner-sm"></span>&nbsp;Masuk...';
+
+      if (!client) {
+        showErr('Supabase belum dikonfigurasi. Periksa SUPABASE_URL dan SUPABASE_ANON_KEY di js/config.js.');
+        btn.disabled    = false;
+        btn.textContent = 'Masuk';
+        return;
+      }
+
+      // ── LIVE MODE (Supabase) ─────────────────────────────
+      try {
+        // Jika input tidak mengandung @ → asumsikan username OPD
+        // Email login OPD = username@sipelor.go.id
+        const resolvedEmail = email.includes('@') ? email : (email.toLowerCase().trim() + '@sipelor.go.id');
+
+        const { data, error } = await client.auth.signInWithPassword({ email: resolvedEmail, password });
+        if (error) throw error;
+
+        // Cek role di tabel profiles
+        const { data: profile, error: profErr } = await client
+          .from('profiles').select('role,full_name').eq('id', data.user.id).single();
+
+        if (profErr || !profile) {
+          await client.auth.signOut();
+          throw new Error(
+            'Profil admin tidak ditemukan. Pastikan user sudah ditambahkan ke tabel profiles dengan role yang benar.'
+          );
+        }
+
+        const role = profile.role || '';
+        if (!['admin','superadmin','manager','operator'].includes(role)) {
+          await client.auth.signOut();
+          throw new Error(
+            `Role "${role || 'tidak diset'}" tidak memiliki akses ke panel admin. ` +
+            'Role yang diizinkan: admin, superadmin, manager, operator.'
+          );
+        }
+
+        window.location.href = 'index.html';
+
+      } catch (err) {
+        const errMap = {
+          'Invalid login credentials':    'Username/email atau password salah. OPD: pastikan username sudah dibuat via SQL dan coba tanpa "@sipelor.go.id".',
+          'Email not confirmed':          'Email belum diverifikasi. Cek kotak masuk email Anda.',
+          'Too many requests':            'Terlalu banyak percobaan. Tunggu beberapa menit dan coba lagi.',
+          'User not found':               'Akun tidak ditemukan. Hubungi administrator untuk membuat akun.',
+          'Failed to fetch':              'Gagal terhubung ke server. Kemungkinan penyebab: (1) File dibuka langsung dari disk — gunakan web server. (2) Tidak ada koneksi internet. (3) Project Supabase sedang paused — cek di supabase.com.',
+          'Load failed':                  'Gagal terhubung ke server. Pastikan koneksi internet aktif dan buka via web server, bukan file://.',
+          'NetworkError when attempting to fetch resource': 'Gagal terhubung ke server. Buka admin via web server (npx serve .), bukan double-click file.',
+        };
+        showErr(errMap[err.message] || err.message);
+        btn.disabled    = false;
+        btn.textContent = 'Masuk';
+      }
+    });
+
+    function showErr(msg) {
+      const el = document.getElementById('login-err');
+      el.textContent = '⚠️ ' + msg;
+      el.classList.add('show');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1028046611967",
+    "project_id": "sipelor-bedas-854cd",
+    "storage_bucket": "sipelor-bedas-854cd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028046611967:android:231f88b9a34b4fee5973ca",
+        "android_client_info": {
+          "package_name": "com.bedas.sipelor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh4fK2lN_ge7ZClyVG5ndlkEngkXFmCi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

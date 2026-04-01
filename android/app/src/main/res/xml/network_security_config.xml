@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Network Security Configuration for SIPELOR BEDAS
+    
+    This file enforces HTTPS connections and prevents cleartext (HTTP) traffic
+    to protect user data from Man-in-the-Middle attacks.
+    
+    Documentation: https://developer.android.com/training/articles/security-config
+-->
+<network-security-config>
+    <!-- 
+        Base configuration for all connections
+        - Block all HTTP (cleartext) traffic
+        - Only allow HTTPS connections
+        - Trust system certificates
+    -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <!-- Trust Android system certificates -->
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 
+        Supabase domain configuration
+        - Force HTTPS for all Supabase connections
+        - Include all subdomains
+    -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">supabase.co</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- 
+        Development/Debug configuration (OPTIONAL - COMMENT OUT IN PRODUCTION!)
+        Uncomment hanya untuk testing di local server
+    -->
+    <!--
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+    -->
+
+    <!-- 
+        Certificate Pinning (ADVANCED - OPTIONAL)
+        Uncomment dan configure jika ingin add certificate pinning
+        
+        WARNING: Certificate pinning memerlukan app update jika certificate expired!
+    -->
+    <!--
+    <domain-config>
+        <domain includeSubdomains="true">gbhprmibbcqfwjgrkfzq.supabase.co</domain>
+        <pin-set expiration="2027-01-01">
+            <pin digest="SHA-256">BASE64_ENCODED_PUBLIC_KEY_HASH_HERE</pin>
+            <pin digest="SHA-256">BACKUP_PIN_HERE</pin>
+        </pin-set>
+    </domain-config>
+    -->
+</network-security-config>

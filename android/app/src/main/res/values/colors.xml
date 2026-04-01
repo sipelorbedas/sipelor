@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#FFFFFF</color>
+    <!-- Warna latar native splash — sama dengan SplashScreen Flutter agar transisi mulus -->
+    <color name="splash_background">#1A1A2E</color>
+</resources>
