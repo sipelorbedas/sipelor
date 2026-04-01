@@ -1,0 +1,53 @@
+# Android Keystore Configuration Template
+# =========================================
+# 
+# IMPORTANT: This is a TEMPLATE file for documentation purposes only.
+# DO NOT commit the actual key.properties file to version control!
+#
+# Setup Instructions:
+# -------------------
+# 1. Generate a new keystore (if you don't have one):
+#    keytool -genkey -v -keystore sipelor-keystore.jks \-keyalg RSA -keysize 2048 -validity 10000 \-alias sipelor
+#
+# 2. Copy this file to key.properties (which is in .gitignore):
+#    cp key.properties.example key.properties
+#
+# 3. Update key.properties with your actual credentials
+#
+# 4. Store keystore file securely:
+#    - Keep backup in secure location (password manager)
+#    - Never commit to version control
+#    - Share securely with team members only
+#
+# For CI/CD:
+# ----------
+# Store these values as secrets in your CI/CD platform:
+# - STORE_PASSWORD
+# - KEY_PASSWORD
+# - KEY_ALIAS
+# - Upload keystore.jks as encrypted file
+
+# Keystore password (used when creating the keystore)
+storePassword=YOUR_STORE_PASSWORD_HERE
+
+# Key password (can be same as store password)
+keyPassword=YOUR_KEY_PASSWORD_HERE
+
+# Key alias (identifier for the key)
+keyAlias=sipelor
+
+# Path to keystore file (relative to android/ directory)
+storeFile=app/sipelor-keystore.jks
+
+# Security Recommendations:
+# - Use strong passwords (min 12 chars, mix of upper/lower/numbers/special)
+# - Different password for each keystore
+# - Store keystore backup in encrypted vault
+# - Never share via email or unsecure channels
+# - Rotate keystore every 1-2 years (plan migration)
+# - Document keystore details in secure password manager
+
+# Google Play App Signing (Recommended):
+# Enable Google Play App Signing to let Google manage your app signing key.
+# This is more secure and allows key recovery if you lose your upload key.
+# https://support.google.com/googleplay/android-developer/answer/9842756

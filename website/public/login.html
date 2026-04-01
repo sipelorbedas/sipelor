@@ -1,0 +1,2040 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masuk / Daftar — SIPELOR BEDAS</title>
+  <meta name="description" content="Masuk atau daftar ke SIPELOR BEDAS — Sistem Pemesanan Lapangan Olahraga DISPORA Kabupaten Bandung." />
+  <link rel="icon" href="images/sipelor.png" type="image/png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS — SIPELOR BEDAS
+    ═══════════════════════════════════════════ */
+    :root {
+      --navy:           #0A1628;
+      --navy-mid:       #132136;
+      --navy-light:     #1E3A5F;
+      --emerald:        #00693E;
+      --emerald-mid:    #059669;
+      --emerald-light:  #34D399;
+      --emerald-pale:   #ECFDF5;
+      --gold:           #D97706;
+      --gold-mid:       #F59E0B;
+      --gold-light:     #FCD34D;
+      --gold-pale:      #FFFBEB;
+      --danger:         #DC2626;
+      --danger-pale:    #FEF2F2;
+      --white:          #FFFFFF;
+      --surface:        #F8FAFB;
+      --gray-100:       #F3F4F6;
+      --gray-200:       #E5E7EB;
+      --gray-300:       #D1D5DB;
+      --gray-400:       #9CA3AF;
+      --gray-500:       #6B7280;
+      --gray-700:       #374151;
+      --gray-900:       #111827;
+
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --radius-sm:  8px;
+      --radius-md:  14px;
+      --radius-lg:  20px;
+
+      --shadow-sm:  0 1px 4px rgba(0,0,0,.08);
+      --shadow-md:  0 4px 18px rgba(0,0,0,.11);
+      --shadow-em:  0 8px 28px rgba(0,105,62,.22);
+      --shadow-gd:  0 8px 24px rgba(217,119,6,.30);
+
+      --transition: all .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--gray-900);
+      min-height: 100vh;
+      display: flex;
+      overflow: auto;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: var(--font-body); }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT — Split Screen
+    ═══════════════════════════════════════════ */
+    .auth-page {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    /* ── Left Panel ── */
+    .auth-left {
+      flex: 1;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 48px;
+      overflow: hidden;
+      background: var(--navy);
+    }
+    .auth-left-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/stadium_jalak_harupat.jpg');
+      background-size: cover;
+      background-position: center 35%;
+      opacity: .18;
+    }
+    .auth-left-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(0,105,62,.55) 0%,
+        rgba(10,22,40,.88) 55%,
+        rgba(10,22,40,.97) 100%
+      );
+    }
+    /* Decorative orbs */
+    .auth-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+      opacity: .35;
+    }
+    .auth-orb-1 {
+      width: 380px; height: 380px;
+      top: -100px; left: -80px;
+      background: radial-gradient(circle, var(--emerald) 0%, transparent 70%);
+    }
+    .auth-orb-2 {
+      width: 300px; height: 300px;
+      bottom: -60px; right: -60px;
+      background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+      opacity: .20;
+    }
+
+    /* Content relative to overlays */
+    .auth-left-top,
+    .auth-left-body,
+    .auth-left-foot { position: relative; z-index: 2; }
+
+    /* Logo */
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .auth-brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+    .auth-brand-text .name {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -.01em;
+      line-height: 1.1;
+    }
+    .auth-brand-text .tagline {
+      font-size: .65rem;
+      color: rgba(255,255,255,.45);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 2px;
+    }
+
+    /* Hero text */
+    .auth-left-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 32px 0;
+    }
+    .auth-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,105,62,.25);
+      border: 1px solid rgba(52,211,153,.30);
+      backdrop-filter: blur(8px);
+      color: var(--emerald-light);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+    .auth-hero-badge .dot-pulse {
+      width: 7px; height: 7px;
+      background: var(--emerald-light);
+      border-radius: 50%;
+      animation: pulse 1.8s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(1.45)} }
+
+    .auth-hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 3.5vw, 2.9rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
+    }
+    .auth-hero-title .hl { color: var(--gold-light); }
+    .auth-hero-sub {
+      font-size: .96rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.75;
+      max-width: 380px;
+      margin-bottom: 36px;
+    }
+
+    /* Feature pills */
+    .auth-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .auth-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,.75);
+      font-size: .875rem;
+    }
+    .auth-feature-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+
+    /* Footer */
+    .auth-left-foot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .auth-left-foot p {
+      font-size: .74rem;
+      color: rgba(255,255,255,.28);
+    }
+    .auth-left-foot a {
+      font-size: .74rem;
+      color: rgba(255,255,255,.38);
+      transition: var(--transition);
+    }
+    .auth-left-foot a:hover { color: rgba(255,255,255,.70); }
+    .auth-left-foot .sep {
+      font-size: .65rem;
+      color: rgba(255,255,255,.18);
+    }
+
+    /* ── Right Panel ── */
+    .auth-right {
+      width: 480px;
+      flex-shrink: 0;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 44px;
+      overflow-y: auto;
+      min-height: 100vh;
+      position: relative;
+    }
+    .auth-right::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,105,62,.25) 30%,
+        rgba(0,105,62,.35) 60%,
+        transparent 100%
+      );
+    }
+    .auth-right-inner {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    /* Right header */
+    .auth-right-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .auth-right-head .logo-mini {
+      width: 52px; height: 52px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 0 auto 14px;
+      box-shadow: 0 4px 16px rgba(0,105,62,.22);
+    }
+    .auth-right-head h1 {
+      font-family: var(--font-head);
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      letter-spacing: -.02em;
+      margin-bottom: 6px;
+    }
+    .auth-right-head p {
+      font-size: .875rem;
+      color: var(--gray-500);
+    }
+
+    /* Tabs */
+    .auth-tabs {
+      display: flex;
+      background: var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: calc(var(--radius-sm) - 2px);
+      border: none;
+      background: transparent;
+      font-family: var(--font-head);
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      transition: var(--transition);
+    }
+    .auth-tab.active {
+      background: var(--white);
+      color: var(--emerald);
+      box-shadow: var(--shadow-sm);
+    }
+    .auth-tab:hover:not(.active) { color: var(--gray-700); }
+
+    /* Form panels */
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    /* Alert */
+    .auth-alert {
+      display: none;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-size: .84rem;
+      line-height: 1.55;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+    .auth-alert.show { display: flex; align-items: flex-start; gap: 8px; }
+    .auth-alert.error {
+      background: var(--danger-pale);
+      color: var(--danger);
+      border: 1px solid rgba(220,38,38,.18);
+    }
+    .auth-alert.success {
+      background: var(--emerald-pale);
+      color: var(--emerald);
+      border: 1px solid rgba(0,105,62,.20);
+    }
+    .auth-alert.info {
+      background: var(--gold-pale);
+      color: #92400e;
+      border: 1px solid rgba(217,119,6,.22);
+    }
+
+    /* Form groups */
+    .form-row { margin-bottom: 16px; }
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+      letter-spacing: .01em;
+    }
+    .form-label .req { color: var(--danger); margin-left: 3px; }
+
+    /* Input wrapper */
+    .input-wrap { position: relative; }
+    .input-wrap .input-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+    .input-wrap input {
+      width: 100%;
+      padding: 11px 14px 11px 40px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      color: var(--gray-900);
+      background: var(--white);
+      transition: var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .input-wrap input::placeholder { color: var(--gray-400); }
+    .input-wrap input:focus {
+      border-color: var(--emerald);
+      box-shadow: 0 0 0 3px rgba(0,105,62,.10);
+    }
+    .input-wrap input.error-field {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(220,38,38,.08);
+    }
+    /* Input without icon */
+    .input-wrap input.no-icon { padding-left: 14px; }
+    /* Eye toggle */
+    .input-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 4px;
+      color: var(--gray-400);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+    .input-toggle:hover { color: var(--gray-700); }
+    .input-wrap input[type="password"] { padding-right: 40px; }
+    /* Field error */
+    .field-err {
+      font-size: .76rem;
+      color: var(--danger);
+      margin-top: 4px;
+      display: none;
+    }
+    .field-err.show { display: block; }
+
+    /* Password strength */
+    .pw-strength-bar {
+      height: 4px;
+      background: var(--gray-200);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .pw-strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width .3s ease, background .3s ease;
+      width: 0%;
+    }
+    .pw-strength-label {
+      font-size: .72rem;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Checkbox */
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+    .check-row input[type="checkbox"] {
+      width: 17px; height: 17px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--emerald);
+    }
+    .check-row label {
+      font-size: .82rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+    .check-row label a {
+      color: var(--emerald);
+      font-weight: 600;
+    }
+    .check-row label a:hover { text-decoration: underline; }
+
+    /* Submit button */
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--emerald);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: .95rem;
+      box-shadow: var(--shadow-em);
+      transition: var(--transition);
+      letter-spacing: .01em;
+    }
+    .btn-submit:hover:not(:disabled) { background: #005c35; transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,105,62,.30); }
+    .btn-submit:active:not(:disabled) { transform: none; }
+    .btn-submit:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-spinner {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,.35);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin .65s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+    .auth-divider span {
+      font-size: .78rem;
+      color: var(--gray-400);
+      white-space: nowrap;
+    }
+
+    /* Forgot password link */
+    .auth-forgot {
+      text-align: right;
+      margin-bottom: 18px;
+    }
+    .auth-forgot a {
+      font-size: .8rem;
+      color: var(--emerald);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .auth-forgot a:hover { text-decoration: underline; }
+
+    /* Switch prompt */
+    .auth-switch {
+      text-align: center;
+      margin-top: 22px;
+      font-size: .83rem;
+      color: var(--gray-500);
+    }
+    .auth-switch a {
+      color: var(--emerald);
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .auth-switch a:hover { text-decoration: underline; }
+
+    /* Home link */
+    .auth-home-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      color: var(--gray-400);
+      margin-top: 20px;
+      transition: var(--transition);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .auth-home-link:hover { color: var(--emerald); }
+
+    /* ── Forgot Password Modal ── */
+    .fp-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10,22,40,.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .fp-overlay.open { display: flex; }
+    .fp-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow-md);
+      animation: fpSlide .22s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fpSlide { from{transform:translateY(-20px);opacity:0} to{transform:none;opacity:1} }
+    .fp-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .fp-title {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gray-900);
+    }
+    .fp-sub {
+      font-size: .84rem;
+      color: var(--gray-500);
+      margin-top: 4px;
+      line-height: 1.55;
+    }
+    .fp-close {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-200);
+      background: none;
+      color: var(--gray-500);
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .fp-close:hover { background: var(--gray-100); color: var(--gray-900); }
+
+    /* ── Success Card ── */
+    .success-card {
+      text-align: center;
+      padding: 20px 0;
+      display: none;
+    }
+    .success-card.show { display: block; }
+    .success-card .s-icon {
+      width: 64px; height: 64px;
+      background: var(--emerald-pale);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.6rem;
+    }
+    .success-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+    .success-card p {
+      font-size: .88rem;
+      color: var(--gray-500);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    /* ═══════════════════════════════════════════
+       OTP VERIFY CARD
+    ═══════════════════════════════════════════ */
+    .otp-verify-card {
+      text-align: center;
+      padding: 8px 0;
+      display: none;
+    }
+    .otp-verify-card.show { display: block; }
+    .otp-verify-card .otp-icon {
+      width: 68px; height: 68px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 20px rgba(37,211,102,.35);
+    }
+    .otp-verify-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+    .otp-verify-card .otp-subtitle {
+      font-size: .86rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .otp-verify-card .otp-subtitle strong {
+      color: var(--gray-900);
+      font-weight: 700;
+    }
+
+    /* 6-digit OTP inputs */
+    .otp-inputs-wrap {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .otp-digit {
+      width: 46px;
+      height: 54px;
+      border: 2px solid var(--gray-200);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: var(--font-head);
+      color: var(--gray-900);
+      background: var(--surface);
+      outline: none;
+      transition: var(--transition);
+      caret-color: var(--emerald);
+      -webkit-appearance: none;
+    }
+    .otp-digit:focus {
+      border-color: var(--emerald);
+      box-shadow: 0 0 0 3px rgba(0,105,62,.12);
+      background: var(--white);
+    }
+    .otp-digit.filled {
+      border-color: var(--emerald);
+      background: var(--emerald-pale);
+      color: var(--emerald);
+    }
+    .otp-digit.otp-error {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(220,38,38,.08);
+      animation: shakex .35s cubic-bezier(.36,.07,.19,.97);
+    }
+    @keyframes shakex {
+      10%,90% { transform: translateX(-2px); }
+      20%,80%  { transform: translateX(3px); }
+      30%,50%,70% { transform: translateX(-4px); }
+      40%,60%  { transform: translateX(4px); }
+    }
+
+    /* OTP resend */
+    .otp-resend-row {
+      font-size: .82rem;
+      color: var(--gray-500);
+      margin-top: 14px;
+    }
+    .otp-resend-link {
+      color: var(--emerald);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: .82rem;
+      padding: 0;
+      transition: var(--transition);
+    }
+    .otp-resend-link:hover:not(:disabled) { text-decoration: underline; }
+    .otp-resend-link:disabled {
+      color: var(--gray-400);
+      cursor: default;
+      text-decoration: none;
+    }
+    .otp-timer {
+      color: var(--emerald);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      margin-left: 4px;
+    }
+    .otp-note {
+      font-size: .76rem;
+      color: var(--gray-400);
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .auth-page { flex-direction: column; }
+      .auth-left {
+        min-height: auto;
+        padding: 28px 28px 32px;
+      }
+      .auth-left-body { padding: 24px 0; }
+      .auth-hero-title { font-size: 1.8rem; }
+      .auth-features { flex-direction: row; flex-wrap: wrap; }
+      .auth-feature { flex: 1; min-width: 140px; }
+      .auth-right {
+        width: 100%;
+        min-height: auto;
+        padding: 36px 28px 48px;
+      }
+      .auth-right::before { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .auth-left { padding: 24px 20px 28px; }
+      .auth-hero-title { font-size: 1.55rem; }
+      .auth-right { padding: 28px 20px 40px; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .otp-digit { width: 40px; height: 48px; font-size: 1.3rem; }
+      .otp-inputs-wrap { gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     AUTH PAGE
+═══════════════════════════════════════════ -->
+<div class="auth-page">
+
+  <!-- ── Left Branding Panel ── -->
+  <div class="auth-left">
+    <div class="auth-left-bg"></div>
+    <div class="auth-left-overlay"></div>
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+
+    <!-- Logo -->
+    <div class="auth-left-top">
+      <a href="../home.html" class="auth-brand">
+        <img src="images/sipelor.png" alt="SIPELOR BEDAS" />
+        <div class="auth-brand-text">
+          <div class="name">SIPELOR BEDAS</div>
+          <div class="tagline">DISPORA Kab. Bandung</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Hero Copy -->
+    <div class="auth-left-body">
+      <div class="auth-hero-badge">
+        <span class="dot-pulse"></span>
+        Platform Resmi DISPORA
+      </div>
+      <h2 class="auth-hero-title">
+        Pesan Lapangan<br>
+        Olahraga Favorit<br>
+        <span class="hl">Kapan Saja</span>
+      </h2>
+      <p class="auth-hero-sub">
+        Satu akun untuk memesan seluruh fasilitas lapangan olahraga DISPORA Kabupaten Bandung — Futsal, Badminton, Tenis, Volly, Basket, dan lainnya.
+      </p>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon">🔒</div>
+          <span>Pembayaran Aman & Terenkripsi</span>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">⚡</div>
+          <span>Konfirmasi Booking Instan</span>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon">📅</div>
+          <span>Jadwal Real-time</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer left -->
+    <div class="auth-left-foot">
+      <p>© 2026 SIPELOR BEDAS</p>
+      <span class="sep">·</span>
+      <a href="#">Privasi</a>
+      <span class="sep">·</span>
+      <a href="#">Ketentuan</a>
+    </div>
+  </div>
+
+  <!-- ── Right Form Panel ── -->
+  <div class="auth-right">
+    <div class="auth-right-inner">
+
+      <!-- Header -->
+      <div class="auth-right-head">
+        <img src="images/sipelor.png" alt="SIPELOR" class="logo-mini" />
+        <h1 id="panel-title">Selamat Datang</h1>
+        <p id="panel-sub">Masuk atau buat akun baru untuk mulai pesan lapangan</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-signin" role="tab" aria-selected="true" onclick="switchTab('signin')">
+          Masuk
+        </button>
+        <button class="auth-tab" id="tab-signup" role="tab" aria-selected="false" onclick="switchTab('signup')">
+          Daftar
+        </button>
+      </div>
+
+      <!-- ════ SIGN IN PANEL ════ -->
+      <div class="auth-panel active" id="panel-signin">
+        <div class="auth-alert" id="signin-alert" role="alert"></div>
+
+        <form id="signin-form" novalidate onsubmit="handleSignIn(event)">
+          <!-- Email / Username -->
+          <div class="form-row">
+            <label class="form-label" for="signin-email">
+              Email <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              </span>
+              <input
+                type="email"
+                id="signin-email"
+                name="email"
+                placeholder="nama@email.com"
+                autocomplete="email"
+                inputmode="email"
+                required
+              />
+            </div>
+            <div class="field-err" id="signin-email-err">Email tidak valid.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-row">
+            <label class="form-label" for="signin-password">
+              Password <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input
+                type="password"
+                id="signin-password"
+                name="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="input-toggle" onclick="togglePw('signin-password', this)" aria-label="Tampilkan password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="field-err" id="signin-pw-err">Password tidak boleh kosong.</div>
+          </div>
+
+          <!-- Remember + Forgot -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div class="check-row" style="margin:0;">
+              <input type="checkbox" id="remember-me" name="remember" />
+              <label for="remember-me" style="font-size:.82rem;color:var(--gray-600);">Ingat saya</label>
+            </div>
+            <div>
+              <a href="javascript:void(0)" onclick="openForgotPw()" style="font-size:.8rem;color:var(--emerald);font-weight:600;">Lupa password?</a>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-submit" id="signin-btn">
+            Masuk ke Akun
+          </button>
+        </form>
+
+        <!-- Switch prompt -->
+        <div class="auth-switch">
+          Belum punya akun? <a onclick="switchTab('signup')">Daftar sekarang →</a>
+        </div>
+      </div><!-- /panel-signin -->
+
+      <!-- ════ SIGN UP PANEL ════ -->
+      <div class="auth-panel" id="panel-signup">
+        <div class="auth-alert" id="signup-alert" role="alert"></div>
+
+        <!-- ── Step 3: Success card (shown after OTP verified) ── -->
+        <div class="success-card" id="signup-success">
+          <div class="s-icon">🎉</div>
+          <h3>Akun Berhasil Dibuat!</h3>
+          <p>
+            Selamat! Akun SIPELOR BEDAS Anda telah aktif dan siap digunakan.
+            Silakan masuk untuk mulai memesan lapangan.
+          </p>
+          <button
+            class="btn-submit"
+            style="background:var(--emerald);"
+            onclick="switchTab('signin')"
+          >
+            Masuk ke Akun Saya
+          </button>
+        </div>
+
+        <!-- ── Step 2: OTP WhatsApp Verification ── -->
+        <div class="otp-verify-card" id="otp-verify-card">
+          <div class="otp-icon">
+            <!-- WhatsApp official logo -->
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" aria-label="WhatsApp">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <h3>Verifikasi WhatsApp</h3>
+          <p class="otp-subtitle">
+            Kode 6 digit telah dikirim ke WhatsApp<br>
+            <strong id="otp-phone-display">+62xxx</strong>
+          </p>
+
+          <div class="auth-alert" id="otp-alert" role="alert"></div>
+
+          <!-- 6-digit OTP input boxes -->
+          <div class="otp-inputs-wrap" id="otp-inputs-wrap">
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1" />
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 2" />
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 3" />
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 4" />
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 5" />
+            <input class="otp-digit" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 6" />
+          </div>
+
+          <button class="btn-submit" id="otp-verify-btn" onclick="handleVerifyOTP()">
+            Verifikasi Kode
+          </button>
+
+          <div class="otp-resend-row">
+            Belum menerima kode?
+            <button class="otp-resend-link" id="otp-resend-btn" onclick="resendWhatsAppOTP()" disabled>
+              Kirim ulang
+            </button>
+            <span class="otp-timer" id="otp-timer"></span>
+          </div>
+          <p class="otp-note">
+            Pastikan WhatsApp aktif di nomor tersebut dan koneksi internet stabil.
+          </p>
+        </div>
+
+        <!-- ── Step 1: Registration Form ── -->
+        <form id="signup-form" novalidate onsubmit="handleSignUp(event)">
+          <!-- Name row -->
+          <div class="form-row-2">
+            <div>
+              <label class="form-label" for="signup-firstname">
+                Nama Depan <span class="req">*</span>
+              </label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input
+                  type="text"
+                  id="signup-firstname"
+                  name="firstname"
+                  placeholder="Budi"
+                  autocomplete="given-name"
+                  required
+                />
+              </div>
+              <div class="field-err" id="signup-fn-err">Nama depan wajib diisi.</div>
+            </div>
+            <div>
+              <label class="form-label" for="signup-lastname">Nama Belakang</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input
+                  type="text"
+                  id="signup-lastname"
+                  name="lastname"
+                  placeholder="Santoso"
+                  autocomplete="family-name"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-row">
+            <label class="form-label" for="signup-email">
+              Email <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+              </span>
+              <input
+                type="email"
+                id="signup-email"
+                name="email"
+                placeholder="nama@email.com"
+                autocomplete="email"
+                inputmode="email"
+                required
+              />
+            </div>
+            <div class="field-err" id="signup-email-err">Masukkan email yang valid.</div>
+          </div>
+
+          <!-- WhatsApp Phone (required for OTP) -->
+          <div class="form-row">
+            <label class="form-label" for="signup-phone">
+              Nomor WhatsApp <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <!-- WhatsApp icon -->
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </span>
+              <input
+                type="tel"
+                id="signup-phone"
+                name="phone"
+                placeholder="08xxxxxxxxxx"
+                autocomplete="tel"
+                inputmode="tel"
+                required
+              />
+            </div>
+            <div class="field-err" id="signup-phone-err">Nomor WhatsApp tidak valid (contoh: 081234567890).</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-row">
+            <label class="form-label" for="signup-password">
+              Password <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input
+                type="password"
+                id="signup-password"
+                name="password"
+                placeholder="Min. 8 karakter"
+                autocomplete="new-password"
+                required
+                oninput="checkStrength(this.value)"
+              />
+              <button type="button" class="input-toggle" onclick="togglePw('signup-password', this)" aria-label="Tampilkan password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <!-- Password strength -->
+            <div class="pw-strength-bar" id="pw-strength-bar">
+              <div class="pw-strength-fill" id="pw-strength-fill"></div>
+            </div>
+            <div class="pw-strength-label" id="pw-strength-label" style="color:var(--gray-400);"></div>
+            <div class="field-err" id="signup-pw-err">Password minimal 8 karakter.</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-row" style="margin-bottom:20px;">
+            <label class="form-label" for="signup-confirm">
+              Konfirmasi Password <span class="req">*</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input
+                type="password"
+                id="signup-confirm"
+                name="confirm"
+                placeholder="Ulangi password"
+                autocomplete="new-password"
+                required
+              />
+              <button type="button" class="input-toggle" onclick="togglePw('signup-confirm', this)" aria-label="Tampilkan password">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="field-err" id="signup-confirm-err">Password tidak sama.</div>
+          </div>
+
+          <!-- Terms -->
+          <div class="check-row" style="margin-bottom:20px;">
+            <input type="checkbox" id="signup-terms" required />
+            <label for="signup-terms">
+              Saya menyetujui <a href="#">Syarat & Ketentuan</a> serta
+              <a href="#">Kebijakan Privasi</a> SIPELOR BEDAS.
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-submit" id="signup-btn">
+            Buat Akun Gratis
+          </button>
+        </form>
+
+        <!-- Switch prompt -->
+        <div class="auth-switch" id="signup-switch">
+          Sudah punya akun? <a onclick="switchTab('signin')">Masuk di sini →</a>
+        </div>
+      </div><!-- /panel-signup -->
+
+      <!-- Home link -->
+      <a href="../home.html" class="auth-home-link">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+        Kembali ke Beranda
+      </a>
+
+    </div><!-- /auth-right-inner -->
+  </div><!-- /auth-right -->
+</div><!-- /auth-page -->
+
+<!-- ═══════════════════════════════════════════
+     FORGOT PASSWORD MODAL
+═══════════════════════════════════════════ -->
+<div class="fp-overlay" id="fp-overlay" onclick="closeFpOnBackdrop(event)">
+  <div class="fp-card">
+    <div class="fp-head">
+      <div>
+        <div class="fp-title">Reset Password</div>
+        <p class="fp-sub">Masukkan email terdaftar. Kami akan kirimkan link untuk reset password.</p>
+      </div>
+      <button class="fp-close" onclick="closeForgotPw()" aria-label="Tutup">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="auth-alert" id="fp-alert" role="alert"></div>
+
+    <!-- Sent success -->
+    <div id="fp-success" style="display:none;text-align:center;padding:8px 0 12px;">
+      <div style="font-size:2rem;margin-bottom:10px;">📬</div>
+      <p style="font-size:.88rem;color:var(--gray-700);font-weight:600;margin-bottom:6px;">Link berhasil dikirim!</p>
+      <p style="font-size:.82rem;color:var(--gray-500);line-height:1.6;">Cek inbox email Anda dan klik link reset password yang kami kirimkan. Link berlaku 1 jam.</p>
+    </div>
+
+    <form id="fp-form" novalidate onsubmit="handleForgotPw(event)">
+      <div class="form-row" style="margin-bottom:20px;">
+        <label class="form-label" for="fp-email">Email Terdaftar <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          </span>
+          <input
+            type="email"
+            id="fp-email"
+            placeholder="nama@email.com"
+            autocomplete="email"
+            inputmode="email"
+            required
+          />
+        </div>
+        <div class="field-err" id="fp-email-err">Email tidak valid.</div>
+      </div>
+      <button type="submit" class="btn-submit" id="fp-btn" style="background:var(--navy);">
+        Kirim Link Reset
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SUPABASE + LOGIC
+═══════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+
+// ── Supabase Config ──────────────────────────────────────────────────────────
+const SUPABASE_URL      = 'https://gbhprmibbcqfwjgrkfzq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiaHBybWliYmNxZndqZ3JrZnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MDgwNTcsImV4cCI6MjA4NDQ4NDA1N30.vMuV0A4NEC5IhA34TrVmJGBtB4UerOt2Dk8fe4uxwrY';
+const REDIRECT_AFTER_LOGIN = '../pesan.html';
+
+// ── WhatsApp OTP Config (Fonnte) ─────────────────────────────────────────────
+// SETUP:
+//   1. Daftarkan akun di https://fonnte.com
+//   2. Hubungkan nomor WhatsApp di Fonnte dashboard
+//   3. Salin API token dan paste di bawah
+//   4. Di Supabase Dashboard → Authentication → Providers → Email:
+//      Nonaktifkan "Confirm email" agar akun langsung aktif setelah daftar
+//
+// PENTING: Token ini akan terlihat di source code (client-side).
+// Batasi penggunaan token di Fonnte dashboard (whitelist domain/IP jika tersedia).
+const FONNTE_TOKEN = '8mzNV9hFvm8CcsFAj4UZ'; // ← Isi token Fonnte Anda
+
+const OTP_EXPIRY_MS  = 5 * 60 * 1000; // 5 menit
+const OTP_MAX_TRIES  = 3;              // maks percobaan verifikasi
+const OTP_COOLDOWN_S = 60;             // detik sebelum bisa kirim ulang
+
+// ── State ────────────────────────────────────────────────────────────────────
+let _otpState = null;
+// { code, phone, phoneDisplay, expiresAt, attempts, email, password, fullName }
+let _otpTimerInterval = null;
+
+// ── Supabase client ──────────────────────────────────────────────────────────
+let sb = null;
+try {
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: {
+      storageKey:       'sipelor-user-session',
+      persistSession:   true,
+      autoRefreshToken: true,
+    }
+  });
+} catch (e) {
+  console.warn('[SIPELOR] Supabase init error:', e.message);
+}
+
+// ── Auto-redirect if already logged in ──────────────────────────────────────
+(async function checkExistingSession() {
+  if (!sb) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .maybeSingle();
+    const role = profile?.role || 'user';
+    if (['admin','superadmin','manager','operator'].includes(role)) {
+      window.location.replace('../admin/index.html');
+    } else {
+      window.location.replace(REDIRECT_AFTER_LOGIN);
+    }
+  } catch (_) { /* stay on login */ }
+})();
+
+// ── Tab switching ────────────────────────────────────────────────────────────
+window.switchTab = function(tab) {
+  const panels  = { signin: 'panel-signin', signup: 'panel-signup' };
+  const tabBtns = { signin: 'tab-signin',   signup: 'tab-signup'   };
+  const titles  = { signin: 'Selamat Datang', signup: 'Buat Akun Baru' };
+  const subs    = {
+    signin: 'Masuk atau buat akun baru untuk mulai pesan lapangan',
+    signup: 'Daftar gratis — mulai pesan lapangan dalam hitungan menit',
+  };
+  Object.keys(panels).forEach(k => {
+    const panel = document.getElementById(panels[k]);
+    const btn   = document.getElementById(tabBtns[k]);
+    panel.classList.toggle('active', k === tab);
+    btn.classList.toggle('active',   k === tab);
+    btn.setAttribute('aria-selected', k === tab ? 'true' : 'false');
+  });
+  document.getElementById('panel-title').textContent = titles[tab];
+  document.getElementById('panel-sub').textContent   = subs[tab];
+  document.querySelector('.auth-right').scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// ── Toggle password visibility ───────────────────────────────────────────────
+window.togglePw = function(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  const show = inp.type === 'password';
+  inp.type   = show ? 'text' : 'password';
+  const icon = btn.querySelector('.eye-icon');
+  if (icon) {
+    icon.innerHTML = show
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  }
+};
+
+// ── Password strength ────────────────────────────────────────────────────────
+window.checkStrength = function(pw) {
+  const bar   = document.getElementById('pw-strength-fill');
+  const label = document.getElementById('pw-strength-label');
+  let score = 0;
+  if (pw.length >= 8)  score++;
+  if (pw.length >= 12) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  const cfg = [
+    { pct: '0%',   color: 'transparent', txt: '' },
+    { pct: '25%',  color: '#EF4444',     txt: 'Sangat Lemah' },
+    { pct: '40%',  color: '#F97316',     txt: 'Lemah' },
+    { pct: '60%',  color: '#F59E0B',     txt: 'Sedang' },
+    { pct: '80%',  color: '#22C55E',     txt: 'Kuat' },
+    { pct: '100%', color: '#00693E',     txt: 'Sangat Kuat' },
+  ];
+  const s   = cfg[Math.min(score, 5)];
+  bar.style.width      = s.pct;
+  bar.style.background = s.color;
+  label.textContent    = s.txt;
+  label.style.color    = s.color;
+};
+
+// ── Alert helpers ────────────────────────────────────────────────────────────
+function showAlert(id, type, msg) {
+  const el  = document.getElementById(id);
+  if (!el) return;
+  el.className = `auth-alert show ${type}`;
+  const icons = { error: '⚠️', success: '✅', info: 'ℹ️' };
+  el.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+}
+function hideAlert(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'auth-alert';
+  el.innerHTML = '';
+}
+
+// ── Field error helpers ──────────────────────────────────────────────────────
+function fieldError(inputId, errId, show, msg) {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  if (show) {
+    inp?.classList.add('error-field');
+    if (err) { err.textContent = msg || err.textContent; err.classList.add('show'); }
+  } else {
+    inp?.classList.remove('error-field');
+    if (err) err.classList.remove('show');
+  }
+}
+
+// ── Supabase error messages in Indonesian ────────────────────────────────────
+function friendlyError(err) {
+  const msg = err?.message || '';
+  const map = {
+    'Invalid login credentials':    'Email atau password salah. Periksa kembali dan coba lagi.',
+    'Email not confirmed':          'Email belum diverifikasi. Hubungi admin atau coba daftar ulang.',
+    'Too many requests':            'Terlalu banyak percobaan. Tunggu beberapa menit sebelum mencoba lagi.',
+    'User already registered':      'Email ini sudah terdaftar. Silakan masuk atau gunakan email lain.',
+    'Password should be at least':  'Password minimal 6 karakter.',
+    'Unable to validate email':     'Format email tidak valid.',
+    'signup is disabled':           'Pendaftaran sementara dinonaktifkan. Hubungi administrator.',
+    'Email rate limit exceeded':    'Batas pengiriman email tercapai. Coba lagi dalam beberapa menit.',
+    'Failed to fetch':              'Gagal terhubung ke server. Pastikan koneksi internet aktif.',
+    'Load failed':                  'Gagal terhubung ke server. Periksa koneksi internet.',
+    'WhatsApp gagal':               'Gagal mengirim kode WhatsApp. Periksa nomor dan coba lagi.',
+  };
+  for (const [key, val] of Object.entries(map)) {
+    if (msg.includes(key)) return val;
+  }
+  return msg || 'Terjadi kesalahan. Silakan coba lagi.';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SIGN IN
+// ═══════════════════════════════════════════════════════════════
+window.handleSignIn = async function(e) {
+  e.preventDefault();
+  hideAlert('signin-alert');
+
+  const email    = document.getElementById('signin-email').value.trim();
+  const password = document.getElementById('signin-password').value;
+  const btn      = document.getElementById('signin-btn');
+
+  let valid = true;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    fieldError('signin-email', 'signin-email-err', true, 'Masukkan email yang valid.');
+    valid = false;
+  } else {
+    fieldError('signin-email', 'signin-email-err', false);
+  }
+  if (!password) {
+    fieldError('signin-password', 'signin-pw-err', true, 'Password tidak boleh kosong.');
+    valid = false;
+  } else {
+    fieldError('signin-password', 'signin-pw-err', false);
+  }
+  if (!valid) return;
+
+  if (!sb) {
+    showAlert('signin-alert', 'error', 'Koneksi ke server gagal. Refresh halaman dan coba lagi.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="btn-spinner"></span> Memproses...';
+
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+
+    let redirectUrl = REDIRECT_AFTER_LOGIN;
+    try {
+      const { data: profile } = await sb
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .maybeSingle();
+      const role = profile?.role || 'user';
+      if (['admin','superadmin','manager','operator'].includes(role)) {
+        redirectUrl = '../admin/index.html';
+      }
+    } catch (_) {}
+
+    showAlert('signin-alert', 'success', '✅ Login berhasil! Mengalihkan...');
+    setTimeout(() => { window.location.replace(redirectUrl); }, 800);
+
+  } catch (err) {
+    showAlert('signin-alert', 'error', friendlyError(err));
+    btn.disabled = false;
+    btn.innerHTML = 'Masuk ke Akun';
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════
+// WHATSAPP OTP — UTILITIES
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Normalise Indonesian phone number to international format for Fonnte.
+ * e.g. 081234567890 → 6281234567890
+ */
+function normalizePhone(raw) {
+  let phone = String(raw).replace(/[\s\-\(\)\.\+]/g, '');
+  if (phone.startsWith('0')) phone = '62' + phone.slice(1);
+  if (!phone.startsWith('62')) phone = '62' + phone;
+  return phone;
+}
+
+/**
+ * Validate raw phone input (Indonesian mobile number).
+ */
+function isValidPhone(raw) {
+  const digits = String(raw).replace(/[\s\-\(\)\.\+]/g, '');
+  // Accept 08xxxxxxxxx (10-13 digits starting with 0) or 628... (11-14 digits starting with 62)
+  return /^(0[1-9]\d{7,11}|62[1-9]\d{7,11})$/.test(digits);
+}
+
+/**
+ * Generate a random 6-digit OTP string.
+ */
+function generateOTP() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+/**
+ * Format phone for display (e.g. 6281234567890 → +62 812-3456-7890).
+ */
+function formatPhoneDisplay(normalized) {
+  const n = normalized.replace(/^62/, '');
+  if (n.length <= 4) return `+62 ${n}`;
+  if (n.length <= 8) return `+62 ${n.slice(0,3)}-${n.slice(3)}`;
+  return `+62 ${n.slice(0,3)}-${n.slice(3,7)}-${n.slice(7)}`;
+}
+
+/**
+ * Send WhatsApp OTP via Fonnte API.
+ * Fonnte supports CORS for browser calls.
+ */
+async function sendWhatsAppOTP(normalizedPhone, otp) {
+  if (!FONNTE_TOKEN || FONNTE_TOKEN === 'GANTI_DENGAN_TOKEN_FONNTE_ANDA') {
+    // DEV MODE: log OTP to console so registration can still be tested
+    console.info(`[SIPELOR OTP DEV] Kode untuk ${normalizedPhone}: ${otp}`);
+    console.warn('[SIPELOR] Token Fonnte belum dikonfigurasi. Set FONNTE_TOKEN di login.html');
+    return true; // allow flow to continue during development
+  }
+
+  const message =
+    `Kode verifikasi SIPELOR BEDAS Anda:\n\n` +
+    `*${otp}*\n\n` +
+    `Berlaku 5 menit. Jangan bagikan kode ini kepada siapapun.\n\n` +
+    `— SIPELOR BEDAS DISPORA Kab. Bandung`;
+
+  const res = await fetch('https://api.fonnte.com/send', {
+    method: 'POST',
+    headers: {
+      'Authorization': FONNTE_TOKEN,
+    },
+    body: new URLSearchParams({
+      target:      normalizedPhone,
+      message:     message,
+      countryCode: '62',
+    }),
+  });
+
+  let json = {};
+  try { json = await res.json(); } catch (_) { /* non-JSON response */ }
+
+  if (!res.ok || json.status === false) {
+    const reason = json.reason || json.message || `HTTP ${res.status}`;
+    throw new Error(`WhatsApp gagal: ${reason}`);
+  }
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SIGN UP — STEP 1: Register & send OTP
+// ═══════════════════════════════════════════════════════════════
+window.handleSignUp = async function(e) {
+  e.preventDefault();
+  hideAlert('signup-alert');
+
+  const firstName = document.getElementById('signup-firstname').value.trim();
+  const lastName  = document.getElementById('signup-lastname').value.trim();
+  const email     = document.getElementById('signup-email').value.trim();
+  const phone     = document.getElementById('signup-phone').value.trim();
+  const password  = document.getElementById('signup-password').value;
+  const confirm   = document.getElementById('signup-confirm').value;
+  const terms     = document.getElementById('signup-terms').checked;
+  const btn       = document.getElementById('signup-btn');
+  const fullName  = [firstName, lastName].filter(Boolean).join(' ');
+
+  // ── Validation ──────────────────────────────────────────────
+  let valid = true;
+
+  if (!firstName) {
+    fieldError('signup-firstname', 'signup-fn-err', true, 'Nama depan wajib diisi.');
+    valid = false;
+  } else {
+    fieldError('signup-firstname', 'signup-fn-err', false);
+  }
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    fieldError('signup-email', 'signup-email-err', true, 'Masukkan email yang valid.');
+    valid = false;
+  } else {
+    fieldError('signup-email', 'signup-email-err', false);
+  }
+
+  if (!phone || !isValidPhone(phone)) {
+    fieldError('signup-phone', 'signup-phone-err', true, 'Nomor WhatsApp tidak valid (contoh: 081234567890).');
+    valid = false;
+  } else {
+    fieldError('signup-phone', 'signup-phone-err', false);
+  }
+
+  if (password.length < 8) {
+    fieldError('signup-password', 'signup-pw-err', true, 'Password minimal 8 karakter.');
+    valid = false;
+  } else {
+    fieldError('signup-password', 'signup-pw-err', false);
+  }
+
+  if (password !== confirm) {
+    fieldError('signup-confirm', 'signup-confirm-err', true, 'Password tidak sama.');
+    valid = false;
+  } else {
+    fieldError('signup-confirm', 'signup-confirm-err', false);
+  }
+
+  if (!terms) {
+    showAlert('signup-alert', 'error', 'Anda harus menyetujui Syarat & Ketentuan untuk mendaftar.');
+    valid = false;
+  }
+  if (!valid) return;
+
+  if (!sb) {
+    showAlert('signup-alert', 'error', 'Koneksi ke server gagal. Refresh halaman dan coba lagi.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="btn-spinner"></span> Membuat Akun...';
+
+  try {
+    // ── Step A: Create Supabase auth account ────────────────────
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName, phone: normalizePhone(phone) },
+      },
+    });
+    if (error) throw error;
+
+    // Best-effort: upsert profile row
+    if (data.user) {
+      try {
+        await sb.from('profiles').upsert({
+          id:         data.user.id,
+          full_name:  fullName,
+          email:      email,
+          phone:      normalizePhone(phone),
+          role:       'user',
+          created_at: new Date().toISOString(),
+        }, { onConflict: 'id' });
+      } catch (_) { /* profile insert is best-effort */ }
+    }
+
+    // ── Sign out immediately so the browser session doesn't exist
+    //    until the user completes WhatsApp OTP verification.
+    //    Without this, checkExistingSession() on home.html would
+    //    redirect the user to pesan.html before OTP is verified.
+    try { await sb.auth.signOut(); } catch (_) {}
+
+    // ── Step B: Generate & send WhatsApp OTP ────────────────────
+    btn.innerHTML = '<span class="btn-spinner"></span> Mengirim Kode WhatsApp...';
+
+    const otp          = generateOTP();
+    const normalPhone  = normalizePhone(phone);
+    const phoneDisplay = formatPhoneDisplay(normalPhone);
+
+    await sendWhatsAppOTP(normalPhone, otp);
+
+    // ── Store OTP state ─────────────────────────────────────────
+    _otpState = {
+      code:         otp,
+      phone:        normalPhone,
+      phoneDisplay: phoneDisplay,
+      expiresAt:    Date.now() + OTP_EXPIRY_MS,
+      attempts:     0,
+      email:        email,
+      password:     password,
+      fullName:     fullName,
+    };
+
+    // ── Step C: Show OTP verification step ──────────────────────
+    showOTPCard(phoneDisplay);
+
+  } catch (err) {
+    showAlert('signup-alert', 'error', friendlyError(err));
+    btn.disabled = false;
+    btn.innerHTML = 'Buat Akun Gratis';
+  }
+};
+
+// ── Show OTP verification card ───────────────────────────────────────────────
+function showOTPCard(phoneDisplay) {
+  document.getElementById('signup-form').style.display   = 'none';
+  document.getElementById('signup-switch').style.display = 'none';
+  document.getElementById('panel-title').textContent     = 'Verifikasi WhatsApp';
+  document.getElementById('panel-sub').textContent       = 'Masukkan kode 6 digit yang dikirim ke WhatsApp Anda';
+
+  document.getElementById('otp-phone-display').textContent = phoneDisplay;
+  document.getElementById('otp-verify-card').classList.add('show');
+
+  initOTPInputs();
+  startOTPTimer();
+
+  // Focus first digit
+  setTimeout(() => {
+    const first = document.querySelector('.otp-digit');
+    if (first) first.focus();
+  }, 100);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// OTP INPUT — Keyboard / Paste UX
+// ═══════════════════════════════════════════════════════════════
+function initOTPInputs() {
+  const inputs = document.querySelectorAll('.otp-digit');
+  inputs.forEach((inp, idx) => {
+    // Only allow numeric input
+    inp.addEventListener('input', () => {
+      const val = inp.value.replace(/\D/g, '');
+      inp.value = val ? val[0] : '';
+      inp.classList.toggle('filled', !!inp.value);
+      inp.classList.remove('otp-error');
+      // Auto-advance
+      if (inp.value && idx < inputs.length - 1) {
+        inputs[idx + 1].focus();
+      }
+    });
+
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Backspace') {
+        if (!inp.value && idx > 0) {
+          inputs[idx - 1].focus();
+          inputs[idx - 1].value = '';
+          inputs[idx - 1].classList.remove('filled');
+        }
+        inp.classList.remove('otp-error');
+      }
+      if (e.key === 'ArrowLeft' && idx > 0) inputs[idx - 1].focus();
+      if (e.key === 'ArrowRight' && idx < inputs.length - 1) inputs[idx + 1].focus();
+      if (e.key === 'Enter') handleVerifyOTP();
+    });
+
+    // Handle paste (e.g. SMS auto-fill)
+    inp.addEventListener('paste', e => {
+      e.preventDefault();
+      const digits = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+      digits.split('').forEach((d, i) => {
+        if (inputs[i]) {
+          inputs[i].value = d;
+          inputs[i].classList.add('filled');
+          inputs[i].classList.remove('otp-error');
+        }
+      });
+      const nextIdx = Math.min(digits.length, inputs.length - 1);
+      inputs[nextIdx].focus();
+    });
+  });
+}
+
+function getOTPValue() {
+  return [...document.querySelectorAll('.otp-digit')].map(i => i.value).join('');
+}
+
+function clearOTPInputs(markError) {
+  document.querySelectorAll('.otp-digit').forEach(i => {
+    i.value = '';
+    i.classList.remove('filled');
+    if (markError) i.classList.add('otp-error');
+    else i.classList.remove('otp-error');
+  });
+  const first = document.querySelector('.otp-digit');
+  if (first) first.focus();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// OTP VERIFICATION — STEP 2
+// ═══════════════════════════════════════════════════════════════
+window.handleVerifyOTP = async function() {
+  hideAlert('otp-alert');
+
+  if (!_otpState) {
+    showAlert('otp-alert', 'error', 'Sesi verifikasi tidak ditemukan. Silakan daftar ulang.');
+    return;
+  }
+
+  // Check expiry
+  if (Date.now() > _otpState.expiresAt) {
+    showAlert('otp-alert', 'error', 'Kode OTP sudah kedaluwarsa. Klik "Kirim ulang" untuk mendapatkan kode baru.');
+    clearOTPInputs(false);
+    return;
+  }
+
+  const entered = getOTPValue();
+  if (entered.length < 6) {
+    showAlert('otp-alert', 'error', 'Masukkan 6 digit kode OTP terlebih dahulu.');
+    return;
+  }
+
+  _otpState.attempts++;
+
+  if (entered !== _otpState.code) {
+    const remaining = OTP_MAX_TRIES - _otpState.attempts;
+    clearOTPInputs(true);
+    if (remaining <= 0) {
+      showAlert('otp-alert', 'error', 'Terlalu banyak percobaan. Klik "Kirim ulang" untuk kode baru.');
+      // Lock verify button
+      const btn = document.getElementById('otp-verify-btn');
+      btn.disabled = true;
+      btn.textContent = 'Kode Salah';
+    } else {
+      showAlert('otp-alert', 'error', `Kode salah. Sisa percobaan: ${remaining}.`);
+    }
+    return;
+  }
+
+  // ── OTP Correct — complete registration ──────────────────────
+  const btn = document.getElementById('otp-verify-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="btn-spinner"></span> Memverifikasi...';
+
+  // Stop timer
+  clearOTPTimer();
+
+  // Hide OTP card
+  document.getElementById('otp-verify-card').classList.remove('show');
+
+  // Show success card
+  document.getElementById('signup-success').classList.add('show');
+  document.getElementById('panel-title').textContent = 'Akun Aktif! 🎉';
+  document.getElementById('panel-sub').textContent   = 'Verifikasi WhatsApp berhasil';
+
+  // Try auto sign-in (works when Supabase email confirmation is disabled)
+  if (sb && _otpState.email && _otpState.password) {
+    try {
+      const { data: siData, error: siErr } = await sb.auth.signInWithPassword({
+        email:    _otpState.email,
+        password: _otpState.password,
+      });
+      if (!siErr && siData.session) {
+        // Auto-redirect after a short delay so user sees success screen
+        setTimeout(() => {
+          window.location.replace(REDIRECT_AFTER_LOGIN);
+        }, 2000);
+      }
+    } catch (_) {
+      // Auto sign-in failed (e.g. email confirmation still enabled in Supabase).
+      // User can manually click "Masuk ke Akun Saya".
+    }
+  }
+
+  // Clear sensitive OTP state
+  _otpState = null;
+};
+
+// ═══════════════════════════════════════════════════════════════
+// OTP RESEND
+// ═══════════════════════════════════════════════════════════════
+window.resendWhatsAppOTP = async function() {
+  if (!_otpState) return;
+
+  const resendBtn = document.getElementById('otp-resend-btn');
+  const verifyBtn = document.getElementById('otp-verify-btn');
+
+  resendBtn.disabled = true;
+  hideAlert('otp-alert');
+
+  try {
+    const newOtp = generateOTP();
+    await sendWhatsAppOTP(_otpState.phone, newOtp);
+
+    // Reset OTP state
+    _otpState.code      = newOtp;
+    _otpState.expiresAt = Date.now() + OTP_EXPIRY_MS;
+    _otpState.attempts  = 0;
+
+    // Re-enable verify button (if it was locked)
+    verifyBtn.disabled = false;
+    verifyBtn.innerHTML = 'Verifikasi Kode';
+
+    clearOTPInputs(false);
+    showAlert('otp-alert', 'success', `Kode baru berhasil dikirim ke WhatsApp ${_otpState.phoneDisplay}.`);
+    startOTPTimer();
+
+  } catch (err) {
+    showAlert('otp-alert', 'error', 'Gagal mengirim ulang kode. Pastikan koneksi internet aktif dan coba lagi.');
+    resendBtn.disabled = false;
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════
+// OTP COUNTDOWN TIMER
+// ═══════════════════════════════════════════════════════════════
+function startOTPTimer() {
+  clearOTPTimer();
+
+  const resendBtn = document.getElementById('otp-resend-btn');
+  const timerEl   = document.getElementById('otp-timer');
+  let seconds     = OTP_COOLDOWN_S;
+
+  resendBtn.disabled = true;
+  timerEl.textContent = `(${seconds}d)`;
+
+  _otpTimerInterval = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) {
+      clearOTPTimer();
+      resendBtn.disabled  = false;
+      timerEl.textContent = '';
+    } else {
+      timerEl.textContent = `(${seconds}d)`;
+    }
+  }, 1000);
+}
+
+function clearOTPTimer() {
+  if (_otpTimerInterval) {
+    clearInterval(_otpTimerInterval);
+    _otpTimerInterval = null;
+  }
+  const timerEl = document.getElementById('otp-timer');
+  if (timerEl) timerEl.textContent = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FORGOT PASSWORD
+// ═══════════════════════════════════════════════════════════════
+window.openForgotPw = function() {
+  hideAlert('fp-alert');
+  document.getElementById('fp-form').style.display    = '';
+  document.getElementById('fp-success').style.display = 'none';
+  document.getElementById('fp-btn').disabled          = false;
+  document.getElementById('fp-btn').innerHTML         = 'Kirim Link Reset';
+  document.getElementById('fp-email').value           = document.getElementById('signin-email').value || '';
+  document.getElementById('fp-overlay').classList.add('open');
+  setTimeout(() => { document.getElementById('fp-email').focus(); }, 120);
+};
+window.closeForgotPw = function() {
+  document.getElementById('fp-overlay').classList.remove('open');
+};
+window.closeFpOnBackdrop = function(e) {
+  if (e.target === document.getElementById('fp-overlay')) closeForgotPw();
+};
+
+window.handleForgotPw = async function(e) {
+  e.preventDefault();
+  const email = document.getElementById('fp-email').value.trim();
+  const btn   = document.getElementById('fp-btn');
+  const errEl = document.getElementById('fp-email-err');
+  hideAlert('fp-alert');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = 'Masukkan email yang valid.';
+    errEl.classList.add('show');
+    document.getElementById('fp-email').classList.add('error-field');
+    return;
+  }
+  errEl.classList.remove('show');
+  document.getElementById('fp-email').classList.remove('error-field');
+
+  if (!sb) {
+    showAlert('fp-alert', 'error', 'Koneksi server gagal.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="btn-spinner"></span> Mengirim...';
+
+  try {
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/login.html?reset=true',
+    });
+    if (error) throw error;
+    document.getElementById('fp-form').style.display    = 'none';
+    document.getElementById('fp-success').style.display = '';
+  } catch (err) {
+    showAlert('fp-alert', 'error', friendlyError(err));
+    btn.disabled = false;
+    btn.innerHTML = 'Kirim Link Reset';
+  }
+};
+
+// ── Handle URL params on load ─────────────────────────────────────────────────
+(function handleURLParams() {
+  const params = new URLSearchParams(window.location.search);
+  const hash   = new URLSearchParams(window.location.hash.replace('#', '?'));
+
+  // ?tab=signup → pre-select register tab (from home.html "Daftar" button)
+  if (params.get('tab') === 'signup') {
+    switchTab('signup');
+  }
+
+  // Password reset redirect
+  const type = hash.get('type') || params.get('type');
+  if (type === 'recovery') {
+    switchTab('signin');
+    showAlert('signin-alert', 'info',
+      'Masukkan password baru Anda. Silakan gunakan form Masuk di bawah setelah mereset password.');
+  }
+})();
+
+// ── Escape key closes modal ───────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeForgotPw();
+});
+</script>
+</body>
+</html>

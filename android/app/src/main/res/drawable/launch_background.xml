@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Branded launch splash — menghapus white flash bawaan Flutter -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background gelap sesuai warna utama app -->
+    <item android:drawable="@color/splash_background" />
+
+    <!-- Logo SIPELOR di tengah layar -->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/ic_launcher" />
+    </item>
+</layer-list>

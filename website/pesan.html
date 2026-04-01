@@ -1,0 +1,1763 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesan Lapangan — SIPELOR BEDAS</title>
+  <link rel="icon" href="public/images/sipelor.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --navy:          #0A1628;  --navy-mid:      #132136;
+  --emerald:       #00693E;  --emerald-mid:   #059669;
+  --emerald-light: #34D399;  --emerald-pale:  #ECFDF5;
+  --gold:          #D97706;  --gold-mid:      #F59E0B;
+  --gold-pale:     #FFFBEB;  --gold-light:    #FCD34D;
+  --red:           #DC2626;  --red-pale:      #FEF2F2;
+  --white:         #FFFFFF;  --surface:       #F8FAFB;
+  --gray-100:      #F3F4F6;  --gray-200:      #E5E7EB;
+  --gray-300:      #D1D5DB;  --gray-400:      #9CA3AF;
+  --gray-500:      #6B7280;  --gray-700:      #374151;
+  --gray-900:      #111827;
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px; --radius-xl: 28px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-em: 0 8px 24px rgba(0,105,62,.22);
+  --shadow-gd: 0 8px 24px rgba(217,119,6,.30);
+  --transition: all .25s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:var(--font-body);background:var(--surface);color:var(--gray-900);line-height:1.6;overflow-x:hidden;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+/* TOPBAR / NAV */
+.topbar{background:var(--navy);padding:8px 0;font-size:.78rem;}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;}
+.topbar-features{display:flex;align-items:center;gap:20px;}
+.topbar-feature{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.70);}
+.topbar-feature .dot{width:6px;height:6px;background:var(--emerald-light);border-radius:50%;}
+.topbar-right{display:flex;align-items:center;gap:16px;color:rgba(255,255,255,.55);}
+.topbar-right a{color:rgba(255,255,255,.65);transition:var(--transition);}
+.topbar-right a:hover{color:var(--gold-light);}
+.navbar{position:sticky;top:0;z-index:500;background:var(--white);border-bottom:1px solid var(--gray-200);box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.nav-inner{display:flex;align-items:center;gap:8px;height:64px;}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0;margin-right:16px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:8px;}
+.nav-logo-text .brand{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--emerald);}
+.nav-logo-text .tagline{font-size:.6rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;}
+.nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:var(--radius-sm);font-family:var(--font-head);font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:var(--transition);}
+.btn-ghost{background:var(--gray-100);color:var(--gray-700);}
+.breadcrumb-bar{background:var(--white);border-bottom:1px solid var(--gray-100);padding:14px 0;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--gray-400);}
+.breadcrumb a{color:var(--emerald);}
+.breadcrumb a:hover{text-decoration:underline;}
+.breadcrumb .cur{color:var(--gray-700);font-weight:500;}
+
+/* LAYOUT */
+.pesan-wrap{max-width:1100px;margin:0 auto;padding:36px 24px 80px;}
+.pesan-grid{display:grid;grid-template-columns:1fr 390px;gap:28px;align-items:start;}
+
+/* ── SCHEDULE CARD ── */
+.sched-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow:hidden;box-shadow:var(--shadow-sm);}
+.sched-card-head{background:var(--navy);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.sched-card-title{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--white);}
+.sched-card-sub{font-size:.75rem;color:rgba(255,255,255,.55);margin-top:2px;}
+.date-nav{display:flex;align-items:center;gap:8px;}
+.date-nav-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.20);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.8rem;transition:var(--transition);}
+.date-nav-btn:hover{background:var(--emerald);border-color:var(--emerald);}
+.date-label{font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--white);min-width:160px;text-align:center;}
+
+/* MODE BADGE */
+.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.mode-badge.hourly   {background:rgba(0,105,62,.18);color:var(--emerald-light);}
+.mode-badge.twohour  {background:rgba(0,105,62,.18);color:var(--emerald-light);}
+.mode-badge.session  {background:rgba(0,105,62,.18);color:var(--emerald-light);}
+.mode-badge.person   {background:rgba(217,119,6,.18);color:var(--gold-light);}
+.mode-badge.daily    {background:rgba(255,255,255,.10);color:rgba(255,255,255,.70);}
+.mode-badge.match    {background:rgba(255,255,255,.10);color:rgba(255,255,255,.70);}
+.mode-badge.resepsi8 {background:rgba(139,92,246,.22);color:#c4b5fd;}
+.mode-badge.resepsi18{background:rgba(139,92,246,.22);color:#c4b5fd;}
+
+/* SCHEDULE BODY */
+.sched-body{padding:14px 16px;}
+
+/* Slot rows */
+.sched-slot-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-md);margin-bottom:6px;cursor:pointer;transition:var(--transition);border:2px solid transparent;position:relative;}
+.sched-slot-row:last-child{margin-bottom:0;}
+.sched-slot-row.available{background:var(--emerald-pale);border-color:rgba(0,105,62,.12);}
+.sched-slot-row.available:hover{border-color:var(--emerald);background:#d1fae5;}
+.sched-slot-row.in-range{background:#d1fae5;border-color:var(--emerald);border-style:dashed;}
+.sched-slot-row.start-sel{background:var(--emerald);border-color:var(--emerald);}
+.sched-slot-row.start-sel .slot-time,.sched-slot-row.start-sel .slot-badge-text{color:var(--white)!important;}
+.sched-slot-row.end-sel{background:var(--emerald);border-color:var(--emerald);}
+.sched-slot-row.end-sel .slot-time,.sched-slot-row.end-sel .slot-badge-text{color:var(--white)!important;}
+.sched-slot-row.booked{background:#fff1f2;border-color:rgba(220,38,38,.10);cursor:not-allowed;}
+.sched-slot-row.closed{background:var(--gray-100);border-color:var(--gray-200);cursor:default;opacity:.6;}
+.slot-time{font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--gray-700);min-width:130px;flex-shrink:0;}
+.slot-badge{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:99px;}
+.slot-badge.available{background:rgba(0,105,62,.12);color:var(--emerald);}
+.slot-badge.booked   {background:rgba(220,38,38,.10);color:var(--red);}
+.slot-badge.closed   {background:var(--gray-200);color:var(--gray-500);}
+.slot-badge.selected {background:rgba(255,255,255,.25);color:var(--white);}
+.slot-badge.in-range {background:rgba(0,105,62,.15);color:var(--emerald);}
+.slot-badge .dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.slot-badge-text{}
+.slot-hint{margin-left:auto;font-size:.72rem;color:var(--emerald);font-weight:600;opacity:0;transition:var(--transition);}
+.sched-slot-row.available:hover .slot-hint{opacity:1;}
+
+/* Duration picker (per jam) */
+.duration-picker{margin:12px 0;padding:12px 14px;background:var(--gold-pale);border:1.5px solid rgba(217,119,6,.25);border-radius:var(--radius-md);}
+.duration-picker-label{font-size:.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.duration-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.dur-chip{padding:6px 14px;border-radius:99px;font-size:.78rem;font-weight:700;font-family:var(--font-head);cursor:pointer;border:1.5px solid;transition:var(--transition);}
+.dur-chip.ok{background:var(--white);border-color:rgba(217,119,6,.40);color:var(--gold);}
+.dur-chip.ok:hover{background:var(--gold);color:var(--white);border-color:var(--gold);}
+.dur-chip.active{background:var(--gold);color:var(--white);border-color:var(--gold);}
+.dur-chip.blocked{background:var(--gray-100);border-color:var(--gray-200);color:var(--gray-400);cursor:not-allowed;text-decoration:line-through;opacity:.6;}
+
+/* People counter */
+.people-counter{display:flex;align-items:center;gap:10px;margin:10px 0;}
+.people-btn{width:32px;height:32px;border-radius:50%;background:var(--white);border:1.5px solid var(--gray-300);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:var(--gray-700);transition:var(--transition);}
+.people-btn:hover:not(:disabled){background:var(--emerald);border-color:var(--emerald);color:var(--white);}
+.people-btn:disabled{opacity:.35;cursor:not-allowed;}
+.people-val{font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--gray-900);min-width:28px;text-align:center;}
+.people-cap{font-size:.72rem;color:var(--gray-400);}
+
+/* Daily-mode info */
+.daily-info{padding:24px 20px;text-align:center;}
+.daily-info .di-icon{font-size:2.5rem;margin-bottom:10px;}
+.daily-info .di-title{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:6px;}
+.daily-info .di-sub{font-size:.82rem;color:var(--gray-500);line-height:1.7;}
+.daily-price-box{display:inline-block;margin-top:14px;padding:10px 24px;background:var(--emerald-pale);border:1.5px solid rgba(0,105,62,.20);border-radius:99px;font-family:var(--font-head);font-size:1rem;font-weight:800;color:var(--emerald);}
+
+.sched-loading{height:160px;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gray-400);font-size:.85rem;}
+
+/* ── FORM CARD ── */
+.form-card{background:var(--white);border-radius:var(--radius-lg);border:2px solid var(--emerald);overflow:hidden;box-shadow:var(--shadow-em);position:sticky;top:80px;}
+.form-card-head{background:linear-gradient(135deg,var(--emerald) 0%,var(--emerald-mid) 100%);padding:20px 22px;text-align:center;}
+.form-card-head h3{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+.form-card-head p{font-size:.72rem;color:rgba(255,255,255,.70);}
+.form-body{padding:20px 22px;}
+
+/* Venue pill */
+.venue-pill{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--gray-100);}
+.venue-pill-name{font-family:var(--font-head);font-size:.85rem;font-weight:700;color:var(--gray-900);}
+.venue-pill-type{font-size:.72rem;color:var(--gray-400);}
+.venue-pill-price{margin-left:auto;font-family:var(--font-head);font-size:.82rem;font-weight:700;color:var(--emerald);}
+
+/* Slot summary */
+.slot-summary{background:var(--surface);border:1.5px solid var(--gray-200);border-radius:var(--radius-md);padding:13px 15px;margin-bottom:16px;transition:var(--transition);}
+.slot-summary.has-selection{border-color:var(--emerald);background:var(--emerald-pale);}
+.slot-summary-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400);margin-bottom:7px;}
+.slot-summary.has-selection .slot-summary-label{color:var(--emerald);}
+.slot-summary-empty{font-size:.82rem;color:var(--gray-400);font-style:italic;}
+.slot-summary-rows{display:none;flex-direction:column;gap:4px;}
+.slot-summary.has-selection .slot-summary-rows{display:flex;}
+.slot-summary-row{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--gray-700);}
+
+/* Form fields */
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-family:var(--font-head);font-size:.78rem;font-weight:700;color:var(--gray-700);margin-bottom:5px;}
+.form-label .req{color:var(--red);margin-left:2px;}
+.form-input{width:100%;padding:10px 13px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-200);font-family:var(--font-body);font-size:.9rem;color:var(--gray-900);background:var(--white);transition:var(--transition);outline:none;}
+.form-input:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(0,105,62,.10);}
+.form-input.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(220,38,38,.10);}
+.form-error{display:none;font-size:.72rem;color:var(--red);margin-top:4px;font-weight:500;}
+.form-error.show{display:block;}
+.form-hint{font-size:.72rem;color:var(--gray-400);margin-top:4px;}
+
+/* Price box */
+.price-box{background:var(--surface);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:13px 15px;margin-bottom:16px;display:none;}
+.price-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--gray-500);padding:3px 0;}
+.price-row.total{border-top:1px solid var(--gray-200);margin-top:6px;padding-top:10px;font-weight:700;color:var(--gray-900);font-size:.9rem;}
+.price-row.total .pv{color:var(--emerald);font-family:var(--font-head);font-size:1.05rem;}
+
+/* Submit */
+.submit-btn{display:block;width:100%;padding:13px;background:var(--gold);color:var(--white);font-family:var(--font-head);font-weight:700;font-size:1rem;border:none;border-radius:var(--radius-sm);cursor:pointer;text-align:center;transition:var(--transition);box-shadow:var(--shadow-gd);margin-bottom:10px;}
+.submit-btn:hover:not(:disabled){background:#b45309;transform:translateY(-2px);}
+.submit-btn:disabled{background:var(--gray-200);color:var(--gray-400);box-shadow:none;cursor:not-allowed;transform:none;}
+.form-note{font-size:.70rem;color:var(--gray-400);text-align:center;line-height:1.6;}
+
+/* SUCCESS OVERLAY */
+.success-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.success-overlay.show{display:flex;}
+.success-box{max-width:440px;width:100%;text-align:center;animation:popIn .42s cubic-bezier(.175,.885,.32,1.275);max-height:92vh;overflow-y:auto;}
+@keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* PAYMENT SUCCESS CARD */
+.pay-success-card{background:#fff;border-radius:24px;padding:36px 28px 28px;box-shadow:0 24px 64px rgba(0,0,0,.28);margin-bottom:12px;position:relative;overflow:hidden;}
+.pay-success-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--emerald) 0%,#00529e 50%,var(--emerald-mid) 100%);}
+.pay-success-icon-wrap{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);border:3px solid rgba(0,105,62,.20);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:iconPop .5s .15s both cubic-bezier(.175,.885,.32,1.275);}
+@keyframes iconPop{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.pay-success-checkmark{width:40px;height:40px;stroke:var(--emerald);stroke-width:2.5;fill:none;stroke-dasharray:60;stroke-dashoffset:60;animation:checkDraw .6s .35s ease forwards;}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
+.pay-success-title{font-family:var(--font-head);font-size:1.45rem;font-weight:800;color:var(--gray-900);margin-bottom:6px;}
+.pay-success-subtitle{font-size:.88rem;color:var(--gray-500);line-height:1.6;margin-bottom:20px;}
+.pay-success-info-box{background:var(--emerald-pale);border:1.5px solid rgba(0,105,62,.20);border-radius:12px;padding:14px 16px;margin-bottom:20px;text-align:left;}
+.pay-success-info-row{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--gray-700);padding:4px 0;}
+.pay-success-info-row .pi-icon{font-size:1rem;flex-shrink:0;}
+.pay-success-info-row strong{font-weight:700;color:var(--emerald);}
+.pay-success-admin-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(0,105,62,.12) 0%,rgba(0,82,158,.10) 100%);border:1px solid rgba(0,105,62,.25);border-radius:99px;padding:6px 14px;font-size:.72rem;font-weight:700;color:var(--emerald);margin-bottom:20px;}
+.btn-lihat-etiket{display:block;width:100%;padding:14px;background:linear-gradient(135deg,var(--emerald) 0%,#00529e 100%);color:#fff;font-family:var(--font-head);font-weight:700;font-size:1rem;border:none;border-radius:10px;cursor:pointer;text-align:center;transition:var(--transition);box-shadow:0 6px 20px rgba(0,105,62,.35);letter-spacing:.02em;}
+.btn-lihat-etiket:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,105,62,.40);}
+.btn-lihat-etiket svg{vertical-align:middle;margin-right:6px;}
+
+/* CONFETTI DOTS */
+.confetti-row{display:flex;justify-content:center;gap:6px;margin-bottom:16px;}
+.confetti-dot{width:10px;height:10px;border-radius:50%;animation:confettiBounce .6s ease infinite alternate;}
+.confetti-dot:nth-child(1){background:#00693E;animation-delay:0s;}
+.confetti-dot:nth-child(2){background:#F59E0B;animation-delay:.12s;}
+.confetti-dot:nth-child(3){background:#3B82F6;animation-delay:.24s;}
+.confetti-dot:nth-child(4){background:#EC4899;animation-delay:.36s;}
+.confetti-dot:nth-child(5){background:#00693E;animation-delay:.48s;}
+@keyframes confettiBounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+
+/* E-TIKET */
+.etiket-wrap{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.30);margin-bottom:14px;}
+.etiket-head{background:linear-gradient(135deg,var(--emerald) 0%,#00529e 100%);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.etiket-head-left{display:flex;align-items:center;gap:10px;}
+.etiket-brand{font-family:var(--font-head);font-size:.95rem;font-weight:800;color:#fff;line-height:1.2;}
+.etiket-brand-sub{font-size:.6rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;}
+.etiket-stamp{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.40);color:#fff;font-family:var(--font-head);font-size:.65rem;font-weight:800;letter-spacing:.14em;padding:4px 10px;border-radius:5px;}
+.etiket-body{background:#fff;padding:18px 20px;text-align:left;}
+.etiket-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px dashed var(--gray-100);}
+.etiket-row:last-child{border-bottom:none;}
+.etiket-row-label{font-size:.7rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;padding-top:2px;}
+.etiket-row-val{font-size:.82rem;font-weight:700;color:var(--gray-800);text-align:right;}
+.etiket-total-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;padding:10px 12px;background:var(--emerald-pale);border-radius:8px;border:1px solid rgba(0,105,62,.18);}
+.etiket-total-label{font-size:.72rem;font-weight:700;color:var(--emerald);text-transform:uppercase;letter-spacing:.05em;}
+.etiket-total-val{font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--emerald);}
+/* Tear line */
+.etiket-tear{background:#f3f4f6;display:flex;align-items:center;position:relative;height:22px;}
+.etiket-tear-circle{width:22px;height:22px;background:rgba(0,0,0,.55);border-radius:50%;flex-shrink:0;}
+.etiket-tear-circle.left{margin-left:-11px;}
+.etiket-tear-circle.right{margin-right:-11px;margin-left:auto;}
+.etiket-tear-dots{flex:1;border-top:2px dashed var(--gray-300);margin:0 6px;}
+/* Footer */
+.etiket-foot{background:#fff;padding:14px 20px;text-align:center;border-top:none;}
+.etiket-code{font-family:var(--font-head);font-size:1.1rem;font-weight:800;letter-spacing:2.5px;color:var(--navy);margin:4px 0;}
+.etiket-code-label{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.10em;color:var(--gray-400);}
+.etiket-valid{font-size:.67rem;color:var(--gray-400);margin-top:5px;font-style:italic;}
+/* sdr kept for potential reuse */
+.sdr{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--gray-700);padding:3px 0;}
+
+/* Actions */
+.success-actions{display:flex;gap:10px;margin-top:4px;}
+.success-actions button,.success-actions a{flex:1;padding:12px 10px;border-radius:var(--radius-sm);font-weight:700;font-family:var(--font-head);font-size:.85rem;cursor:pointer;text-align:center;transition:var(--transition);border:none;text-decoration:none;display:inline-block;}
+.btn-download{background:linear-gradient(135deg,var(--emerald) 0%,#00529e 100%);color:#fff;box-shadow:0 4px 16px rgba(0,105,62,.30);}
+.btn-download:hover{opacity:.9;transform:translateY(-1px);}
+.btn-back{background:var(--gray-100);color:var(--gray-700);}
+.btn-back:hover{background:var(--gray-200);}
+
+/* REKENING CARD */
+.rek-card{background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%);border:1.5px solid rgba(0,105,62,.25);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;}
+.rek-card-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--emerald);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rek-bank-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.rek-bank-badge{background:#004a8c;color:#fff;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:4px;letter-spacing:.05em;}
+.rek-number-row{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid rgba(0,105,62,.20);border-radius:var(--radius-sm);padding:10px 12px;}
+.rek-number{font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--gray-900);letter-spacing:2px;flex:1;}
+.rek-copy-btn{display:inline-flex;align-items:center;gap:5px;background:var(--emerald);color:var(--white);border:none;border-radius:6px;padding:5px 12px;font-size:.72rem;font-weight:700;cursor:pointer;transition:var(--transition);flex-shrink:0;}
+.rek-copy-btn:hover{background:#005a35;}
+.rek-copy-btn.copied{background:var(--emerald-mid);}
+.rek-an{font-size:.74rem;color:var(--gray-500);margin-top:7px;}
+
+/* UPLOAD PROOF */
+.upload-zone{border:2px dashed var(--gray-300);border-radius:var(--radius-md);padding:18px 14px;text-align:center;cursor:pointer;transition:var(--transition);background:var(--surface);margin-bottom:10px;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--emerald);background:var(--emerald-pale);}
+.upload-zone-icon{font-size:1.8rem;margin-bottom:5px;}
+.upload-zone-label{font-size:.8rem;color:var(--gray-400);line-height:1.6;}
+.upload-zone-label strong{color:var(--emerald);}
+.upload-file-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:10px;}
+.upload-file-name{flex:1;font-size:.82rem;color:var(--gray-700);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.upload-btn{width:100%;padding:11px;background:var(--emerald);color:var(--white);font-family:var(--font-head);font-weight:700;font-size:.9rem;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);}
+.upload-btn:hover:not(:disabled){background:#005a35;}
+.upload-btn:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;}
+.upload-success-msg{background:var(--emerald-pale);border:1.5px solid rgba(0,105,62,.25);border-radius:var(--radius-md);padding:12px 14px;text-align:center;font-size:.84rem;color:var(--emerald);font-weight:600;}
+
+/* COPY TOAST */
+.copy-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--gray-900);color:var(--white);padding:9px 22px;border-radius:99px;font-size:.82rem;font-weight:600;opacity:0;transition:all .3s ease;z-index:99999;pointer-events:none;white-space:nowrap;}
+.copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* Success box scrollable when upload shown */
+.success-box{max-height:90vh;overflow-y:auto;}
+
+/* FOOTER */
+.footer{background:var(--navy);padding:48px 0 0;}
+.footer-mini-inner{display:flex;align-items:center;justify-content:space-between;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.08);gap:24px;flex-wrap:wrap;}
+.footer-mini-brand{display:flex;align-items:center;gap:10px;}
+.footer-mini-brand img{width:36px;height:36px;object-fit:contain;border-radius:8px;}
+.footer-mini-brand-name{font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--white);}
+.footer-mini-brand-sub{font-size:.6rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;}
+.footer-mini-links{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-mini-links a{font-size:.82rem;color:rgba(255,255,255,.45);transition:var(--transition);}
+.footer-mini-links a:hover{color:var(--emerald-light);}
+.footer-mini-copy{padding:16px 0;font-size:.72rem;color:rgba(255,255,255,.22);text-align:center;}
+
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+@media(max-width:900px){
+  .pesan-grid{grid-template-columns:1fr;}
+  .form-card{position:static;}
+  .topbar-features{display:none;}
+}
+@media(max-width:768px){
+  /* Hide topbar label */
+  .topbar-right span{display:none;}
+  /* Navbar back button smaller */
+  .nav-right .btn{font-size:.8rem;padding:7px 12px;}
+  /* Schedule card head: stack */
+  .sched-card-head{flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px;}
+  .date-nav{width:100%;justify-content:space-between;}
+  .date-label{min-width:0;flex:1;text-align:center;}
+}
+@media(max-width:600px){
+  .container{max-width:100%;padding:0 16px;}
+  .pesan-wrap{padding:16px 16px 60px;}
+  /* Slot time narrower */
+  .slot-time{min-width:110px;font-size:.78rem;}
+  .success-box{padding:0;}
+  .success-actions{flex-direction:column;}
+  .date-label{min-width:0;font-size:.78rem;}
+  /* Breadcrumb wrap */
+  .breadcrumb{flex-wrap:wrap;gap:4px;}
+  /* Footer links stack */
+  .footer-mini-links{flex-direction:column;gap:8px;}
+  .footer-mini-inner{flex-direction:column;align-items:flex-start;}
+  /* Form card padding */
+  .form-body{padding:16px;}
+  .form-card-head{padding:16px;}
+  /* Rek number row */
+  .rek-number{font-size:.88rem;letter-spacing:1px;}
+  /* Page title */
+  .pesan-wrap > div:first-child div:first-child{font-size:1.35rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-features">
+        <div class="topbar-feature"><span class="dot"></span> Pemesanan Mudah</div>
+        <div class="topbar-feature"><span class="dot"></span> Pembayaran Aman</div>
+        <div class="topbar-feature"><span class="dot"></span> Jadwal Real-time</div>
+      </div>
+      <div class="topbar-right">
+        <span>DISPORA Kab. Bandung</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo">
+        <img src="public/images/sipelor.png" alt="SIPELOR BEDAS" width="36" height="36" />
+        <div class="nav-logo-text">
+          <div class="brand">SIPELOR BEDAS</div>
+          <div class="tagline">Dispora Kab. Bandung</div>
+        </div>
+      </a>
+      <div class="nav-right">
+        <a id="nav-back" href="home.html" class="btn btn-ghost" style="font-size:.85rem;padding:9px 18px;">← Kembali</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="breadcrumb-bar">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="home.html">Beranda</a><span>›</span>
+      <a href="home.html#lapangan">Lapangan</a><span>›</span>
+      <a id="bc-venue" href="#">—</a><span>›</span>
+      <span class="cur">Pesan Lapangan</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="pesan-wrap">
+    <div style="margin-bottom:24px;">
+      <div style="font-family:var(--font-head);font-size:1.65rem;font-weight:800;color:var(--gray-900);margin-bottom:4px;">🏅 Pesan Lapangan</div>
+      <div id="page-subtitle" style="font-size:.88rem;color:var(--gray-500);">Pilih slot waktu yang tersedia lalu lengkapi data pemesanan.</div>
+    </div>
+
+    <div class="pesan-grid">
+      <!-- LEFT -->
+      <div>
+        <div class="sched-card">
+          <div class="sched-card-head">
+            <div>
+              <div class="sched-card-title" id="venue-name-head">⏳ Memuat…</div>
+              <div class="sched-card-sub" id="sched-sub">Memuat data lapangan…</div>
+            </div>
+            <div id="date-nav-wrap" class="date-nav">
+              <button class="date-nav-btn" id="date-prev">&#8592;</button>
+              <div class="date-label" id="date-label">—</div>
+              <button class="date-nav-btn" id="date-next">&#8594;</button>
+              <button class="date-nav-btn" id="date-today" style="font-size:.7rem;width:auto;padding:0 10px;border-radius:var(--radius-sm);">Hari Ini</button>
+            </div>
+          </div>
+          <div class="sched-body" id="sched-body">
+            <div class="sched-loading"><span style="animation:spin 1s linear infinite;display:inline-block;">⏳</span> Memuat jadwal…</div>
+          </div>
+        </div>
+        <!-- Info tip (shown dynamically) -->
+        <div id="sched-info-tip" style="margin-top:12px;padding:12px 16px;background:var(--white);border-radius:var(--radius-md);border:1px solid var(--gray-200);display:none;align-items:flex-start;gap:10px;">
+          <span style="font-size:1rem;flex-shrink:0;">ℹ️</span>
+          <div id="sched-info-text" style="font-size:.78rem;color:var(--gray-500);line-height:1.6;"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div>
+        <div class="form-card">
+          <div class="form-card-head">
+            <h3>📋 Data Pemesanan</h3>
+            <p>Isi data dengan benar · Konfirmasi via WhatsApp</p>
+          </div>
+          <div class="form-body">
+
+            <!-- Venue pill -->
+            <div class="venue-pill">
+              <span id="venue-emoji" style="font-size:1.2rem;">🏟️</span>
+              <div>
+                <div class="venue-pill-name" id="venue-name-form">—</div>
+                <div class="venue-pill-type" id="venue-type-form">—</div>
+              </div>
+              <div class="venue-pill-price" id="venue-price-form">—</div>
+            </div>
+
+            <!-- Selection summary -->
+            <div class="slot-summary" id="slot-summary">
+              <div class="slot-summary-label">Pilihan Anda</div>
+              <div class="slot-summary-empty" id="slot-empty">← Pilih dari jadwal di sebelah kiri</div>
+              <div class="slot-summary-rows" id="slot-rows">
+                <div class="slot-summary-row"><span>📅</span><span id="sum-date">—</span></div>
+                <div class="slot-summary-row" id="sum-row-time" style="display:none;"><span>🕐</span><span id="sum-time">—</span></div>
+                <div class="slot-summary-row" id="sum-row-dur"  style="display:none;"><span>⏱️</span><span id="sum-dur">—</span></div>
+                <div class="slot-summary-row" id="sum-row-pax"  style="display:none;"><span>👥</span><span id="sum-pax">—</span></div>
+              </div>
+            </div>
+
+            <!-- People counter (shown for per-orang mode) -->
+            <div id="people-wrap" style="display:none;margin-bottom:14px;">
+              <div class="form-label">Jumlah Peserta <span class="req">*</span></div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+                <div class="people-counter">
+                  <button class="people-btn" id="pax-minus" type="button">−</button>
+                  <div class="people-val" id="pax-val">1</div>
+                  <button class="people-btn" id="pax-plus"  type="button">+</button>
+                </div>
+                <span class="people-cap" id="pax-cap">orang (maks. —)</span>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form id="booking-form" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="f-name">Nama Lengkap <span class="req">*</span></label>
+                <input class="form-input" type="text" id="f-name" placeholder="Contoh: Budi Santoso" autocomplete="name" required />
+                <div class="form-error" id="err-name">Nama lengkap wajib diisi.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-phone">No. Telepon / WhatsApp <span class="req">*</span></label>
+                <input class="form-input" type="tel" id="f-phone" placeholder="Contoh: 08123456789" autocomplete="tel" required />
+                <div class="form-error" id="err-phone">No. telepon wajib diisi (min. 8 angka).</div>
+                <div class="form-hint">Konfirmasi pemesanan dikirim ke nomor ini.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-notes">Catatan (opsional)</label>
+                <input class="form-input" type="text" id="f-notes" placeholder="Misalnya: untuk turnamen RT…" />
+              </div>
+
+              <!-- Price breakdown -->
+              <div class="price-box" id="price-box">
+                <div class="price-row" id="pr-row-1" style="display:none;"><span id="pr-lbl-1">—</span><span id="pr-val-1">—</span></div>
+                <div class="price-row" id="pr-row-2" style="display:none;"><span id="pr-lbl-2">—</span><span id="pr-val-2">—</span></div>
+                <div class="price-row" id="pr-row-3" style="display:none;"><span id="pr-lbl-3">—</span><span id="pr-val-3">—</span></div>
+                <div class="price-row total"><span>Total</span><span class="pv" id="p-total">—</span></div>
+              </div>
+
+              <!-- Rekening Pembayaran -->
+              <div class="rek-card">
+                <div class="rek-card-label">🏦 Rekening Bendahara Penerima</div>
+                <div class="rek-bank-row">
+                  <div class="rek-bank-badge">BJB</div>
+                  <span style="font-size:.82rem;font-weight:600;color:var(--gray-700);">Bank Jabar Banten (BJB)</span>
+                </div>
+                <div class="rek-number-row">
+                  <div class="rek-number" id="rek-display">0075787111001</div>
+                  <button type="button" class="rek-copy-btn" id="rek-copy-btn" onclick="copyRekening()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Salin
+                  </button>
+                </div>
+                <div class="rek-an">a.n. Bendahara Penerimaan DISPORA Kab. Bandung</div>
+              </div>
+
+              <!-- Upload Bukti Transfer (dalam form) -->
+              <div class="form-group">
+                <label class="form-label">📎 Upload Bukti Transfer</label>
+                <div class="upload-zone" id="form-upload-zone"
+                  onclick="document.getElementById('form-proof-input').click()"
+                  ondragover="event.preventDefault();this.classList.add('drag-over')"
+                  ondragleave="this.classList.remove('drag-over')"
+                  ondrop="handleFormProofDrop(event)">
+                  <div class="upload-zone-icon">📁</div>
+                  <div class="upload-zone-label">Klik atau drag file ke sini<br><strong>JPG, PNG, PDF</strong> — maks. 10 MB</div>
+                </div>
+                <input type="file" id="form-proof-input" accept="image/*,.pdf" style="display:none;" onchange="handleFormProofSelect(event)" />
+                <div id="form-proof-file-row" style="display:none;" class="upload-file-row">
+                  <span>📄</span>
+                  <span class="upload-file-name" id="form-proof-file-name">—</span>
+                  <button type="button" onclick="clearFormProofFile()" style="background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:.9rem;padding:0;">✕</button>
+                </div>
+                <div class="form-hint">Upload setelah transfer. Bisa dilewati jika belum transfer.</div>
+              </div>
+
+              <button type="submit" class="submit-btn" id="submit-btn" disabled>🏅 Konfirmasi Pemesanan</button>
+              <div class="form-note">Dengan menekan tombol di atas, Anda menyetujui syarat &amp; ketentuan penggunaan lapangan DISPORA.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+
+    <!-- ── STEP 1: Pembayaran Berhasil ───────────────────── -->
+    <div id="pay-success-step" class="pay-success-card">
+      <!-- Confetti dots -->
+      <div class="confetti-row">
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+        <div class="confetti-dot"></div>
+      </div>
+
+      <!-- Checkmark icon -->
+      <div class="pay-success-icon-wrap">
+        <svg class="pay-success-checkmark" viewBox="0 0 52 52">
+          <polyline points="14 27 22 35 38 17"/>
+        </svg>
+      </div>
+
+      <div class="pay-success-title">Pembayaran Berhasil! 🎉</div>
+      <div class="pay-success-subtitle">
+        Pesanan Anda telah diterima dan data pemesanan<br>
+        telah masuk ke sistem Manajemen Lapangan DISPORA.
+      </div>
+
+      <!-- Info ringkas -->
+      <div class="pay-success-info-box">
+        <div class="pay-success-info-row">
+          <span class="pi-icon">📋</span>
+          <span>No. Booking: <strong id="suc-bid-mini">—</strong></span>
+        </div>
+        <div class="pay-success-info-row">
+          <span class="pi-icon">🏟️</span>
+          <span id="suc-venue-mini">—</span>
+        </div>
+        <div class="pay-success-info-row">
+          <span class="pi-icon">📅</span>
+          <span id="suc-date-mini">—</span>
+        </div>
+        <div class="pay-success-info-row" id="suc-time-mini-row">
+          <span class="pi-icon">🕐</span>
+          <span id="suc-time-mini">—</span>
+        </div>
+        <div class="pay-success-info-row">
+          <span class="pi-icon">💰</span>
+          <span>Total: <strong id="suc-total-mini">—</strong></span>
+        </div>
+      </div>
+
+      <!-- Admin badge -->
+      <div class="pay-success-admin-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Data masuk ke Admin · Menunggu verifikasi
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-lihat-etiket" id="btn-lihat-etiket" onclick="showEtiketStep()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:middle;margin-right:6px"><rect x="1" y="4" width="22" height="16" rx="3"/><path d="M1 10h22"/></svg>
+        Lihat E-Tiket
+      </button>
+      <div style="margin-top:10px;">
+        <a href="home.html" style="font-size:.78rem;color:var(--gray-400);text-decoration:underline;">Kembali ke Beranda</a>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: E-Tiket ──────────────────────────────── -->
+    <div id="etiket-step" style="display:none;">
+      <!-- Back button -->
+      <div style="margin-bottom:10px;text-align:left;">
+        <button onclick="backToSuccess()" style="background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.30);color:#fff;border-radius:8px;padding:6px 14px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--font-head);display:inline-flex;align-items:center;gap:6px;transition:var(--transition);"
+          onmouseover="this.style.background='rgba(255,255,255,.28)'" onmouseout="this.style.background='rgba(255,255,255,.18)'">
+          ← Kembali
+        </button>
+      </div>
+
+      <div class="etiket-wrap" id="etiket-card">
+        <!-- Header -->
+        <div class="etiket-head">
+          <div class="etiket-head-left">
+            <img src="public/images/sipelor.png" alt="SIPELOR" width="34" height="34" style="border-radius:6px;flex-shrink:0;" onerror="this.style.display='none'" />
+            <div>
+              <div class="etiket-brand">SIPELOR BEDAS</div>
+              <div class="etiket-brand-sub">DISPORA Kab. Bandung</div>
+            </div>
+          </div>
+          <div class="etiket-stamp">E-TIKET</div>
+        </div>
+
+        <!-- Body -->
+        <div class="etiket-body" id="etiket-body"><!-- filled by JS --></div>
+
+        <!-- Tear line -->
+        <div class="etiket-tear">
+          <div class="etiket-tear-circle left"></div>
+          <div class="etiket-tear-dots"></div>
+          <div class="etiket-tear-circle right"></div>
+        </div>
+
+        <!-- Footer (booking code) -->
+        <div class="etiket-foot">
+          <div class="etiket-code-label">Nomor Booking</div>
+          <div class="etiket-code" id="suc-bid">—</div>
+          <div class="etiket-valid">Tunjukkan tiket ini kepada petugas lapangan</div>
+        </div>
+      </div>
+
+      <!-- ── Actions ──────────────────────────────────────── -->
+      <div class="success-actions">
+        <button class="btn-download" id="btn-download-tiket" onclick="downloadEtiket()">⬇️ Download E-Tiket</button>
+        <a class="btn-back" href="home.html">🏠 Beranda</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="copy-toast" id="copy-toast"></div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-mini-inner">
+      <div class="footer-mini-brand">
+        <img src="public/images/sipelor.png" alt="SIPELOR" width="36" height="36" />
+        <div>
+          <div class="footer-mini-brand-name">SIPELOR BEDAS</div>
+          <div class="footer-mini-brand-sub">DISPORA Kab. Bandung</div>
+        </div>
+      </div>
+      <div class="footer-mini-links">
+        <a href="home.html">Beranda</a>
+        <a href="home.html#tentang">Tentang</a>
+        <a href="home.html#kontak">Kontak</a>
+      </div>
+    </div>
+    <div class="footer-mini-copy">© 2025 SIPELOR BEDAS — Dinas Pemuda dan Olahraga Kabupaten Bandung.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+'use strict';
+
+// ── Supabase ──────────────────────────────────────────────────────────────
+const CFG = {
+  SUPABASE_URL:      'https://gbhprmibbcqfwjgrkfzq.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiaHBybWliYmNxZndqZ3JrZnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MDgwNTcsImV4cCI6MjA4NDQ4NDA1N30.vMuV0A4NEC5IhA34TrVmJGBtB4UerOt2Dk8fe4uxwrY',
+};
+let sb = null;
+try {
+  sb = window.supabase?.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, {
+    auth: {
+      // Gunakan storage key terpisah agar tidak menimpa sesi admin di localStorage.
+      // Admin panel memakai key default "sb-<ref>-auth-token";
+      // halaman publik memakai key berbeda sehingga keduanya tidak saling mengganggu.
+      storageKey: 'sipelor-public-anon',
+      persistSession: false,   // sesi anon tidak perlu disimpan permanen
+      autoRefreshToken: false,
+    }
+  });
+} catch(e) { console.warn('[SIPELOR] Supabase init error:', e); }
+
+// ── URL params ────────────────────────────────────────────────────────────
+const qp       = new URLSearchParams(window.location.search);
+const fieldId  = qp.get('id')   || '';
+// Gunakan tanggal lokal agar tidak geser ke hari sebelumnya di timezone WIB (UTC+7)
+const _today = new Date();
+const _localToday = `${_today.getFullYear()}-${String(_today.getMonth()+1).padStart(2,'0')}-${String(_today.getDate()).padStart(2,'0')}`;
+const initDate = qp.get('date') || _localToday;
+const initSlot = qp.get('slot') != null ? parseInt(qp.get('slot')) : -1;
+
+// ── Constants ─────────────────────────────────────────────────────────────
+const TIME_SLOTS  = ['06:00 – 08:00','08:00 – 10:00','10:00 – 12:00','12:00 – 14:00',
+                     '14:00 – 16:00','16:00 – 18:00','18:00 – 20:00','20:00 – 22:00'];
+const SLOT_STARTS = ['06:00','08:00','10:00','12:00','14:00','16:00','18:00','20:00'];
+const SLOT_ENDS   = ['08:00','10:00','12:00','14:00','16:00','18:00','20:00','22:00'];
+const DAY_NAMES   = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni',
+                     'Juli','Agustus','September','Oktober','November','Desember'];
+const VENUE_META  = {
+  'Sepak Bola':{emoji:'⚽'},'Futsal':{emoji:'🥅'},'Badminton':{emoji:'🏸'},
+  'Volly':{emoji:'🏐'},'Bola Voli':{emoji:'🏐'},'Basket':{emoji:'🏀'},'Tenis':{emoji:'🎾'},
+};
+
+// ── Pricing mode config ───────────────────────────────────────────────────
+// Maps satuan → behaviour config
+const PRICING_CONFIG = {
+  'per jam':          { mode:'hourly',    showSched:true,  multiSlot:true,  maxSlots:4, showPax:false, label:'per jam',             durHours:2  },
+  'per 2jam':         { mode:'twohour',   showSched:true,  multiSlot:false, maxSlots:1, showPax:false, label:'per 2 jam',            durHours:2  },
+  'per sesi':         { mode:'session',   showSched:true,  multiSlot:false, maxSlots:1, showPax:false, label:'per sesi (2 jam)',     durHours:2  },
+  'per orang':        { mode:'person',    showSched:true,  multiSlot:true,  maxSlots:4, showPax:true,  label:'per orang/jam',       durHours:2  },
+  'per hari':         { mode:'daily',     showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'per hari',            durHours:0  },
+  'per pertandingan': { mode:'match',     showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'per pertandingan',    durHours:0  },
+  // ── Resepsi modes — matched via satuan dropdown or venue name ────────────
+  'resepsi-8':        { mode:'resepsi8',  showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (8 jam)',      durHours:8  },
+  'resepsi-18':       { mode:'resepsi18', showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (18 jam)',     durHours:18 },
+  // Aliases — match whatever admin typed in satuan
+  'resepsi 8 jam':    { mode:'resepsi8',  showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (8 jam)',      durHours:8  },
+  'resepsi 18 jam':   { mode:'resepsi18', showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (18 jam)',     durHours:18 },
+  'resepsi8':         { mode:'resepsi8',  showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (8 jam)',      durHours:8  },
+  'resepsi18':        { mode:'resepsi18', showSched:false, multiSlot:false, maxSlots:0, showPax:false, label:'Resepsi (18 jam)',     durHours:18 },
+};
+function getPricingCfg(satuan) {
+  const s = (satuan||'').toLowerCase().trim();
+  return PRICING_CONFIG[s] || PRICING_CONFIG['per jam'];
+}
+// Auto-resolve mode: cek satuan dulu (resepsi), fallback ke venue name, lalu satuan umum
+function resolveVenueMode(f) {
+  const satuan = (f.satuan || '').toLowerCase().trim();
+  const name   = (f.venue_name || '').toLowerCase();
+
+  // 1. Cek satuan mengandung kata 'resepsi'
+  if (satuan.includes('resepsi')) {
+    if (satuan.includes('18')) return PRICING_CONFIG['resepsi-18'];
+    return PRICING_CONFIG['resepsi-8'];
+  }
+  // 2. Cek exact match di PRICING_CONFIG (termasuk alias)
+  if (PRICING_CONFIG[satuan]) return PRICING_CONFIG[satuan];
+  // 3. Cek venue name (berbagai format: "resepsi18", "resepsi 18 jam", "resepsi 8 jam", dst.)
+  if (name.includes('resepsi')) {
+    if (name.includes('18')) return PRICING_CONFIG['resepsi-18'];
+    return PRICING_CONFIG['resepsi-8'];
+  }
+  // 4. Default ke satuan umum
+  return getPricingCfg(f.satuan);
+}
+
+// ── State ─────────────────────────────────────────────────────────────────
+let field       = null;
+let pcfg        = PRICING_CONFIG['per jam'];
+let currentDate = new Date(initDate + 'T00:00:00');
+let bookedMap   = {};   // { 'yyyy-mm-dd|slotIdx': true }
+let startSlot   = -1;  // first selected slot index
+let numSlots    = 1;   // number of consecutive slots selected (1–4)
+let numPax      = 1;   // people count (mode=person only)
+let kapasitas   = 20;  // max people from field data
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+// Gunakan komponen tanggal lokal (bukan UTC) agar tidak geser 1 hari di WIB/UTC+7
+function isoDate(d)  {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+function fmtDate(d)  { return `${DAY_NAMES[d.getDay()]}, ${d.getDate()} ${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`; }
+function fmtPrice(p) { return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(p).replace('IDR','Rp'); }
+function genBookingId() {
+  const n=new Date(), p=x=>String(x).padStart(2,'0');
+  return `BOOK-${n.getFullYear()}${p(n.getMonth()+1)}${p(n.getDate())}-${String(Math.floor(Math.random()*9999)).padStart(4,'0')}`;
+}
+function isSlotPast(slotIdx) {
+  const now=new Date(), ds=isoDate(currentDate);
+  if (ds !== isoDate(now)) return false;
+  return parseInt(SLOT_STARTS[slotIdx]) < now.getHours();
+}
+function isSlotBooked(ds, idx) { return !!bookedMap[`${ds}|${idx}`]; }
+function isSlotAvailable(ds, idx) { return !isSlotBooked(ds,idx) && !isSlotPast(idx); }
+
+// ── Load field ────────────────────────────────────────────────────────────
+async function loadField() {
+  if (!fieldId) { showSchedError('Parameter lapangan tidak ditemukan.'); return; }
+  try {
+    if (sb) {
+      const {data,error} = await sb.from('fields').select('*').eq('id',fieldId).single();
+      if (!error && data) field = data;
+    }
+    if (!field) {
+      field = {id:fieldId, venue_name:'GOR Sabilulungan', venue_type:'Futsal',
+               area:'Lantai 1', price_per_hour:80000, satuan:'per jam',
+               status:'available', kapasitas:'14 orang'};
+    }
+  } catch(e) {
+    field = {id:fieldId, venue_name:'Lapangan', venue_type:'Futsal',
+             price_per_hour:80000, satuan:'per jam', status:'available'};
+  }
+
+  // Parse kapasitas number
+  const kapStr = String(field.kapasitas||'20');
+  kapasitas = parseInt(kapStr.replace(/\D/g,'')) || 20;
+
+  pcfg = resolveVenueMode(field);
+  const meta = VENUE_META[field.venue_type] || {emoji:'🏟️'};
+
+  // Update header labels
+  document.getElementById('venue-name-head').textContent  = `${meta.emoji} ${field.venue_name}`;
+  document.getElementById('venue-name-form').textContent  = field.venue_name;
+  document.getElementById('venue-type-form').textContent  = `${field.venue_type}${field.area?' · '+field.area:''}`;
+  document.getElementById('venue-emoji').textContent      = meta.emoji;
+  document.getElementById('bc-venue').textContent         = field.venue_name;
+  document.getElementById('bc-venue').href                = `venue-detail.html?id=${fieldId}`;
+  document.getElementById('nav-back').href                = `venue-detail.html?id=${fieldId}`;
+  document.title = `Pesan ${field.venue_name} — SIPELOR BEDAS`;
+
+  // Price label in pill
+  const priceLabel = `${fmtPrice(field.price_per_hour)} ${pcfg.label}`;
+  document.getElementById('venue-price-form').textContent = priceLabel;
+
+  // Show/hide people wrap
+  document.getElementById('people-wrap').style.display = pcfg.showPax ? 'block' : 'none';
+  if (pcfg.showPax) {
+    document.getElementById('pax-cap').textContent = `orang (maks. ${kapasitas})`;
+    renderPaxCounter();
+  }
+
+  // Schedule sub label
+  applyModeUI();
+
+  await fetchBookings();
+  renderSchedule();
+
+  // Pre-select from URL
+  if (initSlot >= 0 && initSlot < TIME_SLOTS.length && pcfg.showSched) {
+    handleSlotClick(initSlot);
+  } else if (!pcfg.showSched) {
+    // For daily/match: auto-select current date
+    updateSummary();
+    checkSubmitReady();
+  }
+}
+
+function applyModeUI() {
+  const showSched = pcfg.showSched;
+  document.getElementById('date-nav-wrap').style.display = 'flex';
+
+  let sub = '';
+  let tip = '';
+  switch(pcfg.mode) {
+    case 'hourly':
+      sub = 'Klik slot <strong style="color:var(--emerald-light);">Tersedia</strong> untuk pilih jam mulai, lalu pilih durasi';
+      tip = `Setiap slot berdurasi <strong>2 jam</strong>. Anda bisa memesan hingga <strong>8 jam (4 slot)</strong> secara berurutan. Jam operasional <strong>06:00 – 22:00</strong>. Tarif: <strong>${fmtPrice(field.price_per_hour)}/jam</strong>.`;
+      break;
+    case 'twohour':
+      sub = 'Klik slot <strong style="color:var(--emerald-light);">Tersedia</strong> untuk memilih waktu (2 jam)';
+      tip = `Lapangan ini disewa per <strong>2 jam</strong> per slot. Pilih satu slot yang diinginkan. Tarif: <strong>${fmtPrice(field.price_per_hour)}/2 jam</strong>.`;
+      break;
+    case 'session':
+      sub = 'Klik slot <strong style="color:var(--emerald-light);">Tersedia</strong> untuk memilih sesi (2 jam)';
+      tip = `Lapangan ini disewa per sesi. Setiap sesi berlangsung <strong>2 jam</strong>. Tarif: <strong>${fmtPrice(field.price_per_hour)}/sesi</strong>.`;
+      break;
+    case 'person':
+      sub = 'Pilih jam lalu tentukan jumlah peserta';
+      tip = `Harga dihitung per orang per jam. Maks. <strong>${kapasitas} orang</strong>. Setiap slot berdurasi <strong>2 jam</strong>, maks. <strong>8 jam</strong>.`;
+      break;
+    case 'daily':
+      sub = 'Pemesanan berlaku untuk <strong style="color:var(--emerald-light);">satu hari penuh</strong>';
+      tip = `Lapangan ini disewa per hari. Tarif: <strong>${fmtPrice(field.price_per_hour)}/hari</strong>. Tidak perlu memilih slot jam.`;
+      break;
+    case 'match':
+      sub = 'Pemesanan berlaku untuk <strong style="color:var(--emerald-light);">satu pertandingan</strong>';
+      tip = `Lapangan ini disewa per pertandingan. Tarif: <strong>${fmtPrice(field.price_per_hour)}/pertandingan</strong>.`;
+      break;
+    case 'resepsi8':
+      sub = '🏛️ Pemesanan <strong style="color:#c4b5fd;">Resepsi 8 Jam</strong> — eksklusif';
+      tip = `Paket <strong>Resepsi 8 Jam</strong>: Gedung dipesan secara eksklusif selama <strong>8 jam penuh</strong> (06:00 – 14:00). Cocok untuk acara resepsi, pernikahan, & seminar. Tarif: <strong>${fmtPrice(field.price_per_hour)}</strong>.`;
+      break;
+    case 'resepsi18':
+      sub = '🎪 Pemesanan <strong style="color:#c4b5fd;">Resepsi Seharian</strong> — 18 jam eksklusif';
+      tip = `Paket <strong>Resepsi 18 Jam</strong>: Gedung Gymnasium dipesan secara eksklusif selama <strong>18 jam penuh</strong> (06:00 – 00:00). Cocok untuk pesta besar, expo, & konser. Tarif: <strong>${fmtPrice(field.price_per_hour)}</strong>.`;
+      break;
+  }
+  document.getElementById('sched-sub').innerHTML = sub;
+
+  const tipEl  = document.getElementById('sched-info-tip');
+  const tipTxt = document.getElementById('sched-info-text');
+  tipEl.style.display  = 'flex';
+  tipTxt.innerHTML     = tip;
+
+  // Page subtitle
+  if (!showSched) {
+    document.getElementById('page-subtitle').textContent = 'Pilih tanggal dan lengkapi data pemesanan.';
+  }
+}
+
+// ── Fetch booked slots ────────────────────────────────────────────────────
+async function fetchBookings() {
+  if (!sb || !fieldId || !pcfg.showSched) return;
+  const today = new Date();
+  const from  = new Date(today); from.setDate(today.getDate()-1);
+  const to    = new Date(today); to.setMonth(today.getMonth()+3);
+  try {
+    const {data,error} = await sb.from('bookings')
+      .select('booking_date,start_time,status')
+      .eq('field_id', fieldId)
+      .in('status',['pending','confirmed'])
+      .gte('booking_date', isoDate(from))
+      .lte('booking_date', isoDate(to));
+    if (error) { console.warn('[SIPELOR]', error.message); return; }
+    bookedMap = {};
+    (data||[]).forEach(b => {
+      const hh = String(b.start_time||'').substring(0,5);
+      const i  = SLOT_STARTS.indexOf(hh);
+      if (i>=0) bookedMap[`${b.booking_date}|${i}`] = true;
+    });
+  } catch(e) { console.warn('[SIPELOR] fetchBookings:', e.message); }
+}
+
+// ── Render schedule ───────────────────────────────────────────────────────
+function renderSchedule() {
+  const ds = isoDate(currentDate);
+  document.getElementById('date-label').textContent = fmtDate(currentDate);
+
+  // Daily/match modes: no slots
+  if (!pcfg.showSched) {
+    document.getElementById('sched-body').innerHTML = buildDailyInfo();
+    updateSummary();
+    checkSubmitReady();
+    return;
+  }
+
+  const endSlot = startSlot >= 0 ? startSlot + numSlots - 1 : -1;
+
+  let html = '';
+  TIME_SLOTS.forEach((slot, i) => {
+    const booked = isSlotBooked(ds, i);
+    const past   = isSlotPast(i);
+    const avail  = !booked && !past;
+    const isSel  = startSlot === i;
+    const inRng  = startSlot >= 0 && i > startSlot && i <= endSlot;
+    const isEnd  = endSlot === i && endSlot !== startSlot;
+
+    let rowCls = booked ? 'booked' : past ? 'closed' : 'available';
+    let extra  = '';
+    if (isSel)  { rowCls += ' start-sel'; }
+    if (inRng)  { rowCls += ' in-range'; }
+    if (isEnd)  { rowCls += ' end-sel'; }
+
+    const click = avail ? `onclick="handleSlotClick(${i})"` : '';
+    const badgeLbl = booked ? 'Dipesan' : past ? 'Lewat' : (isSel ? 'Mulai' : inRng ? '+ Lanjut' : isEnd ? 'Selesai' : 'Tersedia');
+    const badgeCls = booked ? 'booked' : past ? 'closed' : (isSel||inRng||isEnd) ? 'selected' : 'available';
+
+    html += `<div class="sched-slot-row ${rowCls}" ${click}>
+      <div class="slot-time">${slot}</div>
+      <div class="slot-badge ${badgeCls}"><span class="dot"></span><span class="slot-badge-text">${badgeLbl}</span></div>
+      ${avail && !isSel && !inRng && !isEnd ? '<div class="slot-hint">← Pilih</div>' : ''}
+    </div>`;
+
+    // After start-sel row: inject duration picker (hourly/person only, NOT resepsi8)
+    if (isSel && pcfg.multiSlot && pcfg.mode !== 'resepsi8') {
+      html += buildDurationPicker(i, ds);
+    }
+    // For resepsi8: show a fixed-info chip instead of a picker
+    if (isSel && pcfg.mode === 'resepsi8') {
+      html += `<div style="margin:8px 0 4px;padding:10px 14px;background:rgba(139,92,246,.10);border:1.5px solid rgba(139,92,246,.30);border-radius:var(--radius-md);font-size:.78rem;color:#7c3aed;font-weight:600;">
+        🎪 Otomatis <strong>8 jam</strong> diblokir (${TIME_SLOTS[i].split(' ')[0]} – ${SLOT_ENDS[i + (pcfg.fixedSlots||4) - 1] || '—'})
+      </div>`;
+    }
+  });
+
+  document.getElementById('sched-body').innerHTML = html || '<div class="sched-loading">Tidak ada slot tersedia.</div>';
+}
+
+function buildDailyInfo() {
+  const iconMap = { daily:'📅', match:'🏆', resepsi18:'🎪', resepsi8:'🎪' };
+  const durMap  = { daily:'Seharian penuh', match:'Satu pertandingan', resepsi18:'18 jam eksklusif (06:00 – 00:00)', resepsi8:'8 jam eksklusif (06:00 – 14:00)' };
+  const icon    = iconMap[pcfg.mode]  || '📅';
+  const durText = durMap[pcfg.mode]   || 'Seharian penuh';
+  const accent  = (pcfg.mode === 'resepsi18' || pcfg.mode === 'resepsi8') ? 'style="border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.08);color:#7c3aed;"' : '';
+  return `<div class="daily-info">
+    <div class="di-icon">${icon}</div>
+    <div class="di-title">${fmtDate(currentDate)}</div>
+    <div class="di-sub">${durText} · Eksklusif untuk Anda</div>
+    <div class="daily-price-box" ${accent}>${fmtPrice(field.price_per_hour)} / ${pcfg.label}</div>
+  </div>`;
+}
+
+function buildDurationPicker(startIdx, ds) {
+  let html = `<div class="duration-picker" id="dur-picker">
+    <div class="duration-picker-label">⏱️ Durasi (maks. ${pcfg.maxSlots * 2} jam)</div>
+    <div class="duration-chips">`;
+
+  for (let n = 1; n <= pcfg.maxSlots; n++) {
+    const endIdx = startIdx + n - 1;
+    if (endIdx >= TIME_SLOTS.length) break;
+
+    // Check if all slots in range are available
+    let rangeOk = true;
+    for (let k = startIdx; k <= endIdx; k++) {
+      if (!isSlotAvailable(ds, k)) { rangeOk = false; break; }
+    }
+
+    const hours   = n * 2;
+    const active  = n === numSlots ? ' active' : '';
+    const cls     = rangeOk ? (active ? 'dur-chip active' : 'dur-chip ok') : 'dur-chip blocked';
+    const onclick = rangeOk ? `onclick="setDuration(${n})"` : '';
+    const tag     = !rangeOk ? ' ✗' : '';
+    html += `<button type="button" class="${cls}" ${onclick}>${hours} jam${tag}</button>`;
+  }
+  html += `</div></div>`;
+  return html;
+}
+
+// ── Slot click handler ────────────────────────────────────────────────────
+window.handleSlotClick = function(idx) {
+  const ds = isoDate(currentDate);
+  if (!isSlotAvailable(ds, idx)) return;
+
+  if (pcfg.mode === 'resepsi8') {
+    // Auto-select exactly fixedSlots (4 = 8 jam) starting from idx
+    const fixed = pcfg.fixedSlots || 4;
+    if (startSlot === idx) { startSlot = -1; numSlots = 1; }
+    else {
+      // Check all 4 slots are available
+      let ok = true;
+      for (let k = idx; k < idx + fixed; k++) {
+        if (k >= TIME_SLOTS.length || !isSlotAvailable(ds, k)) { ok = false; break; }
+      }
+      if (!ok) {
+        alert(`⚠️ Tidak tersedia 8 jam berturut-turut mulai ${TIME_SLOTS[idx].split(' ')[0]}.\nCoba pilih jam mulai yang lain.`);
+        return;
+      }
+      startSlot = idx;
+      numSlots  = fixed;
+    }
+  } else if (pcfg.multiSlot) {
+    // Toggle: if same start clicked again, deselect
+    if (startSlot === idx) { startSlot = -1; numSlots = 1; }
+    else { startSlot = idx; numSlots = 1; }
+  } else {
+    // Session / twohour: single slot toggle
+    startSlot = (startSlot === idx) ? -1 : idx;
+    numSlots  = 1;
+  }
+  renderSchedule();
+  updateSummary();
+  checkSubmitReady();
+};
+
+window.setDuration = function(n) {
+  numSlots = n;
+  renderSchedule();
+  updateSummary();
+  checkSubmitReady();
+};
+
+// ── People counter ────────────────────────────────────────────────────────
+function renderPaxCounter() {
+  document.getElementById('pax-val').textContent = numPax;
+  document.getElementById('pax-minus').disabled  = numPax <= 1;
+  document.getElementById('pax-plus').disabled   = numPax >= kapasitas;
+}
+document.getElementById('pax-minus')?.addEventListener('click', () => {
+  if (numPax > 1) { numPax--; renderPaxCounter(); updateSummary(); checkSubmitReady(); }
+});
+document.getElementById('pax-plus')?.addEventListener('click', () => {
+  if (numPax < kapasitas) { numPax++; renderPaxCounter(); updateSummary(); checkSubmitReady(); }
+});
+
+// ── Date nav ──────────────────────────────────────────────────────────────
+function changeDate(dir) {
+  const nd = new Date(currentDate);
+  nd.setDate(nd.getDate() + dir);
+  const today = new Date(); today.setHours(0,0,0,0);
+  if (nd < today) return;
+  currentDate = nd;
+  startSlot   = -1;
+  numSlots    = 1;
+  renderSchedule();
+  updateSummary();
+  checkSubmitReady();
+}
+document.getElementById('date-prev').addEventListener('click', () => changeDate(-1));
+document.getElementById('date-next').addEventListener('click', () => changeDate(1));
+document.getElementById('date-today').addEventListener('click', () => {
+  currentDate = new Date(); currentDate.setHours(0,0,0,0);
+  startSlot=-1; numSlots=1;
+  renderSchedule(); updateSummary(); checkSubmitReady();
+});
+
+// ── Summary & price ───────────────────────────────────────────────────────
+function calcTotal() {
+  const p = field?.price_per_hour || 0;
+  switch(pcfg.mode) {
+    case 'hourly':    return p * numSlots * 2;          // n_slots × 2hr × tarif/jam
+    case 'twohour':   return p;                         // flat per 2 jam
+    case 'session':   return p;                         // flat per sesi
+    case 'person':    return p * numPax * numSlots * 2; // per orang × n_slots × 2hr
+    case 'daily':     return p;                         // flat per hari
+    case 'match':     return p;                         // flat per pertandingan
+    case 'resepsi8':  return p;                         // flat paket resepsi 8 jam
+    case 'resepsi18': return p;                         // flat paket resepsi 18 jam
+    default:          return p;
+  }
+}
+
+function updateSummary() {
+  const hasSelection = (pcfg.showSched && startSlot >= 0) || (!pcfg.showSched);
+  const sum = document.getElementById('slot-summary');
+
+  if (!hasSelection) {
+    sum.classList.remove('has-selection');
+    document.getElementById('slot-empty').style.display = 'block';
+    document.getElementById('slot-rows').style.display  = 'none';
+    document.getElementById('price-box').style.display  = 'none';
+    return;
+  }
+
+  sum.classList.add('has-selection');
+  document.getElementById('slot-empty').style.display = 'none';
+  document.getElementById('slot-rows').style.display  = 'flex';
+
+  document.getElementById('sum-date').textContent = fmtDate(currentDate);
+
+  // Time rows
+  const rtRow = document.getElementById('sum-row-time');
+  const rdRow = document.getElementById('sum-row-dur');
+  const rpRow = document.getElementById('sum-row-pax');
+
+  if (pcfg.showSched && startSlot >= 0) {
+    const endIdx  = startSlot + numSlots - 1;
+    const timeStr = `${SLOT_STARTS[startSlot]} – ${SLOT_ENDS[endIdx]}`;
+    document.getElementById('sum-time').textContent = timeStr;
+    rtRow.style.display = 'flex';
+
+    const durStr = `${numSlots * 2} jam`;
+    document.getElementById('sum-dur').textContent = durStr;
+    rdRow.style.display = 'flex';
+  } else {
+    rtRow.style.display = 'none';
+    rdRow.style.display = 'none';
+  }
+
+  if (pcfg.showPax) {
+    document.getElementById('sum-pax').textContent = `${numPax} orang`;
+    rpRow.style.display = 'flex';
+  } else {
+    rpRow.style.display = 'none';
+  }
+
+  // Price breakdown
+  const p = field?.price_per_hour || 0;
+  const total = calcTotal();
+  const pb = document.getElementById('price-box');
+  pb.style.display = 'block';
+
+  function showRow(n, label, val) {
+    document.getElementById(`pr-row-${n}`).style.display = 'flex';
+    document.getElementById(`pr-lbl-${n}`).textContent = label;
+    document.getElementById(`pr-val-${n}`).textContent = val;
+  }
+  function hideRow(n) { document.getElementById(`pr-row-${n}`).style.display = 'none'; }
+
+  switch(pcfg.mode) {
+    case 'hourly':
+      showRow(1, `Tarif (${fmtPrice(p)}/jam)`, fmtPrice(p) + '/jam');
+      showRow(2, 'Durasi', `${numSlots * 2} jam`);
+      hideRow(3);
+      break;
+    case 'twohour':
+      showRow(1, 'Tarif per 2 jam', fmtPrice(p));
+      hideRow(2); hideRow(3);
+      break;
+    case 'session':
+      showRow(1, 'Tarif per sesi (2 jam)', fmtPrice(p));
+      hideRow(2); hideRow(3);
+      break;
+    case 'person':
+      showRow(1, `Tarif (${fmtPrice(p)}/orang/jam)`, fmtPrice(p) + '/org/jam');
+      showRow(2, 'Peserta × Durasi', `${numPax} org × ${numSlots * 2} jam`);
+      hideRow(3);
+      break;
+    case 'daily':
+      showRow(1, 'Tarif sewa harian', fmtPrice(p));
+      hideRow(2); hideRow(3);
+      break;
+    case 'match':
+      showRow(1, 'Tarif per pertandingan', fmtPrice(p));
+      hideRow(2); hideRow(3);
+      break;
+    case 'resepsi8':
+      showRow(1, '🎪 Paket Resepsi 8 Jam', fmtPrice(p));
+      showRow(2, 'Durasi', '8 jam');
+      hideRow(3);
+      break;
+    case 'resepsi18':
+      showRow(1, '🎪 Paket Resepsi 18 Jam', fmtPrice(p));
+      showRow(2, 'Durasi', '18 jam (06:00 – 00:00)');
+      hideRow(3);
+      break;
+  }
+  document.getElementById('p-total').textContent = fmtPrice(total);
+}
+
+// ── Validation ────────────────────────────────────────────────────────────
+function checkSubmitReady() {
+  const nameOk  = document.getElementById('f-name').value.trim().length >= 2;
+  const phoneOk = /^[0-9+\-\s]{8,15}$/.test(document.getElementById('f-phone').value.trim());
+  const slotOk  = !pcfg.showSched || startSlot >= 0;
+  const proofOk = !!_proofFile;
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = !(nameOk && phoneOk && slotOk && proofOk);
+  // Update button label hint
+  if (!proofOk) {
+    btn.textContent = '📎 Upload Bukti Transfer Dulu';
+  } else if (!(nameOk && phoneOk)) {
+    btn.textContent = '🏅 Konfirmasi Pemesanan';
+  } else {
+    btn.textContent = '🏅 Konfirmasi Pemesanan';
+  }
+}
+
+['f-name','f-phone'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => { el.classList.remove('error'); checkSubmitReady(); });
+  el.addEventListener('blur',  () => validateField(id));
+});
+function validateField(id) {
+  const el = document.getElementById(id);
+  const v  = el.value.trim();
+  const ok = id==='f-name' ? v.length>=2 : /^[0-9+\-\s]{8,15}$/.test(v);
+  el.classList.toggle('error', !ok);
+  document.getElementById('err-'+id.replace('f-','')).classList.toggle('show', !ok);
+  return ok;
+}
+function validateAll() { return validateField('f-name') & validateField('f-phone'); }
+
+// ── Submit ────────────────────────────────────────────────────────────────
+document.getElementById('booking-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateAll()) return;
+  if (pcfg.showSched && startSlot < 0) { alert('Silakan pilih slot waktu terlebih dahulu.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = '⏳ Memproses…';
+
+  const bookingId   = genBookingId();
+  let bookingUUID   = null;
+  const name        = document.getElementById('f-name').value.trim();
+  const phone       = document.getElementById('f-phone').value.trim();
+  const notes       = document.getElementById('f-notes').value.trim();
+  const ds          = isoDate(currentDate);
+  const endIdx      = startSlot >= 0 ? startSlot + numSlots - 1 : -1;
+  const startTime   = startSlot >= 0 ? SLOT_STARTS[startSlot] : '06:00';
+  const endTime     = pcfg.mode === 'resepsi18' ? '00:00'
+                    : pcfg.mode === 'resepsi8'  ? '14:00'
+                    : endIdx >= 0 ? SLOT_ENDS[endIdx] : '22:00';
+  const durHours    = pcfg.mode === 'resepsi8'  ? 8
+                    : pcfg.mode === 'resepsi18' ? 18
+                    : pcfg.showSched ? numSlots * 2 : (pcfg.mode==='daily'?16:4);
+  const total       = calcTotal();
+
+  // Format pipe-separated agar admin dapat mem-parse nama & HP pemesan
+  // Admin's _parseBookerName() expects: "Pemesan: Nama | HP: 08xxx | ..."
+  const notesJson = [
+    `Pemesan: ${name}`,
+    `HP: ${phone}`,
+    pcfg.showPax ? `Peserta: ${numPax} orang` : null,
+    notes ? `Catatan: ${notes}` : null,
+  ].filter(Boolean).join(' | ');
+
+  let saved = false;
+  let saveError = '';
+  try {
+    if (!sb) throw new Error('Supabase tidak terhubung.');
+
+    // ── Anon sign-in ────────────────────────────────────────
+    let userId = null;
+    try {
+      const { data: anonData, error: anonErr } = await sb.auth.signInAnonymously();
+      if (anonErr) throw anonErr;
+      userId = anonData?.user?.id || null;
+    } catch(anonEx) {
+      console.error('[SIPELOR] signInAnonymously gagal:', anonEx.message);
+      saveError = `Login anonim gagal: ${anonEx.message}. Pastikan Anonymous Auth aktif di Supabase.`;
+    }
+
+    if (!userId) {
+      if (!saveError) saveError = 'Gagal mendapatkan user session. Coba lagi.';
+      throw new Error(saveError);
+    }
+
+    // ── Build rows ───────────────────────────────────────────
+    const rows = [];
+    if (pcfg.showSched) {
+      for (let k = 0; k < numSlots; k++) {
+        rows.push({
+              booking_id:     k === 0 ? bookingId : `${bookingId}-${k+1}`,
+              user_id:        userId,
+              field_id:       fieldId,
+              venue_id:       field.venue_id || fieldId,
+              booking_date:   ds,
+              start_time:     SLOT_STARTS[startSlot + k],
+              end_time:       SLOT_ENDS[startSlot + k],
+              duration_hours: 2,
+              total_amount:   k === 0 ? total : 0,
+              status:         'pending',
+              payment_status: 'pending',
+              notes:          k === 0 ? notesJson : `Ref: ${bookingId}`,
+            });
+          }
+        } else {
+          rows.push({
+            booking_id:     bookingId,
+            user_id:        userId,
+            field_id:       fieldId,
+            venue_id:       field.venue_id || fieldId,
+            booking_date:   ds,
+            start_time:     '06:00',
+            end_time:       pcfg.mode === 'resepsi18' ? '00:00' : pcfg.mode === 'resepsi8' ? '14:00' : '22:00',
+            duration_hours: durHours,
+            total_amount:   total,
+            status:         'pending',
+            payment_status: 'pending',
+            notes:          notesJson,
+          });
+    }
+
+    // ── Insert booking ───────────────────────────────────────
+    const { data: insertedRows, error: insertErr } = await sb.from('bookings').insert(rows).select('id');
+    if (insertErr) {
+      console.error('[SIPELOR] Insert booking gagal:', insertErr);
+      // Pesan error khusus untuk masalah RLS
+      if (insertErr.code === '42501' || insertErr.message?.includes('policy') || insertErr.message?.includes('RLS')) {
+        saveError = `RLS Error: Jalankan SQL fix_bookings_insert_policy.sql di Supabase SQL Editor. (${insertErr.message})`;
+      } else {
+        saveError = insertErr.message;
+      }
+      throw new Error(saveError);
+    }
+
+    saved     = true;
+    bookingUUID = insertedRows?.[0]?.id || null;
+    console.log('[SIPELOR] ✅ Booking tersimpan:', bookingId, '| UUID:', bookingUUID);
+
+    // Mark all selected slots as booked locally
+    for (let k = 0; k < numSlots; k++) {
+      bookedMap[`${ds}|${startSlot+k}`] = true;
+    }
+
+    // ── Upload bukti pembayaran ──────────────────────────────
+    // Strategi: coba storage dulu; jika gagal → simpan sebagai base64 di DB
+    // Dengan base64, tidak butuh storage policy — langsung tersimpan di tabel
+    if (_proofFile && bookingUUID) {
+      let proofFilePath = null;
+
+      // ── Coba storage upload ──────────────────────────────────
+      try {
+        const ext  = _proofFile.name.split('.').pop().toLowerCase();
+        const path = `${bookingUUID}/${Date.now()}_bukti.${ext}`;
+        const { data: storageData, error: upErr } = await sb.storage
+          .from('payment-proofs')
+          .upload(path, _proofFile, { upsert: true, contentType: _proofFile.type });
+        if (!upErr && storageData) {
+          const { data: urlData } = sb.storage.from('payment-proofs').getPublicUrl(path);
+          proofFilePath = urlData?.publicUrl || path;
+          console.log('[SIPELOR] ✅ Storage upload berhasil:', proofFilePath);
+        }
+      } catch(_) { /* storage tidak tersedia atau akses ditolak */ }
+
+      // ── Fallback: kompres & simpan sebagai base64 di tabel ──
+      if (!proofFilePath) {
+        try {
+          proofFilePath = await _compressToBase64(_proofFile);
+          console.log('[SIPELOR] ✅ Bukti disimpan sebagai base64 (storage bypass).');
+        } catch(b64Err) {
+          console.error('[SIPELOR] base64 fallback gagal:', b64Err.message);
+        }
+      }
+
+      // ── Insert ke payment_proofs ─────────────────────────────
+      if (proofFilePath) {
+        const { error: ppErr } = await sb.from('payment_proofs').insert({
+          booking_id: bookingUUID,
+          user_id:    userId,
+          file_path:  proofFilePath,
+          file_name:  _proofFile.name,   // ← wajib: NOT NULL constraint
+          status:     'pending',
+        });
+        if (ppErr) {
+          console.error('[SIPELOR] ❌ Insert payment_proofs gagal:', ppErr.message);
+          showToastMsg('⚠️ Bukti pembayaran gagal disimpan. Hubungi admin.');
+        } else {
+          console.log('[SIPELOR] ✅ payment_proofs tersimpan.');
+          _proofFile = null;
+        }
+      }
+    }
+
+  } catch(err) {
+    if (!saveError) saveError = err.message;
+    console.error('[SIPELOR] Submit error:', err.message);
+  }
+
+  // Inject saveError ke etiket body jika gagal
+  if (!saved) {
+    console.warn('[SIPELOR] ⚠️ Booking TIDAK tersimpan. Penyebab:', saveError);
+  }
+
+  showSuccess({bookingId, bookingUUID, name, phone, ds, startTime, endTime, durHours, total, saved, saveError});
+});
+
+// ── Success overlay ───────────────────────────────────────────────────────
+let _currentBookingUUID = null; // used by uploadProof
+
+function showSuccess({bookingId, bookingUUID, name, phone, ds, startTime, endTime, durHours, total, saved, saveError = ''}) {
+  _currentBookingUUID = bookingUUID || null;
+  const vn   = field?.venue_name || 'Lapangan';
+  const vt   = field?.venue_type || '';
+  const area = field?.area || '';
+
+  // ── Populate mini-info on Step 1 (Pembayaran Berhasil) ───
+  document.getElementById('suc-bid-mini').textContent   = bookingId;
+  document.getElementById('suc-venue-mini').textContent = `${vn}${vt ? ' · ' + vt : ''}${area ? ' · ' + area : ''}`;
+  document.getElementById('suc-date-mini').textContent  = fmtDate(currentDate);
+  document.getElementById('suc-total-mini').textContent = fmtPrice(total);
+
+  const showTimeInSuc = pcfg.showSched || pcfg.mode === 'resepsi18' || pcfg.mode === 'resepsi8';
+  const jamVal = showTimeInSuc
+    ? (pcfg.mode === 'resepsi18' ? '06:00 – 00:00' : pcfg.mode === 'resepsi8' ? '06:00 – 14:00' : `${startTime} – ${endTime}`)
+    : '—';
+  const timeRow = document.getElementById('suc-time-mini-row');
+  if (showTimeInSuc) {
+    document.getElementById('suc-time-mini').textContent = jamVal + (durHours > 0 ? ` (${durHours} jam)` : '');
+    timeRow.style.display = 'flex';
+  } else {
+    timeRow.style.display = 'none';
+  }
+
+  // ── Booking code on e-tiket ───────────────────────────────
+  document.getElementById('suc-bid').textContent = bookingId;
+
+  // ── Build full e-tiket body ───────────────────────────────
+  const durVal  = durHours > 0 ? `${durHours} jam` : pcfg.label;
+  const paxHtml = pcfg.showPax
+    ? `<div class="etiket-row"><span class="etiket-row-label">Peserta</span><span class="etiket-row-val">${numPax} orang</span></div>` : '';
+  const jamHtml = showTimeInSuc
+    ? `<div class="etiket-row"><span class="etiket-row-label">Jam</span><span class="etiket-row-val">${jamVal} (${durVal})</span></div>` : '';
+  const areaHtml = area
+    ? `<div class="etiket-row"><span class="etiket-row-label">Area</span><span class="etiket-row-val">${area}</span></div>` : '';
+
+  document.getElementById('etiket-body').innerHTML = `
+    <div class="etiket-row"><span class="etiket-row-label">Nama</span><span class="etiket-row-val">${name}</span></div>
+    <div class="etiket-row"><span class="etiket-row-label">No. HP</span><span class="etiket-row-val">${phone}</span></div>
+    <div class="etiket-row"><span class="etiket-row-label">Lapangan</span><span class="etiket-row-val">${vn}${vt ? ' · ' + vt : ''}</span></div>
+    ${areaHtml}
+    <div class="etiket-row"><span class="etiket-row-label">Tanggal</span><span class="etiket-row-val">${fmtDate(currentDate)}</span></div>
+    ${jamHtml}${paxHtml}
+    <div class="etiket-total-row">
+      <span class="etiket-total-label">Total Pembayaran</span>
+      <span class="etiket-total-val">${fmtPrice(total)}</span>
+    </div>
+    ${!saved ? `<div style="margin-top:10px;padding:10px 12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:7px;font-size:.72rem;color:#991b1b;font-weight:600;text-align:left;">
+      ⚠️ <strong>Booking belum tersimpan di database.</strong><br>
+      <span style="font-weight:400;opacity:.85;">${saveError || 'Hubungi admin DISPORA untuk konfirmasi manual.'}</span>
+      ${saveError && saveError.includes('RLS') ? `<br><span style="font-weight:700;margin-top:4px;display:block;">→ Admin: Jalankan <code>fix_bookings_insert_policy.sql</code> di Supabase SQL Editor.</span>` : ''}
+    </div>` : ''}
+  `;
+
+  // If UUID not captured from insert (RLS/policy issue), look it up by booking_id
+  if (saved && !_currentBookingUUID && sb) {
+    sb.from('bookings').select('id').eq('booking_id', bookingId).maybeSingle()
+      .then(({ data }) => { if (data?.id) _currentBookingUUID = data.id; });
+  }
+
+  // ── Step 1: Update badge & title based on save status ────
+  const adminBadge = document.querySelector('.pay-success-admin-badge');
+  const successTitle = document.querySelector('.pay-success-title');
+  if (!saved && adminBadge) {
+    adminBadge.style.background = 'linear-gradient(135deg,rgba(220,38,38,.12) 0%,rgba(220,38,38,.08) 100%)';
+    adminBadge.style.borderColor = 'rgba(220,38,38,.30)';
+    adminBadge.style.color = '#991b1b';
+    adminBadge.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Booking belum tersimpan — hubungi admin`;
+  } else if (saved && adminBadge) {
+    adminBadge.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Data masuk ke Admin · Menunggu verifikasi`;
+  }
+
+  // ── Show overlay at Step 1 ────────────────────────────────
+  document.getElementById('pay-success-step').style.display = 'block';
+  document.getElementById('etiket-step').style.display      = 'none';
+  document.getElementById('success-overlay').classList.add('show');
+  renderSchedule();
+}
+
+// ── Step navigation: Pembayaran Berhasil → E-Tiket ───────────────────────
+function showEtiketStep() {
+  document.getElementById('pay-success-step').style.display = 'none';
+  const etiketStep = document.getElementById('etiket-step');
+  etiketStep.style.display   = 'block';
+  etiketStep.style.animation = 'popIn .36s cubic-bezier(.175,.885,.32,1.275)';
+  document.getElementById('success-overlay').scrollTop = 0;
+}
+
+function backToSuccess() {
+  document.getElementById('etiket-step').style.display      = 'none';
+  document.getElementById('pay-success-step').style.display = 'block';
+  document.getElementById('success-overlay').scrollTop      = 0;
+}
+
+// ── Download E-Tiket ──────────────────────────────────────────────────────
+async function downloadEtiket() {
+  const card = document.getElementById('etiket-card');
+  const btn  = document.getElementById('btn-download-tiket');
+  if (!card) return;
+
+  const imgs     = [...card.querySelectorAll('img')];
+  const origSrcs = imgs.map(img => img.src);
+  const blobUrls = [];
+
+  try {
+    btn.disabled = true;
+    btn.textContent = '⏳ Menyiapkan…';
+
+    // Pre-fetch each image as a same-origin blob URL so html2canvas can draw
+    // it without CORS restrictions (avoids "tainted canvas" error).
+    await Promise.all(imgs.map(async (img, i) => {
+      try {
+        const res = await fetch(img.src);
+        if (!res.ok) return;
+        const blob  = await res.blob();
+        const bUrl  = URL.createObjectURL(blob);
+        blobUrls[i] = bUrl;
+        img.src     = bUrl;
+      } catch { /* keep original src */ }
+    }));
+
+    // Wait for any src-swapped images to finish loading
+    await Promise.all(imgs.map(img =>
+      img.complete ? Promise.resolve()
+                   : new Promise(r => { img.onload = r; img.onerror = r; })
+    ));
+
+    const canvas = await html2canvas(card, {
+      scale: 3,
+      useCORS: false,       // blob URLs are same-origin — no CORS fetch needed
+      allowTaint: false,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
+
+    const link = document.createElement('a');
+    const bid  = document.getElementById('suc-bid')?.textContent || 'etiket';
+    link.download = `E-Tiket-${bid}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToastMsg('✅ E-Tiket berhasil didownload!');
+  } catch(err) {
+    console.warn('[SIPELOR] downloadEtiket:', err.message);
+    showToastMsg('⚠️ Gagal download, coba lagi');
+  } finally {
+    // Restore original src and revoke temporary blob URLs
+    imgs.forEach((img, i) => { img.src = origSrcs[i]; });
+    blobUrls.forEach(u => u && URL.revokeObjectURL(u));
+    btn.disabled = false;
+    btn.textContent = '⬇️ Download E-Tiket';
+  }
+}
+
+// ── Rekening copy ─────────────────────────────────────────────────────────
+function showToastMsg(msg) {
+  const t = document.getElementById('copy-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function copyRekening() {
+  const REK = '0075787111001';
+  const btn = document.getElementById('rek-copy-btn');
+  navigator.clipboard.writeText(REK).then(() => {
+    if (btn) { btn.textContent = '✓ Tersalin!'; btn.classList.add('copied'); }
+    showToastMsg('✓ Nomor rekening berhasil disalin');
+    setTimeout(() => {
+      if (btn) {
+        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Salin`;
+        btn.classList.remove('copied');
+      }
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const el = document.createElement('textarea');
+    el.value = REK; el.style.position = 'fixed'; el.style.opacity = '0';
+    document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+    showToastMsg('✓ Nomor rekening disalin');
+  });
+}
+
+// ── Proof upload (form-side) ──────────────────────────────────────────────
+let _proofFile = null; // file selected in the form card
+
+function handleFormProofSelect(e) {
+  const file = e.target.files?.[0];
+  if (file) _setFormProofFile(file);
+}
+
+function handleFormProofDrop(e) {
+  e.preventDefault();
+  document.getElementById('form-upload-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files?.[0];
+  if (file) _setFormProofFile(file);
+}
+
+function _setFormProofFile(file) {
+  if (file.size > 10 * 1024 * 1024) { showToastMsg('⚠️ File terlalu besar (maks. 10 MB)'); return; }
+  _proofFile = file;
+  document.getElementById('form-proof-file-name').textContent = file.name;
+  document.getElementById('form-proof-file-row').style.display = 'flex';
+  document.getElementById('form-upload-zone').style.display = 'none';
+  checkSubmitReady();
+}
+
+function clearFormProofFile() {
+  _proofFile = null;
+  const inp = document.getElementById('form-proof-input');
+  if (inp) inp.value = '';
+  document.getElementById('form-proof-file-row').style.display = 'none';
+  document.getElementById('form-upload-zone').style.display = 'block';
+  checkSubmitReady();
+}
+
+// ── Legacy stubs (overlay upload removed, kept for safety) ───────────────
+function handleProofSelect() {}
+function handleProofDrop(e) { e.preventDefault(); }
+function clearProofFile() {}
+
+async function doUploadProof() {
+  if (!_proofFile || !_currentBookingUUID || !sb) {
+    showToastMsg('⚠️ Tidak dapat mengupload saat ini');
+    return;
+  }
+
+  const btn = document.getElementById('proof-upload-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Mengupload…';
+
+  try {
+    // Build storage path
+    const ext       = _proofFile.name.split('.').pop();
+    const timestamp = Date.now();
+    const path      = `${_currentBookingUUID}/${timestamp}_bukti.${ext}`;
+
+    // Upload file to Supabase storage bucket 'payment-proofs'
+    const { data: uploadData, error: uploadError } = await sb.storage
+      .from('payment-proofs')
+      .upload(path, _proofFile, { upsert: true, contentType: _proofFile.type });
+
+    if (uploadError) throw uploadError;
+
+    // Get public URL
+    const { data: urlData } = sb.storage.from('payment-proofs').getPublicUrl(path);
+    const publicUrl = urlData?.publicUrl || path;
+
+    // Ambil user_id dari sesi aktif (anon session dari proses booking)
+    const { data: { user: _u } } = await sb.auth.getUser();
+    const _userId = _u?.id || null;
+
+    // Insert record into payment_proofs table
+    const { error: dbError } = await sb.from('payment_proofs').insert({
+      booking_id: _currentBookingUUID,
+      user_id:    _userId,
+      file_path:  publicUrl,
+      file_name:  _proofFile.name,     // ← wajib: NOT NULL constraint
+      status:     'pending',
+    });
+
+    if (dbError) throw dbError;
+
+    // Show success toast
+    showToastMsg('✅ Bukti transfer berhasil diupload!');
+
+  } catch(err) {
+    console.warn('[SIPELOR] Upload proof error:', err.message);
+    btn.disabled = false;
+    btn.textContent = '⬆️ Upload Bukti Transfer';
+    showToastMsg('⚠️ Gagal upload: ' + (err.message || 'Coba lagi'));
+  }
+}
+
+function showSchedError(msg) {
+  document.getElementById('sched-body').innerHTML =
+    `<div class="sched-loading" style="color:var(--red);">⚠️ ${msg}</div>`;
+}
+
+// ── Compress file to base64 data URL (for DB storage fallback) ───────────
+// Gambar di-resize ke max 1400px dan dikompres ke JPEG 80%.
+// PDF dan file non-image dikembalikan apa adanya sebagai base64.
+function _compressToBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith('image/')) {
+      // Non-image: simpan as-is (base64)
+      const r = new FileReader();
+      r.onload  = e => resolve(e.target.result);
+      r.onerror = () => reject(new Error('FileReader error'));
+      r.readAsDataURL(file);
+      return;
+    }
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const MAX = 1400;
+      let w = img.width, h = img.height;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.80));
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      // Fallback ke raw base64
+      const r = new FileReader();
+      r.onload  = e => resolve(e.target.result);
+      r.onerror = () => reject(new Error('FileReader error'));
+      r.readAsDataURL(file);
+    };
+    img.src = url;
+  });
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+loadField();
+</script>
+</body>
+</html>

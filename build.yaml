@@ -1,0 +1,59 @@
+# Build configuration for code generation
+# This file configures build_runner for generating code from annotations
+
+targets:
+  $default:
+    builders:
+      # Freezed code generation
+      freezed:
+        enabled: true
+        generate_for:
+          - lib/models/*.dart
+          - lib/**/*.freezed.dart
+        options:
+          # Generate copyWith method
+          copy_with: true
+          # Generate toJson/fromJson
+          json_serializable: true
+          # Generate == operator and hashCode
+          equal: true
+          # Generate toString
+          to_string: true
+      
+      # JSON Serializable code generation
+      json_serializable:
+        enabled: true
+        generate_for:
+          - lib/models/*.dart
+          - lib/**/*.g.dart
+        options:
+          # Generate snake_case field names
+          field_rename: snake
+          # Allow null values
+          explicit_to_json: true
+          # Generate checked fromJson
+          checked: true
+      
+      # Riverpod code generation
+      riverpod_generator:
+        enabled: true
+        generate_for:
+          - lib/providers/*.dart
+          - lib/**/*.g.dart
+        options:
+          # Generate provider name from function name
+          generate_name: true
+
+# Global options
+builders:
+  freezed:
+    options:
+      # Use language version 3.0+
+      language: ">=3.0.0 <4.0.0"
+  
+  json_serializable:
+    options:
+      # Create factory constructors
+      create_factory: true
+      # Create toJson method
+      create_to_json: true

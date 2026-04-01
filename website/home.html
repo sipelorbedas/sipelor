@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIPELOR BEDAS — Sistem Informasi Penyewaan Lapangan Olahraga Kabupaten Bandung</title>
+  <meta name="description" content="Pesan lapangan olahraga di Kabupaten Bandung secara online. Futsal, Badminton, Bola Voli, Basket, Tenis & Sepak Bola. DISPORA Kabupaten Bandung." />
+  <link rel="icon" href="public/images/sipelor.png" type="image/png" />
+
+  <!-- Fonts: Space Grotesk + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+   Navy + Emerald + Amber — SIPELOR BEDAS
+═══════════════════════════════════════════ */
+:root {
+  --navy:          #0A1628;
+  --navy-mid:      #132136;
+  --navy-light:    #1E3A5F;
+  --emerald:       #00693E;
+  --emerald-mid:   #059669;
+  --emerald-light: #34D399;
+  --emerald-pale:  #ECFDF5;
+  --gold:          #D97706;
+  --gold-mid:      #F59E0B;
+  --gold-light:    #FCD34D;
+  --gold-pale:     #FFFBEB;
+  --white:         #FFFFFF;
+  --surface:       #F8FAFB;
+  --gray-100:      #F3F4F6;
+  --gray-200:      #E5E7EB;
+  --gray-400:      #9CA3AF;
+  --gray-500:      #6B7280;
+  --gray-700:      #374151;
+  --gray-900:      #111827;
+
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,.14);
+  --shadow-em:  0 8px 24px rgba(0,105,62,.22);
+  --shadow-gd:  0 8px 24px rgba(217,119,6,.30);
+
+  --transition: all .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { font-family: var(--font-body); background: var(--white); color: var(--gray-900); line-height: 1.6; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Util ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--radius-sm);
+  font-family: var(--font-head); font-weight: 600; font-size: .9rem;
+  cursor: pointer; border: none; transition: var(--transition); white-space: nowrap;
+}
+.btn-gold {
+  background: var(--gold); color: var(--white);
+  box-shadow: var(--shadow-gd);
+}
+.btn-gold:hover { background: #b45309; transform: translateY(-1px); }
+.btn-emerald {
+  background: var(--emerald); color: var(--white);
+  box-shadow: var(--shadow-em);
+}
+.btn-emerald:hover { background: #00562f; transform: translateY(-1px); }
+.btn-outline-white {
+  background: transparent; color: var(--white);
+  border: 1.5px solid rgba(255,255,255,.55);
+}
+.btn-outline-white:hover { background: rgba(255,255,255,.10); border-color: var(--white); }
+.btn-outline-emerald {
+  background: transparent; color: var(--emerald);
+  border: 1.5px solid var(--emerald);
+}
+.btn-outline-emerald:hover { background: var(--emerald-pale); }
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .75rem; font-weight: 600; letter-spacing: .10em; text-transform: uppercase;
+  color: var(--emerald); background: var(--emerald-pale);
+  border: 1px solid rgba(0,105,62,.20); padding: 5px 12px; border-radius: 99px; margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 700; color: var(--gray-900); line-height: 1.15; margin-bottom: 12px;
+}
+.section-title.white { color: var(--white); }
+.section-sub {
+  font-size: .98rem; color: var(--gray-500); font-weight: 400; line-height: 1.7; max-width: 520px;
+}
+.section-sub.white { color: rgba(255,255,255,.65); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: .10s; }
+.delay-2 { transition-delay: .20s; }
+.delay-3 { transition-delay: .30s; }
+
+/* Safety net: if JS reveal never fires (e.g. very fast scroll or JS blocked),
+   force visibility after 3s via CSS animation */
+@keyframes revealFallback { to { opacity: 1; transform: translateY(0); } }
+.reveal:not(.in) {
+  animation: revealFallback 0.4s ease 3s forwards;
+}
+
+/* Animation for dynamically rendered cards */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.anim-fadein { animation: fadeUp .4s ease forwards; }
+.anim-fadein:nth-child(2) { animation-delay: .05s; }
+.anim-fadein:nth-child(3) { animation-delay: .10s; }
+.anim-fadein:nth-child(4) { animation-delay: .15s; }
+.anim-fadein:nth-child(5) { animation-delay: .20s; }
+.anim-fadein:nth-child(6) { animation-delay: .25s; }
+
+/* ═══════════════════════════════════════════
+   TOP BAR
+═══════════════════════════════════════════ */
+.topbar {
+  background: var(--navy);
+  padding: 8px 0;
+  font-size: .78rem;
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.topbar-features {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.topbar-feature {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,.70); white-space: nowrap;
+}
+.topbar-feature .dot {
+  width: 6px; height: 6px; background: var(--emerald-light); border-radius: 50%; flex-shrink: 0;
+}
+.topbar-right {
+  display: flex; align-items: center; gap: 16px;
+  color: rgba(255,255,255,.55); white-space: nowrap;
+}
+.topbar-right a { color: rgba(255,255,255,.65); transition: var(--transition); }
+.topbar-right a:hover { color: var(--gold-light); }
+
+/* ═══════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════ */
+.navbar {
+  position: sticky; top: 0; z-index: 500;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.nav-inner {
+  display: flex; align-items: center; gap: 8px;
+  height: 64px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-right: 16px;
+}
+.nav-logo img { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-text .brand { font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: var(--emerald); letter-spacing: -.01em; }
+.nav-logo-text .tagline { font-size: .6rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: .06em; }
+
+.nav-links { display: flex; align-items: center; gap: 2px; flex: 1; }
+.nav-item { position: relative; }
+.nav-link {
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: .88rem; font-weight: 500; color: var(--gray-700);
+  transition: var(--transition); cursor: pointer; white-space: nowrap;
+  background: none; border: none; font-family: var(--font-body);
+}
+.nav-link:hover, .nav-link.active { color: var(--emerald); background: var(--emerald-pale); }
+.nav-link .chevron { font-size: .6rem; transition: var(--transition); }
+.nav-item:hover .chevron { transform: rotate(180deg); }
+
+/* Dropdown */
+.nav-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); left: 0;
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+  padding: 10px; min-width: 200px; z-index: 600;
+}
+.nav-item:hover .nav-dropdown { display: block; }
+.nav-dropdown a {
+  display: block; padding: 9px 14px;
+  font-size: .875rem; color: var(--gray-700); font-weight: 400;
+  border-radius: var(--radius-sm); transition: var(--transition);
+}
+.nav-dropdown a:hover { background: var(--emerald-pale); color: var(--emerald); }
+.nav-dropdown-divider { height: 1px; background: var(--gray-100); margin: 6px 0; }
+.nav-dropdown a.all-link { font-weight: 600; color: var(--emerald); }
+
+.nav-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.nav-search-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  background: var(--gray-100); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem; color: var(--gray-500); transition: var(--transition);
+}
+.nav-search-btn:hover { background: var(--emerald-pale); color: var(--emerald); }
+
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 6px; border: none; background: none;
+}
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--gray-700); border-radius: 2px; transition: var(--transition); }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  position: relative; min-height: 500px; max-height: 620px; height: 60vh;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('public/images/stadium_jalak_harupat.jpg');
+  background-size: cover; background-position: center 35%;
+  transform: scale(1.03);
+  animation: heroZoom 14s ease-in-out infinite alternate;
+}
+@keyframes heroZoom { from { transform: scale(1.03); } to { transform: scale(1.08); } }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10,22,40,.92) 0%,
+    rgba(10,22,40,.60) 40%,
+    rgba(10,22,40,.30) 70%,
+    rgba(10,22,40,.20) 100%
+  );
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 48px 0; width: 100%;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,105,62,.25); border: 1px solid rgba(52,211,153,.35);
+  backdrop-filter: blur(8px); color: var(--emerald-light);
+  font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+}
+.hero-badge .dot-pulse {
+  width: 7px; height: 7px; background: var(--emerald-light); border-radius: 50%;
+  animation: pulse 1.6s ease infinite;
+}
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(1.4); } }
+.hero-title {
+  font-family: var(--font-head); font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 700; color: var(--white); line-height: 1.05;
+  letter-spacing: -.02em; margin-bottom: 16px;
+}
+.hero-title .hl { color: var(--gold-light); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem); color: rgba(255,255,255,.80);
+  font-weight: 400; max-width: 580px; line-height: 1.75; margin-bottom: 32px;
+}
+.hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hero-actions .btn { padding: 13px 28px; font-size: .95rem; }
+
+/* Quick stats below hero */
+.hero-stats-bar {
+  background: var(--navy-mid);
+  border-top: 3px solid var(--emerald);
+}
+.stats-bar-inner {
+  display: flex; align-items: stretch;
+}
+.stat-item {
+  flex: 1; display: flex; align-items: center; gap: 14px;
+  padding: 20px 24px;
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+.stat-item:last-child { border-right: none; }
+.stat-icon-box {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.stat-icon-box.em { background: rgba(0,105,62,.25); }
+.stat-icon-box.gd { background: rgba(217,119,6,.25); }
+.stat-icon-box.nv { background: rgba(30,58,95,.50); }
+.stat-icon-box.pu { background: rgba(124,58,237,.20); }
+.stat-num {
+  font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+  color: var(--white); line-height: 1;
+}
+.stat-lbl { font-size: .72rem; color: rgba(255,255,255,.50); text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; }
+
+/* ═══════════════════════════════════════════
+   SUPPORTED BY STRIP
+═══════════════════════════════════════════ */
+.supported-section {
+  background: var(--white);
+  padding: 28px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.supported-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gray-400); text-align: center; margin-bottom: 18px;
+}
+.supported-row {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px;
+}
+.supported-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  border-radius: 99px; padding: 7px 16px;
+  font-size: .78rem; font-weight: 600; white-space: nowrap;
+  border: 1.5px solid; transition: var(--transition);
+}
+.supported-pill.gov {
+  background: var(--emerald-pale); border-color: rgba(0,105,62,.25); color: var(--emerald);
+}
+.supported-pill.gov:hover { background: var(--emerald); color: var(--white); border-color: var(--emerald); }
+.supported-pill.partner {
+  background: var(--gray-100); border-color: var(--gray-200); color: var(--gray-700);
+}
+.supported-pill.partner:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.supported-divider {
+  width: 1px; height: 24px; background: var(--gray-200); flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   SPORT CATEGORIES (like GBK)
+═══════════════════════════════════════════ */
+.categories-section { padding: 64px 0 48px; background: var(--surface); }
+.section-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 36px; flex-wrap: wrap; gap: 16px;
+}
+.categories-scroll-wrap {
+  overflow-x: auto; margin: 0 -24px; padding: 0 24px 16px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  cursor: grab; user-select: none;
+}
+.categories-scroll-wrap:active { cursor: grabbing; }
+.categories-scroll-wrap::-webkit-scrollbar { display: none; }
+.categories-row { display: flex; gap: 16px; width: max-content; }
+.cat-card {
+  flex-shrink: 0; width: 200px; border-radius: var(--radius-md);
+  overflow: hidden; cursor: pointer; transition: var(--transition);
+  background: var(--white); border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+.cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--emerald); }
+.cat-card.active { border-color: var(--emerald); box-shadow: var(--shadow-em); }
+.cat-img-wrap { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.cat-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.cat-card:hover .cat-img { transform: scale(1.06); }
+.cat-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,22,40,.80) 0%, transparent 60%);
+}
+.cat-img-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--gold); color: var(--white);
+  font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 99px;
+}
+.cat-emoji {
+  position: absolute; bottom: 12px; left: 12px;
+  font-size: 1.5rem; line-height: 1;
+}
+.cat-body { padding: 14px 16px; }
+.cat-name {
+  font-family: var(--font-head); font-size: .95rem; font-weight: 700;
+  color: var(--gray-900); margin-bottom: 4px;
+}
+.cat-count {
+  font-size: .78rem; color: var(--gray-500); font-weight: 400;
+}
+.cat-count .num { color: var(--emerald); font-weight: 700; }
+/* ── Category arrows ── */
+.cat-arrows { display: flex; gap: 6px; }
+.cat-arrow {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--transition);
+  font-size: 1rem; color: var(--gray-700); flex-shrink: 0;
+}
+.cat-arrow:hover { background: var(--emerald); color: var(--white); border-color: var(--emerald); box-shadow: var(--shadow-em); }
+.cat-arrow:disabled { opacity: .32; cursor: default; pointer-events: none; }
+
+/* ── App download badges ── */
+.app-dl-badges { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; width: 168px; }
+.app-dl-badge { display: block; transition: var(--transition); line-height: 0; }
+.app-dl-badge:hover { opacity: .82; transform: translateY(-2px); }
+.app-dl-badge img { width: 100%; height: auto; display: block; border-radius: 4px; }
+
+/* loading cat skeleton */
+.cat-skeleton {
+  flex-shrink: 0; width: 200px; border-radius: var(--radius-md);
+  background: var(--gray-100); overflow: hidden; height: 200px; position: relative;
+}
+.cat-skeleton::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+  animation: shimmer 1.4s ease infinite;
+}
+
+/* ═══════════════════════════════════════════
+   FIELDS GRID
+═══════════════════════════════════════════ */
+.fields-section { padding: 64px 0; background: var(--white); }
+.fields-filter-bar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 32px; flex-wrap: wrap;
+}
+.filter-chip {
+  padding: 7px 16px; border-radius: 99px;
+  font-size: .82rem; font-weight: 500; cursor: pointer;
+  border: 1.5px solid var(--gray-200); background: var(--white);
+  color: var(--gray-600); transition: var(--transition); font-family: var(--font-body);
+}
+.filter-chip:hover { border-color: var(--emerald); color: var(--emerald); }
+.filter-chip.active { background: var(--emerald); border-color: var(--emerald); color: var(--white); }
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.fields-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+.btn-load-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 32px; border-radius: 99px;
+  border: 2px solid var(--emerald); background: transparent;
+  color: var(--emerald); font-size: .95rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+  font-family: var(--font-body);
+}
+.btn-load-more:hover { background: var(--emerald); color: var(--white); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-load-more svg { transition: transform .3s ease; }
+.btn-load-more:hover svg { transform: translateY(2px); }
+.field-card {
+  background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); overflow: hidden;
+  transition: var(--transition); cursor: pointer;
+}
+.field-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--gray-300); }
+.field-card-img {
+  position: relative; aspect-ratio: 16/10; overflow: hidden;
+}
+.field-card-img img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease;
+}
+.field-card:hover .field-card-img img { transform: scale(1.05); }
+.field-status-badge {
+  position: absolute; top: 10px; left: 10px;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  padding: 4px 10px; border-radius: 99px;
+}
+.field-status-badge.available { background: rgba(0,105,62,.90); color: var(--white); }
+.field-status-badge.booked    { background: rgba(185,28,28,.85); color: var(--white); }
+.field-status-badge.maintenance { background: rgba(180,83,9,.85); color: var(--white); }
+.field-price-badge {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(10,22,40,.82); backdrop-filter: blur(6px);
+  color: var(--white); font-size: .72rem; font-weight: 600;
+  padding: 4px 10px; border-radius: 99px; white-space: nowrap;
+}
+.field-price-badge span { color: var(--gold-light); font-weight: 700; }
+
+.field-card-body { padding: 16px 18px 18px; }
+.field-type-tag {
+  display: inline-block; font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--emerald);
+  background: var(--emerald-pale); padding: 3px 9px; border-radius: 99px; margin-bottom: 8px;
+}
+.field-name {
+  font-family: var(--font-head); font-size: 1.02rem; font-weight: 700;
+  color: var(--gray-900); margin-bottom: 6px; line-height: 1.2;
+}
+.field-meta { font-size: .80rem; color: var(--gray-400); margin-bottom: 12px; }
+.field-facs { display: flex; gap: 6px; flex-wrap: wrap; }
+.fac {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: .68rem; color: var(--gray-500); background: var(--gray-100);
+  padding: 3px 8px; border-radius: 99px;
+}
+/* Field skeleton */
+.field-skeleton {
+  background: var(--gray-100); border-radius: var(--radius-md);
+  height: 260px; position: relative; overflow: hidden;
+}
+.field-skeleton::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+
+.fields-empty {
+  grid-column: 1/-1; text-align: center; padding: 80px 20px;
+  color: var(--gray-400);
+}
+.fields-empty .empty-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: .4; }
+
+/* ── Field Search Bar ── */
+.fields-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.fields-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 440px;
+}
+.fields-search-wrap .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+.fields-search-input {
+  width: 100%;
+  padding: 11px 40px 11px 42px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: var(--gray-900);
+  background: var(--white);
+  transition: var(--transition);
+  outline: none;
+}
+.fields-search-input::placeholder { color: var(--gray-400); }
+.fields-search-input:focus {
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(0,105,62,.10);
+}
+.fields-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--gray-400);
+  display: none;
+  align-items: center;
+  transition: var(--transition);
+  line-height: 0;
+}
+.fields-search-clear:hover { color: var(--gray-700); }
+.fields-search-clear.visible { display: flex; }
+
+.fields-search-results-count {
+  font-size: .82rem;
+  color: var(--gray-500);
+  white-space: nowrap;
+  margin-left: 4px;
+}
+.fields-search-results-count .hl { color: var(--emerald); font-weight: 700; }
+
+/* ═══════════════════════════════════════════
+   ABOUT SIPELOR
+═══════════════════════════════════════════ */
+.about-section {
+  background: var(--navy);
+  padding: 80px 0;
+  position: relative; overflow: hidden;
+}
+.about-section::before {
+  content: ''; position: absolute;
+  top: -160px; right: -160px; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,105,62,.15) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-logo-wrap {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px;
+}
+.about-logo {
+  width: 120px; height: 120px; object-fit: contain;
+  border-radius: 24px;
+  filter: drop-shadow(0 0 40px rgba(52,211,153,.30));
+}
+.about-brand {
+  font-family: var(--font-head); font-size: 1.6rem; font-weight: 800;
+  color: var(--white); letter-spacing: -.01em; line-height: 1.1;
+}
+.about-brand small {
+  display: block; font-size: .75rem; font-weight: 400; color: rgba(255,255,255,.45);
+  letter-spacing: .08em; text-transform: uppercase; margin-top: 4px;
+}
+.about-divider {
+  width: 60px; height: 3px; background: linear-gradient(90deg, var(--emerald), var(--emerald-light));
+  border-radius: 2px;
+}
+.about-text .section-sub { max-width: 100%; }
+.about-stats { display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap; }
+.about-stat { }
+.about-stat .num {
+  font-family: var(--font-head); font-size: 2rem; font-weight: 800;
+  color: var(--gold-light); line-height: 1;
+}
+.about-stat .lbl { font-size: .78rem; color: rgba(255,255,255,.50); margin-top: 4px; }
+.about-badges { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+.about-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.70); font-size: .78rem; padding: 7px 14px; border-radius: 99px;
+}
+
+/* ═══════════════════════════════════════════
+   HOW TO BOOK
+═══════════════════════════════════════════ */
+.how-section { padding: 80px 0; background: var(--surface); }
+.how-header { text-align: center; margin-bottom: 56px; }
+.how-header .section-sub { margin: 0 auto; }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  position: relative;
+}
+.steps-grid::before {
+  content: ''; position: absolute; top: 38px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
+  height: 2px; background: linear-gradient(90deg, var(--emerald), var(--emerald-light), var(--gold));
+  z-index: 0;
+}
+.step {
+  text-align: center; padding: 0 28px; position: relative; z-index: 1;
+}
+.step-num {
+  width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: 1.6rem; font-weight: 800;
+  position: relative;
+}
+.step:nth-child(1) .step-num { background: var(--emerald); color: var(--white); box-shadow: 0 0 0 8px rgba(0,105,62,.12); }
+.step:nth-child(2) .step-num { background: var(--gold); color: var(--white); box-shadow: 0 0 0 8px rgba(217,119,6,.12); }
+.step:nth-child(3) .step-num { background: var(--navy); color: var(--white); box-shadow: 0 0 0 8px rgba(10,22,40,.10); }
+.step-icon {
+  position: absolute; bottom: -4px; right: -4px;
+  width: 26px; height: 26px; background: var(--white); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: .85rem;
+  box-shadow: var(--shadow-sm);
+}
+.step-title {
+  font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
+  color: var(--gray-900); margin-bottom: 10px;
+}
+.step-desc { font-size: .88rem; color: var(--gray-500); line-height: 1.75; }
+
+/* ═══════════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════════ */
+.cta-section {
+  padding: 80px 0; background: var(--emerald);
+  position: relative; overflow: hidden; text-align: center;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-title {
+  font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; color: var(--white); line-height: 1.1; margin-bottom: 14px; position: relative;
+}
+.cta-sub {
+  font-size: 1rem; color: rgba(255,255,255,.80); max-width: 480px; margin: 0 auto 36px; position: relative;
+}
+.cta-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+.btn-cta-white {
+  background: var(--white); color: var(--emerald); font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+.btn-cta-white:hover { background: var(--gold-pale); transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer { background: var(--navy); padding: 72px 0 0; }
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr 1fr; gap: 36px;
+  padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* ── Security badges in footer ── */
+.sec-badges { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
+.sec-badge {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius-sm); padding: 9px 12px;
+  transition: var(--transition);
+}
+.sec-badge:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.20); }
+.sec-badge-icon {
+  width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.sec-badge-icon.green { background: rgba(0,105,62,.30); }
+.sec-badge-icon.blue  { background: rgba(30,58,95,.60); }
+.sec-badge-icon.gold  { background: rgba(217,119,6,.25); }
+.sec-badge-info { display: flex; flex-direction: column; line-height: 1.2; }
+.sec-badge-info strong { font-size: .75rem; font-weight: 700; color: var(--white); font-family: var(--font-head); letter-spacing: .03em; }
+.sec-badge-info span   { font-size: .63rem; color: rgba(255,255,255,.42); margin-top: 1px; }
+.footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.footer-brand-logo img { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
+.footer-brand-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--white); }
+.footer-brand-sub { font-size: .62rem; color: rgba(255,255,255,.40); text-transform: uppercase; letter-spacing: .06em; }
+.footer-desc { font-size: .85rem; color: rgba(255,255,255,.45); line-height: 1.80; margin-bottom: 22px; }
+.footer-socials { display: flex; gap: 8px; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10);
+  display: flex; align-items: center; justify-content: center; font-size: .85rem;
+  color: rgba(255,255,255,.50); transition: var(--transition); cursor: pointer;
+}
+.social-btn:hover { background: var(--emerald); border-color: var(--emerald); color: var(--white); }
+.footer-col h5 {
+  font-family: var(--font-head); font-size: .7rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.30); margin-bottom: 18px;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a { font-size: .85rem; color: rgba(255,255,255,.55); transition: var(--transition); }
+.footer-col ul a:hover { color: var(--emerald-light); padding-left: 4px; }
+.footer-contact { display: flex; flex-direction: column; gap: 11px; }
+.contact-row { display: flex; align-items: flex-start; gap: 9px; }
+.contact-row .ci { font-size: .9rem; color: var(--emerald-light); margin-top: 2px; flex-shrink: 0; }
+.contact-row p { font-size: .82rem; color: rgba(255,255,255,.50); line-height: 1.55; }
+.footer-bottom {
+  padding: 18px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.footer-bottom p { font-size: .76rem; color: rgba(255,255,255,.25); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: .76rem; color: rgba(255,255,255,.28); transition: var(--transition); }
+.footer-bottom-links a:hover { color: rgba(255,255,255,.60); }
+
+/* ═══════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .stats-bar-inner { flex-wrap: wrap; }
+  .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .about-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+  .about-logo-wrap { flex-direction: row; text-align: left; }
+  .about-badges { justify-content: flex-start; }
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .fields-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .topbar-features { display: none; }
+  /* Hide "DISPORA Kab. Bandung" text on mobile */
+  .topbar-right span { display: none; }
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  /* Hide Masuk/Daftar buttons on mobile — keep search + hamburger */
+  .nav-right .btn { display: none; }
+  .nav-right .nav-search-btn { display: flex; }
+  .steps-grid { grid-template-columns: 1fr; gap: 32px; }
+  .steps-grid::before { display: none; }
+  .fields-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .about-logo-wrap { flex-direction: column; align-items: center; }
+  .about-stats { justify-content: center; }
+  /* VD modal hero height reduce */
+  .vd-hero { height: 220px; }
+  /* VD modal body padding */
+  .vd-body { padding: 16px 16px 24px; gap: 20px; }
+  /* VD name smaller */
+  .vd-name { font-size: 1.35rem; }
+  /* Hero content */
+  .hero-content { padding: 36px 0; }
+  /* Stats padding */
+  .stat-item { padding: 16px 16px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  /* Stats: 1 column on very small */
+  .stats-bar-inner { flex-direction: column; }
+  .stat-item { width: 100%; min-width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+  /* Section header stack */
+  .section-header { flex-direction: column; align-items: flex-start; }
+  .section-header > div:last-child { width: 100%; }
+  /* Cat arrows row wrap */
+  .cat-arrows { display: none; }
+  /* Hero */
+  .hero-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .hero-actions .btn { padding: 11px 18px; font-size: .88rem; }
+  /* Footer bottom links wrap */
+  .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+  /* Supported pills smaller */
+  .supported-pill { font-size: .72rem; padding: 6px 12px; }
+  .supported-divider { display: none; }
+  /* Schedule */
+  .sched-date-range { min-width: 0; font-size: .88rem; }
+  /* VD info grid 1 col */
+  .vd-info-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Mobile nav open */
+.nav-links.mobile-open {
+  display: flex; flex-direction: column; position: absolute;
+  top: 64px; left: 0; right: 0;
+  background: var(--white); border-top: 1px solid var(--gray-200);
+  padding: 16px 24px; gap: 4px;
+  box-shadow: var(--shadow-lg); z-index: 490;
+}
+.nav-links.mobile-open .nav-item { width: 100%; }
+.nav-links.mobile-open .nav-dropdown { position: static; box-shadow: none; border: none; background: var(--emerald-pale); margin-top: 4px; display: none; }
+.nav-links.mobile-open .nav-item.open .nav-dropdown { display: block; }
+
+/* ═══════════════════════════════════════════
+   VENUE DETAIL MODAL
+═══════════════════════════════════════════ */
+.vd-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(10,22,40,.65); backdrop-filter: blur(4px);
+  display: none; align-items: flex-start; justify-content: center;
+  overflow-y: auto; padding: 0;
+  animation: vdFadeIn .22s ease;
+}
+.vd-overlay.open { display: flex; }
+@keyframes vdFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.vd-modal {
+  background: var(--white); width: 100%; max-width: 1000px;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  box-shadow: var(--shadow-lg); overflow: hidden;
+  animation: vdSlideDown .28s cubic-bezier(.4,0,.2,1);
+  margin: 0 auto;
+}
+@keyframes vdSlideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Hero */
+.vd-hero {
+  position: relative; height: 340px; overflow: hidden; background: var(--navy);
+}
+.vd-hero img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.vd-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,22,40,.75) 0%, rgba(10,22,40,.20) 60%, transparent 100%);
+}
+.vd-close {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(10,22,40,.60); backdrop-filter: blur(6px);
+  border: 1.5px solid rgba(255,255,255,.25);
+  color: var(--white); font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+.vd-close:hover { background: rgba(185,28,28,.80); border-color: transparent; }
+.vd-hero-type {
+  position: absolute; bottom: 20px; left: 28px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--emerald); color: var(--white);
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 99px;
+}
+
+/* Body layout */
+.vd-body { display: grid; grid-template-columns: 1fr 300px; gap: 32px; padding: 28px 28px 36px; }
+@media (max-width: 768px) { .vd-body { grid-template-columns: 1fr; } }
+
+/* Left column */
+.vd-breadcrumb { font-size: .75rem; color: var(--gray-400); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+.vd-breadcrumb a { color: var(--emerald); }
+.vd-breadcrumb span { color: var(--gray-400); }
+.vd-name {
+  font-family: var(--font-head); font-size: 1.7rem; font-weight: 800;
+  color: var(--gray-900); line-height: 1.1; margin-bottom: 6px;
+}
+.vd-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.vd-stars { color: var(--gold-mid); font-size: .95rem; letter-spacing: 1px; }
+.vd-rating-lbl { font-size: .78rem; color: var(--gray-400); }
+
+.vd-section-title {
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .10em; color: var(--gray-400);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.vd-section-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-100); }
+.vd-desc { font-size: .88rem; color: var(--gray-500); line-height: 1.80; margin-bottom: 28px; }
+
+/* Info grid */
+.vd-info-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;
+}
+@media (max-width: 480px) { .vd-info-grid { grid-template-columns: 1fr 1fr; } }
+.vd-info-card {
+  background: var(--surface); border: 1px solid var(--gray-100);
+  border-radius: var(--radius-md); padding: 14px 16px;
+}
+.vd-info-card .ic-icon { font-size: 1.1rem; margin-bottom: 6px; }
+.vd-info-card .ic-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gray-400); font-weight: 600; margin-bottom: 3px; }
+.vd-info-card .ic-value { font-size: .88rem; color: var(--gray-900); font-weight: 600; line-height: 1.3; }
+
+/* Facilities */
+.vd-facs { display: flex; gap: 8px; flex-wrap: wrap; }
+.vd-fac {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .78rem; color: var(--emerald); font-weight: 500;
+  background: var(--emerald-pale); border: 1px solid rgba(0,105,62,.15);
+  padding: 5px 12px; border-radius: 99px;
+}
+
+/* Right sidebar */
+.vd-sidebar {}
+.vd-book-card {
+  position: sticky; top: 16px;
+  background: var(--white); border: 2px solid var(--emerald);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-em);
+}
+.vd-book-header {
+  background: var(--emerald); padding: 16px 20px; text-align: center;
+}
+.vd-book-header h4 {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 2px;
+}
+.vd-book-header p { font-size: .72rem; color: rgba(255,255,255,.70); }
+.vd-book-body { padding: 20px; }
+.vd-price-row { text-align: center; margin-bottom: 18px; }
+.vd-price {
+  font-family: var(--font-head); font-size: 1.7rem; font-weight: 800; color: var(--emerald);
+}
+.vd-price sub { font-size: .72rem; font-weight: 400; color: var(--gray-400); }
+.vd-book-status {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: .78rem; font-weight: 600; padding: 7px 14px; border-radius: 99px; margin-bottom: 16px;
+}
+.vd-book-status.available { background: var(--emerald-pale); color: var(--emerald); }
+.vd-book-status.booked    { background: #fee2e2; color: #b91c1c; }
+.vd-book-status.maintenance { background: var(--gold-pale); color: var(--gold); }
+.vd-book-status .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.vd-book-btn {
+  display: block; width: 100%; padding: 13px;
+  background: var(--gold); color: var(--white);
+  font-family: var(--font-head); font-weight: 700; font-size: .95rem;
+  border: none; border-radius: var(--radius-sm); cursor: pointer;
+  text-align: center; transition: var(--transition); box-shadow: var(--shadow-gd);
+}
+.vd-book-btn:hover { background: #b45309; transform: translateY(-1px); }
+.vd-book-btn:disabled { background: var(--gray-200); color: var(--gray-400); box-shadow: none; cursor: not-allowed; transform: none; }
+.vd-book-meta { margin-top: 14px; display: flex; flex-direction: column; gap: 7px; }
+.vd-book-meta-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .75rem; color: var(--gray-500);
+}
+.vd-book-meta-row .mi { color: var(--emerald); }
+
+/* ═══════════════════════════════════════════
+   JADWAL LAPANGAN SECTION
+═══════════════════════════════════════════ */
+.schedule-section { padding: 64px 0; background: var(--white); }
+
+.sched-top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.sched-field-wrap { display: flex; align-items: center; gap: 10px; }
+.sched-field-label { font-size: .82rem; font-weight: 600; color: var(--gray-700); white-space: nowrap; }
+.sched-field-select {
+  padding: 9px 36px 9px 14px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--gray-200); background: var(--white);
+  font-family: var(--font-body); font-size: .85rem; color: var(--gray-700);
+  cursor: pointer; outline: none; transition: var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  min-width: 220px;
+}
+.sched-field-select:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(0,105,62,.10); }
+
+.sched-view-tabs {
+  display: flex; gap: 2px; background: var(--gray-100);
+  border-radius: var(--radius-sm); padding: 3px;
+}
+.sched-tab {
+  padding: 7px 20px; border-radius: var(--radius-sm);
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  border: none; background: transparent; font-family: var(--font-body);
+  color: var(--gray-500); transition: var(--transition);
+}
+.sched-tab.active { background: var(--white); color: var(--emerald); box-shadow: var(--shadow-sm); }
+.sched-tab:hover:not(.active) { color: var(--gray-700); }
+
+.sched-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.sched-nav-group { display: flex; align-items: center; gap: 10px; }
+.sched-nav-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; transition: var(--transition); color: var(--gray-700);
+  box-shadow: var(--shadow-sm); flex-shrink: 0;
+}
+.sched-nav-btn:hover { background: var(--emerald); border-color: var(--emerald); color: var(--white); }
+.sched-date-range {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+  color: var(--gray-900); min-width: 220px; text-align: center;
+}
+.sched-today-btn {
+  padding: 8px 18px; font-size: .82rem; border-radius: var(--radius-sm);
+  background: transparent; border: 1.5px solid var(--emerald); color: var(--emerald);
+  font-family: var(--font-head); font-weight: 600; cursor: pointer; transition: var(--transition);
+}
+.sched-today-btn:hover { background: var(--emerald-pale); }
+
+/* ── Schedule Grid ── */
+.sched-grid-wrap {
+  overflow-x: auto; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  box-shadow: var(--shadow-sm);
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+  scrollbar-color: var(--gray-200) transparent;
+}
+.sched-grid-wrap::-webkit-scrollbar { height: 4px; }
+.sched-grid-wrap::-webkit-scrollbar-track { background: transparent; }
+.sched-grid-wrap::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
+
+.sched-table { width: 100%; min-width: 680px; border-collapse: collapse; table-layout: fixed; }
+
+/* Header row */
+.sched-th-time {
+  width: 88px; padding: 14px 10px; text-align: center;
+  background: var(--navy); color: rgba(255,255,255,.55);
+  font-family: var(--font-head); font-size: .68rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; border-right: 1px solid rgba(255,255,255,.08);
+  position: sticky; left: 0; z-index: 2;
+}
+.sched-th-day {
+  padding: 10px 6px; text-align: center;
+  background: var(--navy); border-right: 1px solid rgba(255,255,255,.08);
+  cursor: default;
+}
+.sched-th-day.today { background: var(--emerald); }
+.sched-th-day .day-name {
+  font-family: var(--font-head); font-size: .72rem; font-weight: 700;
+  color: rgba(255,255,255,.60); text-transform: uppercase; letter-spacing: .06em;
+}
+.sched-th-day.today .day-name { color: rgba(255,255,255,.80); }
+.sched-th-day .day-num {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+  color: var(--white); line-height: 1.1; margin-top: 2px;
+}
+
+/* Time label cell */
+.sched-td-time {
+  padding: 10px 8px; text-align: center; white-space: nowrap;
+  background: var(--surface); border-right: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-100);
+  font-size: .72rem; font-weight: 700; color: var(--gray-500);
+  font-family: var(--font-head); letter-spacing: .02em;
+  position: sticky; left: 0; z-index: 1;
+}
+
+/* Slot cell */
+.sched-td-slot {
+  padding: 5px 4px; text-align: center;
+  border-right: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);
+  vertical-align: middle;
+}
+.sched-td-slot:last-child { border-right: none; }
+
+.sched-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  width: calc(100% - 4px); max-width: 110px;
+  padding: 5px 6px; border-radius: var(--radius-sm);
+  font-size: .67rem; font-weight: 700; cursor: pointer;
+  transition: var(--transition); line-height: 1.2; text-align: center;
+  border: 1px solid transparent; white-space: nowrap;
+}
+.sched-pill .sp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.sched-pill.available {
+  background: var(--emerald-pale); color: var(--emerald);
+  border-color: rgba(0,105,62,.20);
+}
+.sched-pill.available:hover { background: var(--emerald); color: var(--white); transform: scale(1.04); }
+.sched-pill.available .sp-dot { background: var(--emerald); }
+.sched-pill.booked {
+  background: #fee2e2; color: #b91c1c;
+  border-color: rgba(185,28,28,.15); cursor: not-allowed;
+}
+.sched-pill.booked .sp-dot { background: #ef4444; }
+.sched-pill.maintenance {
+  background: var(--gold-pale); color: var(--gold);
+  border-color: rgba(217,119,6,.20); cursor: not-allowed;
+}
+.sched-pill.maintenance .sp-dot { background: var(--gold); }
+.sched-pill.closed {
+  background: var(--gray-100); color: var(--gray-400);
+  border-color: var(--gray-200); cursor: default;
+}
+.sched-pill.closed .sp-dot { background: var(--gray-300); }
+
+/* Harian — single day column layout */
+.sched-harian-wrap { padding: 0; }
+.sched-harian-table { width: 100%; min-width: 500px; border-collapse: collapse; }
+.sched-harian-head {
+  padding: 14px 18px; text-align: left;
+  background: var(--navy); color: var(--white);
+  font-family: var(--font-head); font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; border-right: 1px solid rgba(255,255,255,.08);
+}
+.sched-harian-head.time-col { width: 100px; color: rgba(255,255,255,.50); }
+.sched-harian-head.field-col { }
+.sched-harian-td { padding: 8px 12px; border-bottom: 1px solid var(--gray-100); border-right: 1px solid var(--gray-100); }
+.sched-harian-td.time-td {
+  font-size: .75rem; font-weight: 700; color: var(--gray-500);
+  background: var(--surface); font-family: var(--font-head); white-space: nowrap;
+  text-align: center;
+}
+.sched-harian-td:last-child { border-right: none; }
+
+/* Monthly calendar */
+.sched-month-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+}
+.sched-month-dayname {
+  padding: 10px 4px; text-align: center;
+  font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray-500); font-family: var(--font-head);
+}
+.sched-month-cell {
+  min-height: 70px; padding: 8px 6px;
+  border: 1px solid var(--gray-100); border-radius: var(--radius-sm);
+  background: var(--white); position: relative;
+}
+.sched-month-cell.other-month { background: var(--surface); opacity: .45; }
+.sched-month-cell.today-cell { border-color: var(--emerald); background: var(--emerald-pale); }
+.sched-month-num {
+  font-family: var(--font-head); font-size: .82rem; font-weight: 700;
+  color: var(--gray-700); margin-bottom: 4px;
+}
+.sched-month-cell.today-cell .sched-month-num { color: var(--emerald); }
+.sched-month-dots { display: flex; flex-wrap: wrap; gap: 3px; }
+.sched-month-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.sched-month-dot.available { background: var(--emerald); }
+.sched-month-dot.booked    { background: #ef4444; }
+
+/* Legend */
+.sched-legend {
+  display: flex; gap: 20px; align-items: center;
+  margin-top: 16px; flex-wrap: wrap;
+}
+.sched-legend-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--gray-500); }
+.sched-legend-dot {
+  width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0;
+}
+
+/* Loading skeleton for schedule */
+.sched-skeleton {
+  height: 320px; border-radius: var(--radius-md);
+  background: var(--gray-100); position: relative; overflow: hidden;
+}
+.sched-skeleton::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+  animation: shimmer 1.4s ease infinite;
+}
+
+@media (max-width: 768px) {
+  .sched-top-bar { flex-direction: column; align-items: flex-start; }
+  .sched-field-select { min-width: 100%; }
+  .sched-controls { flex-direction: column; align-items: flex-start; }
+  .sched-date-range { min-width: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     TOP BAR
+════════════════════════════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-features">
+        <div class="topbar-feature"><span class="dot"></span> Pemesanan Mudah</div>
+        <div class="topbar-feature"><span class="dot"></span> Pembayaran Aman</div>
+        <div class="topbar-feature"><span class="dot"></span> Jadwal Real-time</div>
+        <div class="topbar-feature"><span class="dot"></span> Lapangan Berkualitas</div>
+      </div>
+      <div class="topbar-right">
+        <span>DISPORA Kab. Bandung</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     NAVBAR
+════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo">
+        <img src="public/images/sipelor.png" alt="SIPELOR BEDAS" width="36" height="36" />
+        <div class="nav-logo-text">
+          <span class="brand">SIPELOR BEDAS</span>
+          <span class="tagline">Dispora Kab. Bandung</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li class="nav-item">
+          <button class="nav-link">Olahraga <span class="chevron">▾</span></button>
+          <div class="nav-dropdown" id="sports-dropdown">
+            <!-- Filled dynamically by JS -->
+            <a href="#lapangan" class="all-link">Semua Lapangan →</a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="#cara-booking">Cara Booking</a></li>
+        <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="nav-search-btn" aria-label="Cari">🔍</button>
+        <!-- Auth buttons — updated dynamically by checkAuthState() -->
+        <div id="nav-auth-buttons" style="display:flex;gap:8px;align-items:center;">
+          <a href="public/login.html" class="btn" id="btn-masuk" style="background:var(--gray-100);color:var(--gray-700);font-size:.85rem;padding:9px 18px;">Masuk</a>
+          <a href="public/login.html?tab=signup" class="btn btn-emerald" id="btn-daftar" style="font-size:.85rem;padding:9px 18px;">Daftar</a>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO — Jalak Harupat
+════════════════════════════════════ -->
+<section class="hero" id="beranda">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot-pulse"></span>
+        Resmi DISPORA Kabupaten Bandung
+      </div>
+      <h1 class="hero-title">
+        Selamat Datang di<br>
+        <span class="hl">SIPELOR BEDAS</span>
+      </h1>
+      <p class="hero-sub">
+        Sistem informasi penyewaan lapangan olahraga digital resmi Kabupaten Bandung.
+        Pilih lapangan, atur jadwal, bayar — semua dalam satu platform.
+      </p>
+      <div class="hero-actions">
+        <a href="public/login.html" class="btn btn-gold">🏅 Pesan Sekarang</a>
+        <a href="#kategori" class="btn btn-outline-white">Lihat Lapangan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="hero-stats-bar">
+  <div class="container">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <div class="stat-icon-box em">🏟️</div>
+        <div>
+          <div class="stat-num" id="stat-fields">—</div>
+          <div class="stat-lbl">Lapangan Aktif</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon-box gd">⚽</div>
+        <div>
+          <div class="stat-num" id="stat-types">—</div>
+          <div class="stat-lbl">Jenis Olahraga</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon-box nv">👥</div>
+        <div>
+          <div class="stat-num">2.500+</div>
+          <div class="stat-lbl">Pengguna Aktif</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon-box pu">📋</div>
+        <div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-lbl">Total Booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SUPPORTED BY
+════════════════════════════════════ -->
+<div class="supported-section">
+  <div class="container">
+    <div class="supported-label">✦ Didukung Oleh ✦</div>
+    <div class="supported-row">
+      <a href="https://bandungkab.go.id/#!/" class="supported-pill gov">🏛️ Pemerintah Kab. Bandung</a>
+      <a href="https://diskominfo.bandungkab.go.id/" class="supported-pill gov">💻 Diskominfo Kab. Bandung</a>
+      <div class="supported-divider"></div>
+      <a href="https://www.instagram.com/kormibandung/" class="supported-pill partner">🤝 Mitra KORMI</a>
+      <a href="https://www.binpreskonikab-bdg.com/" class="supported-pill partner">🏆 Mitra KONI</a>
+      <a href="https://www.instagram.com/npcikabbandung/" class="supported-pill partner">♿ Mitra NPCI</a>
+      <a href="https://bapopsibandungkab.org/" class="supported-pill partner">🎓 Mitra BAPOPSI</a>
+      <a href="https://pramuka-bandungkab.or.id/" class="supported-pill partner">⚜️ Mitra PRAMUKA</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SPORT CATEGORIES
+════════════════════════════════════ -->
+<section class="categories-section" id="kategori">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow reveal">🏅 Kategori</div>
+        <h2 class="section-title reveal">Pilih Jenis Olahraga</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <a href="#lapangan" class="btn btn-outline-emerald reveal" style="font-size:.85rem;">Lihat Semua →</a>
+        <div class="cat-arrows">
+          <button class="cat-arrow" id="cat-prev" aria-label="Sebelumnya">&#8592;</button>
+          <button class="cat-arrow" id="cat-next" aria-label="Berikutnya">&#8594;</button>
+        </div>
+      </div>
+    </div>
+    <div class="categories-scroll-wrap" id="categories-scroll">
+      <div class="categories-row" id="categories-row">
+        <!-- Skeleton loading -->
+        <div class="cat-skeleton"></div>
+        <div class="cat-skeleton"></div>
+        <div class="cat-skeleton"></div>
+        <div class="cat-skeleton"></div>
+        <div class="cat-skeleton"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FIELDS GRID
+════════════════════════════════════ -->
+<section class="fields-section" id="lapangan">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow reveal">🏟️ Lapangan</div>
+        <h2 class="section-title reveal">Lapangan Tersedia</h2>
+      </div>
+    </div>
+    <!-- Search bar -->
+    <div class="fields-search-bar">
+      <div class="fields-search-wrap">
+        <span class="search-icon">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </span>
+        <input
+          type="search"
+          id="fields-search-input"
+          class="fields-search-input"
+          placeholder="Cari lapangan, olahraga, atau area..."
+          autocomplete="off"
+          oninput="handleFieldSearch(this.value)"
+        />
+        <button class="fields-search-clear" id="fields-search-clear" onclick="clearFieldSearch()" aria-label="Hapus pencarian">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <span class="fields-search-results-count" id="fields-search-count" style="display:none;"></span>
+    </div>
+    <!-- Filter chips -->
+    <div class="fields-filter-bar" id="filter-bar">
+      <button class="filter-chip active" data-type="all">Semua</button>
+      <!-- Sport type chips added by JS -->
+    </div>
+    <!-- Grid -->
+    <div class="fields-grid" id="fields-grid">
+      <div class="field-skeleton"></div>
+      <div class="field-skeleton"></div>
+      <div class="field-skeleton"></div>
+      <div class="field-skeleton"></div>
+      <div class="field-skeleton"></div>
+      <div class="field-skeleton"></div>
+    </div>
+    <!-- Load More -->
+    <div class="fields-load-more-wrap" id="load-more-wrap" style="display:none;">
+      <button class="btn-load-more" id="load-more-btn" onclick="loadMoreFields()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        Lihat Lapangan Lainnya
+        <span id="load-more-count" style="background:rgba(0,0,0,.08);border-radius:99px;padding:2px 9px;font-size:.82rem;"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     ABOUT SIPELOR
+════════════════════════════════════ -->
+<section class="about-section" id="tentang">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-logo-wrap reveal">
+        <img src="public/images/sipelor.png" alt="SIPELOR BEDAS Logo" class="about-logo" width="120" height="120" />
+        <div>
+          <div class="about-brand">SIPELOR BEDAS<small>Sistem Informasi Penyewaan Lapangan</small></div>
+          <div class="about-divider" style="margin:14px 0;"></div>
+        </div>
+      </div>
+      <div class="about-text reveal delay-1">
+        <div class="section-eyebrow" style="background:rgba(0,105,62,.20);border-color:rgba(52,211,153,.25);">🏛️ Tentang Kami</div>
+        <h2 class="section-title white">Platform Resmi Penyewaan Lapangan Olahraga</h2>
+        <p class="section-sub white">
+          SIPELOR BEDAS adalah sistem informasi penyewaan lapangan olahraga berbasis digital yang dikelola resmi oleh Dinas Pemuda dan Olahraga (DISPORA) Kabupaten Bandung. Dirancang untuk memudahkan masyarakat mengakses fasilitas olahraga kapan saja dan di mana saja.
+        </p>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="num" id="about-stat-fields">—</div>
+            <div class="lbl">Lapangan</div>
+          </div>
+          <div class="about-stat">
+            <div class="num" id="about-stat-types">—</div>
+            <div class="lbl">Jenis Olahraga</div>
+          </div>
+          <div class="about-stat">
+            <div class="num">2.500+</div>
+            <div class="lbl">Pengguna</div>
+          </div>
+        </div>
+        <div class="about-badges">
+          <span class="about-badge">🔒 Pembayaran Aman</span>
+          <span class="about-badge">⚡ Konfirmasi Instan</span>
+          <span class="about-badge">📱 Mobile Friendly</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     HOW TO BOOK
+════════════════════════════════════ -->
+<section class="how-section" id="cara-booking">
+  <div class="container">
+    <div class="how-header reveal">
+      <div class="section-eyebrow" style="margin:0 auto 12px;">🗺️ Panduan</div>
+      <h2 class="section-title">Cara Memesan Lapangan</h2>
+      <p class="section-sub" style="margin:0 auto;">Selesaikan pemesanan dalam 3 langkah mudah — tidak perlu antri!</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">1<div class="step-icon">⚽</div></div>
+        <div class="step-title">Pilih Olahraga & Lapangan</div>
+        <p class="step-desc">Pilih jenis olahraga, kemudian pilih lapangan yang tersedia sesuai lokasi dan preferensi Anda.</p>
+      </div>
+      <div class="step reveal delay-1">
+        <div class="step-num">2<div class="step-icon">📅</div></div>
+        <div class="step-title">Tentukan Tanggal & Jam</div>
+        <p class="step-desc">Pilih tanggal dan slot waktu yang tersedia. Lihat ketersediaan secara real-time langsung di aplikasi.</p>
+      </div>
+      <div class="step reveal delay-2">
+        <div class="step-num">3<div class="step-icon">✅</div></div>
+        <div class="step-title">Bayar & Konfirmasi</div>
+        <p class="step-desc">Selesaikan pembayaran via QRIS, Transfer Bank, atau dompet digital. Konfirmasi langsung dikirim ke email Anda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CTA
+════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="reveal">
+      <h2 class="cta-title">Siap Berolahraga? 💪</h2>
+      <p class="cta-sub">Pesan lapangan favoritmu sekarang dan mulai aktivitas olahraga bersama komunitas Kabupaten Bandung.</p>
+      <div class="cta-actions">
+        <a href="public/login.html" class="btn btn-cta-white" style="padding:14px 32px;font-size:.98rem;">🏅 Pesan Lapangan Sekarang</a>
+        <a href="#lapangan" class="btn btn-outline-white" style="padding:14px 24px;font-size:.98rem;">Lihat Semua Lapangan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer class="footer" id="kontak">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">
+          <img src="public/images/sipelor.png" alt="SIPELOR" width="40" height="40" />
+          <div>
+            <div class="footer-brand-name">SIPELOR BEDAS</div>
+            <div class="footer-brand-sub">DISPORA Kab. Bandung</div>
+          </div>
+        </div>
+        <p class="footer-desc">Sistem Informasi Penyewaan Lapangan Olahraga Berbasis Digital — dikelola resmi oleh DISPORA Kabupaten Bandung untuk mendukung aktivitas olahraga masyarakat.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#" title="Instagram">📷</a>
+          <a class="social-btn" href="#" title="Facebook">📘</a>
+          <a class="social-btn" href="#" title="YouTube">▶️</a>
+          <a class="social-btn" href="#" title="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Keamanan</h5>
+        <div class="sec-badges">
+          <div class="sec-badge">
+            <div class="sec-badge-icon green">🔒</div>
+            <div class="sec-badge-info">
+              <strong>SSL Secured</strong>
+              <span>256-bit Encryption</span>
+            </div>
+          </div>
+          <div class="sec-badge">
+            <div class="sec-badge-icon blue">🛡️</div>
+            <div class="sec-badge-info">
+              <strong>SHA-256</strong>
+              <span>Secure Hash Algorithm</span>
+            </div>
+          </div>
+          <div class="sec-badge">
+            <div class="sec-badge-icon gold">✅</div>
+            <div class="sec-badge-info">
+              <strong>Data Secure</strong>
+              <span>Data Terenkripsi Penuh</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Informasi</h5>
+        <ul>
+          <li><a href="#tentang">Tentang SIPELOR</a></li>
+          <li><a href="#cara-booking">Cara Booking</a></li>
+          <li><a href="#">Syarat & Ketentuan</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="public/login.html">Login / Daftar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Kontak</h5>
+        <div class="footer-contact">
+          <div class="contact-row"><span class="ci">📍</span><p>Jl. Raya Soreang-Cipatik, Pamekaran, Kec. Kutawaringin, Kabupaten Bandung, Jawa Barat</p></div>
+          <div class="contact-row"><span class="ci">📞</span><p>(022) 58993779 (Hanya di Jam Kerja)</p></div>
+          <div class="contact-row"><span class="ci">✉️</span><p>sipelor@dispora.bandungkab.go.id</p></div>
+          <div class="contact-row"><span class="ci">🕐</span><p>Senin–Jumat: 08.00–16.00 WIB</p></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Unduh Aplikasi</h5>
+        <div class="app-dl-badges">
+          <a href="#" class="app-dl-badge">
+            <img src="public/images/playstore.png" alt="Get it on Google Play" />
+          </a>
+          <a href="#" class="app-dl-badge">
+            <img src="public/images/appstore.png" alt="Download on the App Store" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 SIPELOR BEDAS — Dinas Pemuda dan Olahraga Kabupaten Bandung. Hak cipta dilindungi.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privasi</a>
+        <a href="#">Ketentuan</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+
+// ── Config ───────────────────────────────────────────────────────────────────
+const CFG = {
+  SUPABASE_URL:      'https://gbhprmibbcqfwjgrkfzq.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiaHBybWliYmNxZndqZ3JrZnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5MDgwNTcsImV4cCI6MjA4NDQ4NDA1N30.vMuV0A4NEC5IhA34TrVmJGBtB4UerOt2Dk8fe4uxwrY',
+};
+
+let supabaseClient = null;
+try {
+  supabaseClient = window.supabase?.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY, {
+    auth: {
+      storageKey: 'sipelor-public-anon',
+      persistSession: false,
+      autoRefreshToken: false,
+    }
+  });
+}
+catch (e) { console.warn('[SIPELOR] Supabase init error:', e.message); }
+
+// ── Venue Meta ────────────────────────────────────────────────────────────────
+const VENUE_META = {
+  'Sepak Bola': { emoji:'⚽', img:'public/images/stadium_jalak_harupat.jpg', color:'#6A725A', tag:'Unggulan' },
+  'Futsal':     { emoji:'🥅', img:'https://images.pexels.com/photos/13890306/pexels-photo-13890306.jpeg?auto=compress&cs=tinysrgb&w=600', color:'#4D6C43', tag:'Populer' },
+  'Badminton':  { emoji:'🏸', img:'https://pixabay.com/get/gfc5e30cd0ec0d2e122a3437b0f28749611c275ee8f6015dd3152e0a84b8cab5ddaf96417d7ba66b1947f0f8681cba855.jpg', color:'#4A5568', tag:'Indoor' },
+  'Volly':      { emoji:'🏐', img:'https://picsum.photos/seed/volly/600/400', color:'#5C7A3E', tag:'Outdoor' },
+  'Bola Voli':  { emoji:'🏐', img:'https://picsum.photos/seed/volly/600/400', color:'#5C7A3E', tag:'Outdoor' },
+  'Basket':     { emoji:'🏀', img:'https://picsum.photos/seed/basket/600/400', color:'#6B4226', tag:'Serbaguna' },
+  'Tenis':      { emoji:'🎾', img:'https://picsum.photos/seed/tenis/600/400', color:'#3D6B4F', tag:'Premium' },
+};
+const DEFAULT_META = { emoji:'🏟️', img:'https://picsum.photos/seed/lapangan/600/400', color:'#4A5568', tag:'Lapangan' };
+
+const STATUS_CFG = {
+  available:   { label:'Tersedia',  cls:'available',   dot:'●' },
+  booked:      { label:'Penuh',     cls:'booked',      dot:'●' },
+  maintenance: { label:'Perawatan', cls:'maintenance', dot:'●' },
+};
+
+function fmtPrice(p) {
+  if (!p) return null;
+  return new Intl.NumberFormat('id-ID',{ style:'currency', currency:'IDR', maximumFractionDigits:0 }).format(p).replace('IDR','Rp');
+}
+function getImg(f) {
+  if (Array.isArray(f.image_urls) && f.image_urls[0]) return f.image_urls[0];
+  if (typeof f.image_urls === 'string' && f.image_urls.startsWith('http')) return f.image_urls;
+  return (VENUE_META[f.venue_type] || DEFAULT_META).img;
+}
+function getMeta(t) { return VENUE_META[t] || DEFAULT_META; }
+function buildFacs(f) {
+  const r = [];
+  if (f.tempat_parkir) r.push('🅿️ Parkir');
+  if (f.mushola) r.push('🕌 Mushola');
+  if (f.cctv) r.push('📷 CCTV');
+  if (f.ruang_ganti) r.push('🚿 R. Ganti');
+  if (f.kapasitas) r.push(`👥 ${f.kapasitas}`);
+  return r.slice(0, 4);
+}
+
+// ── Mock ──────────────────────────────────────────────────────────────────────
+function getMock() {
+  return [
+    { id:'f1', venue_name:'GOR Sabilulungan', venue_type:'Futsal',    area:'Lantai 1',  price_per_hour:80000,  satuan:'per jam',          status:'available',   image_urls:[], ukuran_lapangan:'16.8×24.95m', kapasitas:'14 orang', tempat_parkir:true, mushola:true, cctv:true, ruang_tunggu:true, ruang_ganti:true },
+    { id:'f2', venue_name:'GOR Sabilulungan', venue_type:'Badminton', area:'Hall B',    price_per_hour:60000,  satuan:'per jam',          status:'available',   image_urls:[], kapasitas:'8 orang',  tempat_parkir:true, mushola:true, cctv:true },
+    { id:'f3', venue_name:'Arena Tenis DISPORA', venue_type:'Tenis',  area:'Court A',  price_per_hour:100000, satuan:'per jam',          status:'maintenance', image_urls:[], kapasitas:'4 orang',  cctv:true },
+    { id:'f4', venue_name:'GOR Volly Bedas',  venue_type:'Volly',    area:'Utama',     price_per_hour:90000,  satuan:'per pertandingan', status:'available',   image_urls:[], kapasitas:'12 orang', tempat_parkir:true, cctv:true },
+    { id:'f5', venue_name:'Lapangan Basket',  venue_type:'Basket',   area:'Outdoor',   price_per_hour:70000,  satuan:'per sesi',         status:'available',   image_urls:[], kapasitas:'10 orang' },
+    { id:'f6', venue_name:'GOR Bulu Tangkis', venue_type:'Badminton', area:'Hall C',   price_per_hour:55000,  satuan:'per jam',          status:'booked',      image_urls:[], kapasitas:'6 orang',  mushola:true },
+  ];
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let allFields = [];
+let activeFilter = 'all';
+
+// ── Render helpers ────────────────────────────────────────────────────────────
+function renderCategories(fields) {
+  const row = document.getElementById('categories-row');
+  const dropdown = document.getElementById('sports-dropdown');
+  const footerLinks = document.getElementById('footer-sports-links');
+
+  // Group by venue_type
+  const groups = {};
+  fields.forEach(f => {
+    if (!groups[f.venue_type]) groups[f.venue_type] = 0;
+    if (f.status !== 'maintenance') groups[f.venue_type]++;
+  });
+
+  const types = Object.keys(groups);
+
+  // Category cards
+  row.innerHTML = types.map(type => {
+    const meta = getMeta(type);
+    const count = groups[type];
+    return `
+      <div class="cat-card anim-fadein" data-type="${type}" onclick="filterByType('${type}')">
+        <div class="cat-img-wrap">
+          <img class="cat-img" src="${meta.img}" alt="${type}" loading="lazy"
+            style="background:${meta.color};" onerror="this.src='${DEFAULT_META.img}'" />
+          <div class="cat-img-overlay"></div>
+          <div class="cat-img-badge">${meta.tag}</div>
+          <div class="cat-emoji">${meta.emoji}</div>
+        </div>
+        <div class="cat-body">
+          <div class="cat-name">${type}</div>
+          <div class="cat-count"><span class="num">${count}</span> lapangan tersedia</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Refresh arrow state now that cards are in DOM
+  if (window._catUpdateArrows) window._catUpdateArrows();
+
+  // Navbar dropdown
+  const dropdownLinks = types.map(t =>
+    `<a href="#lapangan" onclick="filterByType('${t}')">${getMeta(t).emoji} ${t}</a>`
+  ).join('');
+  dropdown.innerHTML = dropdownLinks + '<div class="nav-dropdown-divider"></div><a href="#lapangan" class="all-link" onclick="filterByType(\'all\')">Semua Lapangan →</a>';
+
+  // Filter chips — by venue name
+  const filterBar = document.getElementById('filter-bar');
+  const venues = [...new Set(fields.map(f => f.venue_name))];
+  const venueChips = venues.map(v =>
+    `<button class="filter-chip" data-venue="${v}" onclick="filterByVenue('${v.replace(/'/g,"\\'")}')">${v}</button>`
+  ).join('');
+  filterBar.innerHTML = `<button class="filter-chip active" data-venue="all" onclick="filterByVenue('all')">Semua</button>` + venueChips;
+
+  // Footer sports links (column may have been replaced)
+  if (footerLinks) {
+    footerLinks.innerHTML = `<li><a href="#lapangan" onclick="filterByType('all')">Semua Lapangan</a></li>` +
+      types.map(t => `<li><a href="#lapangan" onclick="filterByType('${t}')">${getMeta(t).emoji} ${t}</a></li>`).join('');
+  }
+
+}
+
+const PAGE_SIZE = 6;
+let currentFields = [];
+let visibleCount  = PAGE_SIZE;
+
+function buildFieldCard(f) {
+  const meta   = getMeta(f.venue_type);
+  const status = STATUS_CFG[f.status] || STATUS_CFG.available;
+  const img    = getImg(f);
+  const price  = fmtPrice(f.price_per_hour);
+  const facs   = buildFacs(f);
+  const area   = f.area ? ` · ${f.area}` : '';
+  return `
+    <div class="field-card anim-fadein" data-id="${f.id}" onclick="window.location.href='venue-detail.html?id=${f.id}'" style="cursor:pointer;">
+      <div class="field-card-img">
+        <img src="${img}" alt="${f.venue_name}" loading="lazy"
+          style="background:${meta.color};" onerror="this.src='${DEFAULT_META.img}'" />
+        <div class="field-status-badge ${status.cls}">${status.dot} ${status.label}</div>
+        ${price ? `<div class="field-price-badge"><span>${price}</span>/${f.satuan || 'per jam'}</div>` : ''}
+      </div>
+      <div class="field-card-body">
+        <div class="field-type-tag">${meta.emoji} ${f.venue_type}</div>
+        <div class="field-name">${f.venue_name}</div>
+        <div class="field-meta">${f.venue_type}${area}${f.ukuran_lapangan ? ' · ' + f.ukuran_lapangan : ''}</div>
+        <div class="field-facs">${facs.map(fc => `<span class="fac">${fc}</span>`).join('')}</div>
+      </div>
+    </div>`;
+}
+
+function updateLoadMoreBtn() {
+  const wrap  = document.getElementById('load-more-wrap');
+  const count = document.getElementById('load-more-count');
+  const remaining = currentFields.length - visibleCount;
+  if (remaining > 0) {
+    wrap.style.display = 'flex';
+    count.textContent  = `+${remaining}`;
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+function renderFields(fields) {
+  currentFields = fields;
+  visibleCount  = PAGE_SIZE;
+  const grid = document.getElementById('fields-grid');
+  if (!fields.length) {
+    const emptyMsg = _searchQuery
+      ? `Tidak ada lapangan yang cocok dengan "<strong>${_searchQuery}</strong>". Coba kata kunci lain.`
+      : 'Belum ada lapangan untuk kategori ini.';
+    grid.innerHTML = `<div class="fields-empty"><div class="empty-icon">🔍</div><p>${emptyMsg}</p></div>`;
+    updateLoadMoreBtn();
+    return;
+  }
+  grid.innerHTML = fields.slice(0, visibleCount).map(buildFieldCard).join('');
+  updateLoadMoreBtn();
+}
+
+window.loadMoreFields = function() {
+  const grid = document.getElementById('fields-grid');
+  const next = currentFields.slice(visibleCount, visibleCount + PAGE_SIZE);
+  grid.insertAdjacentHTML('beforeend', next.map(buildFieldCard).join(''));
+  visibleCount += next.length;
+  updateLoadMoreBtn();
+  // Smooth scroll to first new card
+  const cards = grid.querySelectorAll('.field-card');
+  if (cards[visibleCount - next.length]) {
+    cards[visibleCount - next.length].scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+};
+
+window.filterByType = function(type) {
+  activeFilter = type;
+  // Reset search when a category is clicked
+  _searchQuery = '';
+  const sinput = document.getElementById('fields-search-input');
+  if (sinput) sinput.value = '';
+  const clearBtn = document.getElementById('fields-search-clear');
+  if (clearBtn) clearBtn.classList.remove('visible');
+  const countEl = document.getElementById('fields-search-count');
+  if (countEl) countEl.style.display = 'none';
+  // Reset venue chips to "Semua"
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.venue === 'all');
+  });
+  // Update category cards
+  document.querySelectorAll('.cat-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.type === type);
+  });
+  // Filter and render
+  const filtered = type === 'all' ? allFields : allFields.filter(f => f.venue_type === type);
+  renderFields(filtered);
+  // Scroll to fields
+  document.getElementById('lapangan')?.scrollIntoView({ behavior:'smooth', block:'start' });
+};
+
+window.filterByVenue = function(venue) {
+  // Reset search when a chip is clicked
+  _searchQuery = '';
+  const sinput = document.getElementById('fields-search-input');
+  if (sinput) sinput.value = '';
+  const clearBtn = document.getElementById('fields-search-clear');
+  if (clearBtn) clearBtn.classList.remove('visible');
+  const countEl = document.getElementById('fields-search-count');
+  if (countEl) countEl.style.display = 'none';
+  // Clear category card highlight
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+  // Update venue chips
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.venue === venue);
+  });
+  // Filter and render
+  const filtered = venue === 'all' ? allFields : allFields.filter(f => f.venue_name === venue);
+  renderFields(filtered);
+};
+
+// ── Field Search ──────────────────────────────────────────────────────────────
+let _searchQuery = '';
+
+window.handleFieldSearch = function(q) {
+  _searchQuery = q.trim().toLowerCase();
+  const clearBtn  = document.getElementById('fields-search-clear');
+  const countEl   = document.getElementById('fields-search-count');
+
+  // Show/hide clear button
+  if (_searchQuery) {
+    clearBtn.classList.add('visible');
+  } else {
+    clearBtn.classList.remove('visible');
+  }
+
+  // Reset venue chips to "Semua" when searching
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.venue === 'all');
+  });
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+
+  if (!_searchQuery) {
+    countEl.style.display = 'none';
+    renderFields(allFields);
+    return;
+  }
+
+  // Search across: venue_name, venue_type, area, ukuran_lapangan
+  const filtered = allFields.filter(f => {
+    const haystack = [
+      f.venue_name   || '',
+      f.venue_type   || '',
+      f.area         || '',
+      f.ukuran_lapangan || '',
+    ].join(' ').toLowerCase();
+    return haystack.includes(_searchQuery);
+  });
+
+  renderFields(filtered);
+
+  // Results count
+  countEl.innerHTML = filtered.length
+    ? `Menampilkan <span class="hl">${filtered.length}</span> lapangan untuk "<em>${q.trim()}</em>"`
+    : `Tidak ada lapangan untuk "<em>${q.trim()}</em>"`;
+  countEl.style.display = 'inline';
+};
+
+window.clearFieldSearch = function() {
+  const input = document.getElementById('fields-search-input');
+  if (input) input.value = '';
+  handleFieldSearch('');
+};
+
+// ── Fetch ─────────────────────────────────────────────────────────────────────
+async function loadFields() {
+  try {
+    if (supabaseClient) {
+      const { data, count, error } = await supabaseClient
+        .from('fields')
+        .select('*', { count:'exact' })
+        .order('status', { ascending:true })
+        .order('created_at', { ascending:false });
+      if (!error && data?.length) {
+        allFields = data;
+      } else {
+        if (error) console.warn('[SIPELOR] fields error:', error.message);
+        allFields = getMock();
+      }
+    } else {
+      allFields = getMock();
+    }
+  } catch(e) {
+    console.warn('[SIPELOR] fetchFields error:', e.message);
+    allFields = getMock();
+  }
+
+  // Update stats (safe)
+  try {
+    const availCount = allFields.filter(f => f.status === 'available').length;
+    const types = new Set(allFields.map(f => f.venue_type));
+    const el = (id, val) => { const n = document.getElementById(id); if (n) n.textContent = val; };
+    el('stat-fields', availCount);
+    el('stat-types',  types.size);
+    el('about-stat-fields', allFields.length);
+    el('about-stat-types',  types.size);
+  } catch(e) { console.warn('[SIPELOR] stat update error:', e.message); }
+
+  // Render
+  renderCategories(allFields);
+  renderFields(allFields);
+
+  // Re-run reveal in case new DOM elements were added
+  initReveal();
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+function initReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    const r = el.getBoundingClientRect();
+    // Immediately reveal elements already in or near the viewport
+    if (r.top < window.innerHeight + 80 && r.bottom > -80) {
+      el.classList.add('in');
+    } else {
+      io.observe(el);
+    }
+  });
+
+  // Failsafe: reveal anything still hidden after 1.5 s
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 1500);
+}
+initReveal();
+
+// ── Mobile nav ────────────────────────────────────────────────────────────────
+const navToggle = document.getElementById('nav-toggle');
+const navLinks  = document.getElementById('nav-links');
+navToggle?.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+});
+document.querySelectorAll('.nav-links .nav-link').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (window.innerWidth < 768) navLinks.classList.remove('mobile-open');
+  });
+});
+
+// ── Smooth scroll ──────────────────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+
+// ── Category arrows + drag-to-scroll ─────────────────────────────────────────
+(function() {
+  const el      = document.getElementById('categories-scroll');
+  const btnPrev = document.getElementById('cat-prev');
+  const btnNext = document.getElementById('cat-next');
+  if (!el) return;
+
+  const STEP = 220;
+
+  window._catUpdateArrows = function() {
+    if (!btnPrev || !btnNext) return;
+    // Use rAF so layout is settled before measuring
+    requestAnimationFrame(() => {
+      btnPrev.disabled = el.scrollLeft <= 1;
+      btnNext.disabled = el.scrollWidth <= el.clientWidth + 1 || el.scrollLeft >= el.scrollWidth - el.clientWidth - 1;
+    });
+  };
+
+  btnPrev?.addEventListener('click', () => { el.scrollBy({ left: -STEP, behavior: 'smooth' }); });
+  btnNext?.addEventListener('click', () => { el.scrollBy({ left:  STEP, behavior: 'smooth' }); });
+  el.addEventListener('scroll', window._catUpdateArrows);
+
+  // Drag-to-scroll (mouse)
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => {
+    isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+  });
+  ['mouseleave','mouseup'].forEach(ev => el.addEventListener(ev, () => { isDown = false; }));
+  el.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    el.scrollLeft = scrollLeft - (e.pageX - el.offsetLeft - startX);
+  });
+})();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// JADWAL LAPANGAN — Schedule Logic
+// ═══════════════════════════════════════════════════════════════════════════
+(function() {
+
+  const TIME_SLOTS = [
+    '06:00 – 08:00','08:00 – 10:00','10:00 – 12:00','12:00 – 14:00',
+    '14:00 – 16:00','16:00 – 18:00','18:00 – 20:00','20:00 – 22:00'
+  ];
+  const DAY_NAMES  = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const STATUSES   = ['available','available','available','booked','booked','maintenance','closed'];
+
+  let schedView      = 'mingguan';
+  let schedAnchor    = new Date();          // current week/day/month anchor
+  let schedFieldId   = 'all';
+
+  // ── Pseudo-random schedule per field+date+slot ────────────────────────────
+  function slotStatus(fieldId, dateStr, slotIdx) {
+    let h = 0;
+    const key = fieldId + dateStr + slotIdx;
+    for (let i = 0; i < key.length; i++) {
+      h = Math.imul(31, h) + key.charCodeAt(i) | 0;
+    }
+    const v = Math.abs(h) % 10;
+    // Early morning / late night = mostly closed
+    if (slotIdx === 0 && Math.abs(h) % 3 === 0) return 'closed';
+    if (slotIdx === 7 && Math.abs(h) % 2 === 0) return 'closed';
+    // Weight: 40% available, 35% booked, 10% maintenance, 15% closed
+    if (v < 4) return 'available';
+    if (v < 8) return 'booked';
+    if (v === 8) return 'maintenance';
+    return 'closed';
+  }
+
+  function isoDate(d) {
+    return d.toISOString().split('T')[0];
+  }
+
+  function formatDateShort(d) {
+    return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}`;
+  }
+
+  function isToday(d) {
+    const t = new Date();
+    return d.getDate()===t.getDate() && d.getMonth()===t.getMonth() && d.getFullYear()===t.getFullYear();
+  }
+
+  // ── Pill HTML ──────────────────────────────────────────────────────────────
+  function pillHtml(status, showLabel) {
+    const lbl = { available:'Tersedia', booked:'Dipesan', maintenance:'Perawatan', closed:'Tutup' };
+    const clickable = status === 'available' ? ' onclick="window.location.href=\'public/login.html\'"' : '';
+    return `<span class="sched-pill ${status}"${clickable} title="${lbl[status]}">
+      <span class="sp-dot"></span>${showLabel ? lbl[status] : ''}
+    </span>`;
+  }
+
+  // ── Get active fields for selector ────────────────────────────────────────
+  function getSchedFields() {
+    if (schedFieldId === 'all') return allFields;
+    return allFields.filter(f => f.id === schedFieldId);
+  }
+
+  // ── Render: Weekly ─────────────────────────────────────────────────────────
+  function renderWeekly() {
+    // anchor to Monday of the week
+    const anchor = new Date(schedAnchor);
+    const dow    = anchor.getDay();                       // 0=Sun
+    const mon    = new Date(anchor);
+    mon.setDate(anchor.getDate() - ((dow + 6) % 7));     // shift to Mon
+
+    const days = Array.from({length: 7}, (_, i) => {
+      const d = new Date(mon); d.setDate(mon.getDate() + i); return d;
+    });
+
+    const startStr = formatDateShort(days[0]);
+    const endStr   = formatDateShort(days[6]);
+    const yr       = days[0].getFullYear();
+    document.getElementById('sched-date-range').textContent =
+      `${days[0].getDate()} ${MONTH_NAMES[days[0].getMonth()]} – ${days[6].getDate()} ${MONTH_NAMES[days[6].getMonth()]} ${yr}`;
+
+    const fields = getSchedFields();
+    const fieldLabel = fields.length === 1 ? fields[0].venue_name : 'Semua Lapangan';
+
+    // Build table
+    let html = `<table class="sched-table">
+      <thead><tr>
+        <th class="sched-th-time">Jam</th>`;
+    days.forEach(d => {
+      const tc = isToday(d) ? ' today' : '';
+      html += `<th class="sched-th-day${tc}">
+        <div class="day-name">${DAY_NAMES[d.getDay()]}</div>
+        <div class="day-num">${d.getDate()}</div>
+      </th>`;
+    });
+    html += `</tr></thead><tbody>`;
+
+    TIME_SLOTS.forEach((slot, si) => {
+      html += `<tr>`;
+      html += `<td class="sched-td-time">${slot}</td>`;
+      days.forEach(d => {
+        // If multiple fields selected, pick worst status
+        const statuses = fields.map(f => slotStatus(f.id, isoDate(d), si));
+        const priority = ['maintenance','booked','available','closed'];
+        const status   = priority.find(p => statuses.includes(p)) || 'closed';
+        html += `<td class="sched-td-slot">${pillHtml(status, false)}</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</tbody></table>`;
+
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  // ── Render: Daily ──────────────────────────────────────────────────────────
+  function renderDaily() {
+    const d = new Date(schedAnchor);
+    document.getElementById('sched-date-range').textContent =
+      `${DAY_NAMES[d.getDay()]}, ${d.getDate()} ${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;
+
+    const fields = getSchedFields();
+    if (!fields.length) {
+      document.getElementById('sched-grid-wrap').innerHTML =
+        `<div style="padding:48px;text-align:center;color:var(--gray-400);">Tidak ada lapangan dipilih.</div>`;
+      return;
+    }
+
+    let html = `<table class="sched-harian-table">
+      <thead><tr>
+        <th class="sched-harian-head time-col">Jam</th>`;
+    fields.forEach(f => {
+      html += `<th class="sched-harian-head field-col">${getMeta(f.venue_type).emoji} ${f.venue_name}<br><small style="font-weight:400;opacity:.6;font-size:.68rem;">${f.venue_type}${f.area ? ' · '+f.area : ''}</small></th>`;
+    });
+    html += `</tr></thead><tbody>`;
+
+    TIME_SLOTS.forEach((slot, si) => {
+      html += `<tr>`;
+      html += `<td class="sched-harian-td time-td">${slot}</td>`;
+      fields.forEach(f => {
+        const status = slotStatus(f.id, isoDate(d), si);
+        html += `<td class="sched-harian-td">${pillHtml(status, true)}</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</tbody></table>`;
+
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  // ── Render: Monthly ────────────────────────────────────────────────────────
+  function renderMonthly() {
+    const yr  = schedAnchor.getFullYear();
+    const mo  = schedAnchor.getMonth();
+    document.getElementById('sched-date-range').textContent =
+      `${MONTH_NAMES[mo]} ${yr}`;
+
+    const firstDay  = new Date(yr, mo, 1);
+    const lastDay   = new Date(yr, mo + 1, 0);
+    const startDow  = (firstDay.getDay() + 6) % 7; // 0=Mon
+    const fields    = getSchedFields();
+
+    // Total cells: fill from Mon
+    const cells = [];
+    // Leading blanks
+    for (let i = 0; i < startDow; i++) {
+      const d = new Date(yr, mo, 1 - (startDow - i));
+      cells.push({ d, other: true });
+    }
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+      cells.push({ d: new Date(yr, mo, d), other: false });
+    }
+    // Trailing blanks
+    while (cells.length % 7 !== 0) {
+      const last = cells[cells.length-1].d;
+      const nd = new Date(last); nd.setDate(last.getDate()+1);
+      cells.push({ d: nd, other: true });
+    }
+
+    let html = `<div style="padding:16px;">
+      <div class="sched-month-grid">`;
+    ['Sen','Sel','Rab','Kam','Jum','Sab','Min'].forEach(n => {
+      html += `<div class="sched-month-dayname">${n}</div>`;
+    });
+    cells.forEach(({ d, other }) => {
+      const tc = isToday(d) ? ' today-cell' : '';
+      const oc = other ? ' other-month' : '';
+      // Quick availability summary (count available vs booked for sample slots)
+      const avail  = TIME_SLOTS.filter((_,i) => fields.some(f => slotStatus(f.id, isoDate(d), i) === 'available')).length;
+      const booked = TIME_SLOTS.filter((_,i) => fields.some(f => slotStatus(f.id, isoDate(d), i) === 'booked')).length;
+      const dots = [
+        ...Array(Math.min(avail,4)).fill('<div class="sched-month-dot available"></div>'),
+        ...Array(Math.min(booked,3)).fill('<div class="sched-month-dot booked"></div>')
+      ].join('');
+      html += `<div class="sched-month-cell${tc}${oc}">
+        <div class="sched-month-num">${d.getDate()}</div>
+        <div class="sched-month-dots">${other ? '' : dots}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+
+    document.getElementById('sched-grid-wrap').innerHTML = html;
+  }
+
+  // ── Main render dispatcher ─────────────────────────────────────────────────
+  function renderSchedule() {
+    if (schedView === 'mingguan') renderWeekly();
+    else if (schedView === 'harian') renderDaily();
+    else renderMonthly();
+  }
+
+  // ── Navigate ───────────────────────────────────────────────────────────────
+  function navigate(dir) {
+    const d = new Date(schedAnchor);
+    if (schedView === 'mingguan') d.setDate(d.getDate() + dir * 7);
+    else if (schedView === 'harian') d.setDate(d.getDate() + dir);
+    else d.setMonth(d.getMonth() + dir);
+    schedAnchor = d;
+    renderSchedule();
+  }
+
+  // ── Field select populate (called after loadFields) ───────────────────────
+  function populateSchedFieldSelect(fields) {
+    const sel = document.getElementById('sched-field-select');
+    if (!sel) return;
+    const extra = fields.map(f =>
+      `<option value="${f.id}">${getMeta(f.venue_type).emoji} ${f.venue_name}${f.area ? ' · '+f.area : ''} (${f.venue_type})</option>`
+    ).join('');
+    sel.innerHTML = `<option value="all">— Semua Lapangan —</option>` + extra;
+  }
+
+  // ── Event wiring ───────────────────────────────────────────────────────────
+  document.getElementById('sched-prev')?.addEventListener('click', () => navigate(-1));
+  document.getElementById('sched-next')?.addEventListener('click', () => navigate(1));
+  document.getElementById('sched-today')?.addEventListener('click', () => {
+    schedAnchor = new Date(); renderSchedule();
+  });
+
+  document.getElementById('sched-view-tabs')?.addEventListener('click', e => {
+    const tab = e.target.closest('.sched-tab');
+    if (!tab) return;
+    schedView = tab.dataset.view;
+    document.querySelectorAll('.sched-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderSchedule();
+  });
+
+  document.getElementById('sched-field-select')?.addEventListener('change', e => {
+    schedFieldId = e.target.value;
+    renderSchedule();
+  });
+
+  // ── Expose hook so loadFields() can call populate after data is ready ─────
+  window._schedInit = function(fields) {
+    populateSchedFieldSelect(fields);
+    renderSchedule();
+  };
+
+})();
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+loadFields();
+// Also reveal static sections on initial load (hero already visible, trigger rest)
+window.addEventListener('load', () => initReveal());
+
+// ── Auth State: update nav buttons based on active session ───────────────────
+(async function checkAuthState() {
+  try {
+    // Use the same storageKey as login.html so we read the same session
+    const authClient = window.supabase?.createClient(
+      CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY,
+      { auth: { storageKey: 'sipelor-user-session', persistSession: true } }
+    );
+    if (!authClient) return;
+
+    const { data: { session } } = await authClient.auth.getSession();
+    if (!session) return; // not logged in — keep default Masuk/Daftar buttons
+
+    // User IS logged in — swap buttons
+    const masuk  = document.getElementById('btn-masuk');
+    const daftar = document.getElementById('btn-daftar');
+    if (masuk) {
+      masuk.href        = 'pesan.html';
+      masuk.textContent = '📋 Pesan Sekarang';
+      masuk.style.background = 'var(--emerald)';
+      masuk.style.color      = '#fff';
+    }
+    if (daftar) {
+      daftar.textContent      = 'Keluar';
+      daftar.style.background = 'var(--gray-100)';
+      daftar.style.color      = 'var(--gray-700)';
+      daftar.removeAttribute('href');
+      daftar.style.cursor = 'pointer';
+      daftar.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try { await authClient.auth.signOut(); } catch (_) {}
+        window.location.reload();
+      });
+    }
+  } catch (_) { /* session check optional — fail silently */ }
+})();
+</script>
+</body>
+</html>

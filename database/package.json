@@ -1,0 +1,13 @@
+{
+  "name": "sipelor-db-scripts",
+  "version": "1.0.0",
+  "description": "SIPELOR BEDAS — Database utility scripts",
+  "private": true,
+  "scripts": {
+    "create-opd-users": "node create_opd_users.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "pg": "^8.13.3"
+  }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Data Extraction Rules for SIPELOR BEDAS — Android 12+ (API 31+)
+    
+    Mencegah backup data sensitif (token, credentials, booking data)
+    ke Google Drive / Cloud Backup / ADB Backup.
+    
+    Referensi: https://developer.android.com/about/versions/12/backup-restore
+-->
+<data-extraction-rules>
+    <!--
+        Cloud backup (Google Drive / Auto Backup) — DINONAKTIFKAN SEPENUHNYA
+        Data pengguna (token auth, encrypted storage) tidak boleh di-backup
+        ke cloud karena mengandung informasi sensitif.
+    -->
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </cloud-backup>
+
+    <!--
+        Device transfer (ADB backup / device-to-device) — DINONAKTIFKAN
+        Mencegah data sensitif ditransfer antar perangkat melalui USB.
+    -->
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,199 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # ==================== CODE ANALYSIS ====================
+  analyze:
+    name: Code Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.4'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Verify formatting
+        run: dart format --set-exit-if-changed .
+      
+      - name: Analyze code
+        run: flutter analyze
+      
+      - name: Check for outdated dependencies
+        run: flutter pub outdated || true
+
+  # ==================== UNIT TESTS ====================
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: analyze
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.4'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Run tests
+        run: flutter test --coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: coverage/lcov.info
+          fail_ci_if_error: false
+      
+      - name: Generate coverage report
+        run: |
+          dart pub global activate coverage
+          dart pub global run coverage:format_coverage \
+            --lcov \
+            --in=coverage \
+            --out=coverage/lcov.info \
+            --report-on=lib || true
+
+  # ==================== BUILD ANDROID ====================
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.4'
+          channel: 'stable'
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build APK (Debug)
+        if: github.ref == 'refs/heads/develop'
+        run: flutter build apk --debug
+      
+      - name: Build APK (Release)
+        if: github.ref == 'refs/heads/main'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=SENTRY_DSN=$SENTRY_DSN \
+            --dart-define=ENVIRONMENT=production
+      
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sipelor-apk-${{ github.sha }}
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 30
+
+  # ==================== BUILD WEB ====================
+  build-web:
+    name: Build Web
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.4'
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build Web
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=ENVIRONMENT=production
+      
+      - name: Upload Web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sipelor-web-${{ github.sha }}
+          path: build/web
+          retention-days: 30
+
+  # ==================== SECURITY SCAN ====================
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: analyze
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ==================== NOTIFICATION ====================
+  notify:
+    name: Notify Build Status
+    runs-on: ubuntu-latest
+    needs: [analyze, test, build-android, build-web]
+    if: always()
+    
+    steps:
+      - name: Check build status
+        run: |
+          if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" ]]; then
+            echo "✅ Build successful!"
+          else
+            echo "❌ Build failed!"
+            exit 1
+          fi

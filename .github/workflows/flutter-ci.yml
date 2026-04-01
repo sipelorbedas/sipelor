@@ -1,0 +1,262 @@
+name: Flutter CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: '3.10.3'
+  JAVA_VERSION: '11'
+
+jobs:
+  # Job 1: Code Analysis & Linting
+  analyze:
+    name: Code Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🔍 Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: 📊 Analyze code
+        run: flutter analyze
+
+      - name: 🔒 Check for security vulnerabilities
+        run: |
+          flutter pub outdated
+          # dart pub global activate pana
+          # pana --no-warning
+
+  # Job 2: Unit & Widget Tests
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: analyze
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🧪 Run unit tests
+        run: flutter test --coverage
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-sipelor
+
+  # Job 3: Build Android APK (Debug)
+  build-android-debug:
+    name: Build Android Debug APK
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build APK
+        run: |
+          flutter build apk --debug \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL_DEV }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_DEV }}
+
+      - name: 📤 Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sipelor-debug.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+  # Job 4: Build Android APK (Release)
+  build-android-release:
+    name: Build Android Release APK
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      - name: 🔑 Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: 📝 Create key.properties
+        run: |
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=keystore.jks
+          EOF
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🏗️ Build APK
+        run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL_PROD }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PROD }} \
+            --dart-define=SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+
+      - name: 🏗️ Build App Bundle
+        run: |
+          flutter build appbundle --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL_PROD }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PROD }} \
+            --dart-define=SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+
+      - name: 📤 Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sipelor-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: 📤 Upload App Bundle artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sipelor-release.aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      - name: 🚀 Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+          draft: false
+          prerelease: false
+
+  # Job 5: Deploy to Play Store (Beta)
+  deploy-play-store-beta:
+    name: Deploy to Play Store Beta
+    runs-on: ubuntu-latest
+    needs: build-android-release
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📥 Download App Bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: sipelor-release.aab
+
+      - name: 🚀 Deploy to Play Store (Internal Testing)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.bedas.sipelor
+          releaseFiles: app-release.aab
+          track: internal
+          status: completed
+
+  # Job 6: Notify Slack/Discord
+  notify:
+    name: Notify Team
+    runs-on: ubuntu-latest
+    needs: [build-android-release]
+    if: always()
+    steps:
+      - name: 📢 Send Slack notification
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "SIPELOR Build ${{ needs.build-android-release.result }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*SIPELOR BEDAS - Build Result*\n\n*Status:* ${{ needs.build-android-release.result }}\n*Branch:* ${{ github.ref_name }}\n*Commit:* ${{ github.event.head_commit.message }}\n*Author:* ${{ github.actor }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Job 7: Security Scan
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: analyze
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔒 Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: 📤 Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'

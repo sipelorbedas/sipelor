@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — SIPELOR BEDAS</title>
+  <meta name="description" content="Panel Administrasi SIPELOR BEDAS — Sistem Pemesanan Lapangan Olahraga DISPORA Kabupaten Bandung" />
+  <link rel="icon" href="images/sipelor.png" type="image/png" />
+
+  <!-- Google Fonts: Mulish -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Admin Styles -->
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <!-- App Root -->
+  <div id="app">
+    <!-- Initial loader while JS boots -->
+    <div style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:18px;
+      background:linear-gradient(135deg,#1E1628 0%,#2D1B47 60%,#1A1025 100%);
+    ">
+      <div style="
+        width:80px;height:80px;
+        border-radius:16px;
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 8px 24px rgba(217,70,239,0.40);
+        animation:pulse 1.5s ease-in-out infinite;
+        overflow:hidden;
+      "><img src="images/sipelor.png" alt="SIPELOR Logo" style="width:100%;height:100%;object-fit:contain;" /></div>
+      <div style="color:rgba(255,255,255,0.8);font-family:'Mulish',sans-serif;font-size:15px;font-weight:600;">
+        Memuat SIPELOR Admin...
+      </div>
+      <div style="
+        width:36px;height:36px;
+        border:3px solid rgba(255,255,255,0.15);
+        border-top-color:#A855F7;
+        border-radius:50%;
+        animation:spin 0.7s linear infinite;
+      "></div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin  { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+  </style>
+
+  <!-- ═══════════════════════════════════════════
+       CDN DEPENDENCIES
+  ════════════════════════════════════════════ -->
+
+  <!-- Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <!-- Chart.js v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+  <!-- ═══════════════════════════════════════════
+       APP CONFIG & API
+  ════════════════════════════════════════════ -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+
+  <!-- ═══════════════════════════════════════════
+       VIEW MODULES
+  ════════════════════════════════════════════ -->
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/bookings.js"></script>
+  <script src="js/views/fields.js"></script>
+  <script src="js/views/staff.js"></script>
+  <script src="js/views/opd.js"></script>
+  <script src="js/views/analytics.js"></script>
+  <script src="js/views/reports.js"></script>
+  <script src="js/views/reviews.js"></script>
+  <script src="js/views/audit.js"></script>
+  <script src="js/views/users.js"></script>
+  <script src="js/views/chat.js"></script>
+  <script src="js/views/carousel.js"></script>
+  <script src="js/views/popup.js"></script>
+
+  <!-- ═══════════════════════════════════════════
+       CORE APP (Router · Auth · Shell)
+       Must be last — depends on all above
+  ════════════════════════════════════════════ -->
+  <script src="js/app.js"></script>
+</body>
+</html>

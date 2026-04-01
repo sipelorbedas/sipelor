@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme saat proses Android dimulai — gunakan dark agar tidak ada white flash -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <!-- Background dark branded sebelum Flutter engine siap -->
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <!-- Status bar transparan agar tampak menyatu dengan background -->
+        <item name="android:statusBarColor">@color/splash_background</item>
+        <item name="android:navigationBarColor">@color/splash_background</item>
+    </style>
+
+    <!-- Theme setelah Flutter engine berjalan -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>
